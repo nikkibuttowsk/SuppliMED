@@ -3,35 +3,34 @@ using AppCore.Models;
 
 namespace AppCore.Services
 {
-    public class InventoryService : IInventoryService
+    public class InventoryServices : IInventoryService
     {
-        private List<MedicalSupply> _supplies = new List<MedicalSupply>();
+        private List<MedicalSupply> supplies = new();
+        private List<Transaction> transactions = new();
 
         public void AddSupply(MedicalSupply supply)
         {
-            _supplies.Add(supply);
+            supplies.Add(supply);
         }
 
         public List<MedicalSupply> GetAllSupplies()
         {
-            return _supplies;
+            return supplies;
         }
 
         public MedicalSupply GetSupplyById(string id)
         {
-            return _supplies.FirstOrDefault(s => s.Id == id);
+            return supplies.FirstOrDefault(s => s.Id == id);
         }
 
-        public void UpdateSupply(MedicalSupply updatedSupply)
+        public void UpdateSupply(MedicalSupply supply)
         {
-            var supply = GetSupplyById(updatedSupply.Id);
-            if (supply != null)
+            var existing = GetSupplyById(supply.Id);
+            if (existing != null)
             {
-                supply.Name = updatedSupply.Name;
-                supply.Category = updatedSupply.Category;
-                supply.Quantity = updatedSupply.Quantity;
-                supply.MinimumStock = updatedSupply.MinimumStock;
-                supply.ExpirationDate = updatedSupply.ExpirationDate;
+                existing.Name = supply.Name;
+                existing.Quantity = supply.Quantity;
+                existing.MinimumStock = supply.MinimumStock;
             }
         }
 
@@ -40,21 +39,68 @@ namespace AppCore.Services
             var supply = GetSupplyById(id);
             if (supply != null)
             {
-                _supplies.Remove(supply);
+                supplies.Remove(supply);
+            }
+        }
+
+        public void AddStock(string id, int qty)
+        {
+            var supply = GetSupplyById(id);
+            if (supply != null)
+            {
+                supply.AddStock(qty);
+                RecordTransaction(id, qty, "ADD");
+            }
+        }
+
+        public void RemoveStock(string id, int qty)
+        {
+            var supply = GetSupplyById(id);
+            if (supply != null)
+            {
+                supply.ReduceStock(qty);
+                RecordTransaction(id, qty, "REMOVE");
             }
         }
 
         public List<MedicalSupply> GetLowStockSupplies()
         {
-            return _supplies.Where(s => s.Quantity <= s.MinimumStock).ToList();
+            return supplies.Where(s => s.IsLowStock()).ToList();
         }
 
         public List<MedicalSupply> GetExpiringSupplies(int days)
         {
-            var targetDate = DateTime.Now.AddDays(days);
-            return _supplies
-                .Where(s => s.ExpirationDate <= targetDate)
+            return supplies
+                .OfType<Medicine>()
+                .Where(m => m.IsExpiringSoon(days))
+                .Cast<MedicalSupply>()
                 .ToList();
+        }
+
+        private void RecordTransaction(string id, int qty, string type)
+        {
+            transactions.Add(new Transaction
+            {
+                TransactionID = Guid.NewGuid().ToString(),
+                Date = DateTime.Now,
+                Quantity = qty,
+                Type = type
+            });
+        }
+
+        public List<Transaction> GetAllTransactions()
+        {
+            return transactions;
+        }
+
+        public void DeleteSupply(string id, User user)
+        {
+            if (user is not Admin)
+                throw new Exception("Access denied");
+
+            var supply = GetSupplyById(id);
+            if (supply != null)
+                supplies.Remove(supply);
         }
     }
 }

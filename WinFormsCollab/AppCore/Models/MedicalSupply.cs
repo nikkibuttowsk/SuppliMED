@@ -7,9 +7,9 @@ namespace AppCore.Models
     }
 
     public class Medicine : MedicalSupply
-{
-    public DateTime ExpirationDate { get; set; }
-}
+    {
+        public DateTime ExpirationDate { get; set; }
+    }
 
     public class Equipment : MedicalSupply
     {
