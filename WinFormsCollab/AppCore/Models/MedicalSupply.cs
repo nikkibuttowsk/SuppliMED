@@ -4,15 +4,30 @@ namespace AppCore.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-    }
+        public int Quantity { get; set; }
+        public int MinimumStock { get; set; }
 
-    public class Medicine : MedicalSupply
-    {
-        public DateTime ExpirationDate { get; set; }
-    }
+        public void AddStock(int amount)
+        {
+            Quantity += amount;
+        }
 
-    public class Equipment : MedicalSupply
-    {
-        public string SerialNumber { get; set; }
+        public void ReduceStock(int amount)
+        {
+            if (amount > Quantity)
+                throw new Exception("Not enough stock");
+
+            Quantity -= amount;
+        }
+
+        public bool IsLowStock()
+        {
+            return Quantity <= MinimumStock;
+        }
+
+        public virtual string GetDetails()
+        {
+            return $"{Id} - {Name} | Qty: {Quantity}";
+        }
     }
 }
