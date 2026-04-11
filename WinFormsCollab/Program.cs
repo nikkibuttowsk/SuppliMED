@@ -1,15 +1,27 @@
 using System;
-using System.Windows.Forms;
+using AppCore.Models;
+using AppCore.Services;
 
-namespace WinFormsApp
+class Program
 {
-    internal static class Program
+    static void Main()
     {
-        [STAThread]
-        static void Main()
+        InventoryService service = new InventoryService();
+
+        var med = new Medicine
         {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Id = "001",
+            Name = "Paracetamol",
+            CurrentStock = 50,
+            MinStock = 100,
+            ExpirationDate = DateTime.Now.AddDays(10)
+        };
+
+        service.AddItem(med);
+
+        foreach (var item in service.GetAllItems())
+        {
+            Console.WriteLine($"{item.Name} - {item.GetStatus()}");
         }
     }
 }

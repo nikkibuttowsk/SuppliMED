@@ -76,6 +76,15 @@ namespace AppCore.Services
                 .Cast<MedicalSupply>()
                 .ToList();
         }
+        
+        public List<MedicalSupply> GetExpiredSupplies()
+        {
+            return supplies
+                .OfType<Medicine>()
+                .Where(m => m.IsExpired())
+                .Cast<MedicalSupply>()
+                .ToList();
+        }
 
         private void RecordTransaction(string id, int qty, string type)
         {

@@ -1,15 +1,13 @@
 namespace AppCore.Models
 {
-    public class User
+    public abstract class User
     {
         public string UserID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public virtual string GetRole()
-        {
-            return "User";
-        }
+        public UserRole Role { get; set; }
+        public abstract string GetRole();
 
         public bool Authenticate(string username, string password)
         {

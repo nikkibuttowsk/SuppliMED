@@ -1,0 +1,12 @@
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.AssemblyInfoInputs.cache
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.AssemblyInfo.cs
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.csproj.CoreCompileInputs.cache
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.sourcelink.json
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/bin/Debug/net10.0/AppCore.deps.json
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/bin/Debug/net10.0/AppCore.dll
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/bin/Debug/net10.0/AppCore.pdb
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.dll
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/refint/AppCore.dll
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/AppCore.pdb
+/Users/nikkilimboc/AOOP_FinalProject/WinFormsCollab/AppCore/obj/Debug/net10.0/ref/AppCore.dll

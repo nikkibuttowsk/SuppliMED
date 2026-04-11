@@ -1,14 +1,27 @@
-var service = new InventoryService();
+using System;
+using AppCore.Models;
+using AppCore.Services;
 
-service.AddSupply(new MedicalSupply
+class Program
 {
-    Id = "001",
-    Name = "Paracetamol",
-    Category = "Medicine",
-    Quantity = 50,
-    MinimumStock = 10,
-    ExpirationDate = DateTime.Now.AddMonths(6)
-});
+    static void Main()
+    {
+        InventoryServices service = new InventoryServices();
 
-var all = service.GetAllSupplies();
-Console.WriteLine(all.Count);
+        var med = new Medicine
+        {
+            Id = "001",
+            Name = "Paracetamol",
+            Quantity = 50,
+            MinimumStock = 100,
+            ExpirationDate = DateTime.Now.AddDays(10)
+        };
+
+        service.AddSupply(med);
+
+        foreach (var item in service.GetAllSupplies())
+        {
+            Console.WriteLine($"{item.Name} - {item.GetDetails()}");
+        }
+    }
+}

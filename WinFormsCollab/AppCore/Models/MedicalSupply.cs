@@ -1,6 +1,6 @@
 namespace AppCore.Models
 {
-    public class MedicalSupply
+    public abstract class MedicalSupply
     {
         public string Id { get; set; }
         public string Name { get; set; }
