@@ -6,7 +6,7 @@ using AppCore.Services;
 public partial class MainForm : Form
 {
     private User currentUser;
-    private InventoryService inventoryService;
+    private InventoryServices inventoryService;
 
     public MainForm(User user)
     {

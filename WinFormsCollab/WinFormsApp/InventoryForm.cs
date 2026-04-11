@@ -5,7 +5,7 @@ using AppCore.Services;
 
 public partial class InventoryForm : Form
 {
-    private InventoryService inventoryService;
+    private InventoryServices inventoryService;
     private User currentUser;
 
     public InventoryForm(InventoryService service, User user)
