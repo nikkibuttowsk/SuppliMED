@@ -29,7 +29,7 @@ namespace AppCore.Services
             if (existing != null)
             {
                 existing.Name = supply.Name;
-                existing.Quantity = supply.Quantity;
+                existing.CurrentStock = supply.CurrentStock;
                 existing.MinimumStock = supply.MinimumStock;
             }
         }

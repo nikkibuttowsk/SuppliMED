@@ -12,7 +12,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         currentUser = user;
-        inventoryService = new InventoryService();
+        inventoryService = new InventoryServices();
 
         lblRole.Text = "Role: " + currentUser.GetRole();
     }

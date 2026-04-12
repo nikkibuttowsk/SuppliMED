@@ -30,9 +30,37 @@ class Program
 
         var expiredSupplies = service.GetExpiredSupplies();
 
+        var lowStockSupplies = service.GetLowStockSupplies();
+        var expiringSoonSupplies = service.GetExpiringSupplies(5);
+        var allSupplies = service.GetAllSupplies();
+        var allTransactions = service.GetAllTransactions();
+        var supplyById = service.GetSupplyById("001");
+
         foreach (var item in expiredSupplies)
         {
             Console.WriteLine($"{item.Name} is EXPIRED");
         }
+
+        foreach (var item in lowStockSupplies)
+        {
+            Console.WriteLine($"{item.Name} is LOW STOCK");
+        }
+
+        foreach (var item in expiringSoonSupplies)
+        {
+            Console.WriteLine($"{item.Name} is EXPIRING SOON");
+        }
+
+        foreach (var item in allSupplies)
+        {
+            Console.WriteLine(item.GetDetails());
+        }
+
+        foreach (var item in allTransactions)
+        {
+            Console.WriteLine(item.GetDetails());
+        }
+
+        Console.WriteLine(supplyById.GetDetails());
     }
 }

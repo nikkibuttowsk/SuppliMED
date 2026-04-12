@@ -33,7 +33,7 @@ public partial class InventoryForm : Form
     {
         dataGridView1.Rows.Clear();
 
-        foreach (var item in inventoryService.GetAllItems())
+        foreach (var item in inventoryService.GetAllSupplies())
         {
             dataGridView1.Rows.Add(
                 item.Id,
@@ -49,32 +49,32 @@ public partial class InventoryForm : Form
     {
         try
         {
-            MedicalSupply item;
+            MedicalSupply supply;
 
             if (cmbCategory.Text == "Medicine")
             {
-                item = new Medicine
+                supply = new Medicine
                 {
                     Id = txtId.Text,
                     Name = txtName.Text,
                     CurrentStock = int.Parse(txtStock.Text),
-                    MinStock = int.Parse(txtMinStock.Text),
+                    MinimumStock = int.Parse(txtMinStock.Text),
                     ExpirationDate = dtpExpiration.Value
                 };
             }
             else
             {
-                item = new Equipment
+                supply = new Equipment
                 {
                     Id = txtId.Text,
                     Name = txtName.Text,
                     CurrentStock = int.Parse(txtStock.Text),
-                    MinStock = int.Parse(txtMinStock.Text),
+                    MinimumStock = int.Parse(txtMinStock.Text),
                     LastMaintenanceDate = dtpMaintenance.Value
                 };
             }
 
-            inventoryService.AddItem(item);
+            inventoryService.AddSupply(supply);
 
             LoadData();
 

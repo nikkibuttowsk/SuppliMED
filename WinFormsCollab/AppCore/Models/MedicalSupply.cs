@@ -4,30 +4,30 @@ namespace AppCore.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public int Quantity { get; set; }
+        public int CurrentStock { get; set; }
         public int MinimumStock { get; set; }
 
         public void AddStock(int amount)
         {
-            Quantity += amount;
+            CurrentStock += amount;
         }
 
         public void ReduceStock(int amount)
         {
-            if (amount > Quantity)
+            if (amount > CurrentStock)
                 throw new Exception("Not enough stock");
 
-            Quantity -= amount;
+            CurrentStock -= amount;
         }
 
         public bool IsLowStock()
         {
-            return Quantity <= MinimumStock;
+            return CurrentStock <= MinimumStock;
         }
 
         public virtual string GetDetails()
         {
-            return $"{Id} - {Name} | Qty: {Quantity}";
+            return $"{Id} - {Name} | Qty: {CurrentStock}";
         }
     }
 }
