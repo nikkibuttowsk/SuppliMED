@@ -12,8 +12,6 @@ namespace UI
         private int lockTime = 60; // seconds
         private System.Timers.Timer lockTimer;
 
-        // Default accounts
-
         public LoginForm()
         {
             InitializeComponent();
