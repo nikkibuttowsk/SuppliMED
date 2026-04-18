@@ -1,18 +1,19 @@
 ﻿using System;
 using AppCore.Models;
 using AppCore.Services;
+using AppCore.Interfaces;
 
 class Program
 {
     static void Main()
     {
-        InventoryServices service = new InventoryServices();
+        IInventoryService service = InventoryServices.Instance;
 
         var med1 = new Medicine
         {
             Id = "001",
             Name = "Paracetamol",
-            Quantity = 50,
+            CurrentStock = 50,
             MinimumStock = 100,
             ExpirationDate = DateTime.Now.AddDays(-5)
         };
@@ -20,7 +21,7 @@ class Program
         {
             Id = "002",
             Name = "Biogesic",
-            Quantity = 30,
+            CurrentStock = 30,
             MinimumStock = 100,
             ExpirationDate = DateTime.Now.AddDays(10)
         };
