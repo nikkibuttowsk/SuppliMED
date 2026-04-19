@@ -1,22 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace AppCore.Models
 {
     public class Medicine : MedicalSupply
     {
-        public DateTime ExpirationDate { get; set; }
+        public List<Batch> Batches { get; set; } = new List<Batch>();
 
-        public bool IsExpired()
-        {
-            return DateTime.Now > ExpirationDate;
-        }
+        // Total stock is the sum of all batch quantities
+        public new int CurrentStock => Batches.Sum(b => b.Quantity);
 
+        // This replaces the old static ExpirationDate property
+        // It dynamically finds the earliest expiration date among active batches
+        public DateTime? EarliestExpirationDate => 
+            Batches.Where(b => b.Quantity > 0)
+                   .OrderBy(b => b.ExpirationDate)
+                   .Select(b => b.ExpirationDate)
+                   .Cast<DateTime?>()
+                   .FirstOrDefault();
+
+        public bool IsAnyBatchExpired() => Batches.Any(b => b.IsExpired());
+        
+        // Checks if ANY batch is expiring soon (based on your dashboard threshold)
         public bool IsExpiringSoon(int days)
         {
-            return (ExpirationDate - DateTime.Now).TotalDays <= days;
+            var nextDate = GetNextExpirationDate();
+            if (nextDate == null) return false;
+
+            return (nextDate.Value - DateTime.Now).TotalDays <= days;
         }
+
+        // Returns the date for the batch that will expire next
+        public DateTime? GetNextExpirationDate() => 
+            Batches.Where(b => !b.IsExpired() && b.Quantity > 0)
+                .OrderBy(b => b.ExpirationDate)
+                .Select(b => b.ExpirationDate)
+                .Cast<DateTime?>()
+                .FirstOrDefault();
 
         public override string GetDetails()
         {
-            return base.GetDetails() + $" | Expires: {ExpirationDate}";
+            string expiryInfo = EarliestExpirationDate.HasValue 
+                ? EarliestExpirationDate.Value.ToString("yyyy-MM-dd") 
+                : "No Active Batches";
+
+            return base.GetDetails() + $" | Next Expiry: {expiryInfo} | Batches: {Batches.Count}";
         }
     }
 }

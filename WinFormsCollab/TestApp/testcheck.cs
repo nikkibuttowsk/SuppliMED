@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AppCore.Models;
 using AppCore.Services;
 using AppCore.Interfaces;
@@ -9,59 +10,61 @@ class Program
     {
         IInventoryService service = InventoryServices.Instance;
 
-        var med1 = new Medicine
-        {
-            Id = "001",
-            Name = "Paracetamol",
-            CurrentStock = 50,
-            MinimumStock = 100,
-            ExpirationDate = DateTime.Now.AddDays(-5)
-        };
-        var med2 = new Medicine
-        {
-            Id = "002",
-            Name = "Biogesic",
-            CurrentStock = 30,
-            MinimumStock = 100,
-            ExpirationDate = DateTime.Now.AddDays(10)
+        Console.WriteLine("=== STARTING SYSTEM TEST: BATCH & FEFO LOGIC ===\n");
+
+        // Batch A: expiring very soon (should be used first)
+        // Batch B: fresh stock (should be used second)
+        var med = new Medicine 
+        { 
+            Id = "MED-TEST", 
+            Name = "Amoxicillin", 
+            Brand = "Generic", 
+            MinimumStock = 20 
         };
 
-        service.AddSupply(med1);
-        service.AddSupply(med2);
+        med.Batches.Add(new Batch { BatchNumber = "OLD-001", Quantity = 10, ExpirationDate = DateTime.Now.AddDays(2) });
+        med.Batches.Add(new Batch { BatchNumber = "NEW-999", Quantity = 50, ExpirationDate = DateTime.Now.AddMonths(12) });
 
-        var expiredSupplies = service.GetExpiredSupplies();
+        service.AddSupply(med);
 
-        var lowStockSupplies = service.GetLowStockSupplies();
-        var expiringSoonSupplies = service.GetExpiringSupplies(5);
-        var allSupplies = service.GetAllSupplies();
-        var allTransactions = service.GetAllTransactions();
-        var supplyById = service.GetSupplyById("001");
+        // dashboard checks
+        Console.WriteLine($"Total Supplies in System: {service.GetAllSupplies().Count}");
+        
+        var expiringSoon = service.GetExpiringSupplies(5);
+        Console.WriteLine($"> Supplies Expiring in 5 days: {expiringSoon.Count} ({expiringSoon.FirstOrDefault()?.Name})");
 
-        foreach (var item in expiredSupplies)
+        // check removing 15 units. 
+        Console.WriteLine("\n--- Action: Dispensing 15 units of Amoxicillin ---");
+        service.RemoveStock("MED-TEST", 15);
+
+        var updatedMed = service.GetSupplyById("MED-TEST") as Medicine;
+        
+        if (updatedMed != null)
         {
-            Console.WriteLine($"{item.Name} is EXPIRED");
+            Console.WriteLine($"Total Stock Remaining: {updatedMed.CurrentStock}");
+            Console.WriteLine($"Number of Batches left: {updatedMed.Batches.Count}");
+            
+            foreach(var b in updatedMed.Batches)
+            {
+                Console.WriteLine($"> Remaining Batch: {b.BatchNumber} | Qty: {b.Quantity} | Expiry: {b.ExpirationDate:yyyy-MM-dd}");
+            }
         }
 
-        foreach (var item in lowStockSupplies)
+        // 5. Test: Transaction History
+        Console.WriteLine("\n--- Transaction Log ---");
+        foreach (var txn in service.GetAllTransactions())
         {
-            Console.WriteLine($"{item.Name} is LOW STOCK");
+            Console.WriteLine($"[{txn.Date:HH:mm:ss}] {txn.Type} | Qty: {txn.Quantity} | User: {txn.AddedBy}");
         }
 
-        foreach (var item in expiringSoonSupplies)
+        // 6. Test: Low Stock Detection
+        var lowStock = service.GetLowStockSupplies();
+        Console.WriteLine($"\nLow Stock Alerts: {lowStock.Count}");
+        foreach(var item in lowStock)
         {
-            Console.WriteLine($"{item.Name} is EXPIRING SOON");
+            Console.WriteLine($"> ALERT: {item.Name} is below minimum stock!");
         }
 
-        foreach (var item in allSupplies)
-        {
-            Console.WriteLine(item.GetDetails());
-        }
-
-        foreach (var item in allTransactions)
-        {
-            Console.WriteLine(item.GetDetails());
-        }
-
-        Console.WriteLine(supplyById.GetDetails());
+        Console.WriteLine("\n=== TEST COMPLETE ===");
     }
 }

@@ -8,8 +8,9 @@ namespace AppCore.Interfaces
         List<MedicalSupply> GetAllSupplies();
         MedicalSupply GetSupplyById(string id);
         void UpdateSupply(MedicalSupply supply);
-        void AddStock(string id, int qty);
+        void AddStock(string id, int qty, string batchNumber = "AUTO", DateTime? expiry = null);
         void RemoveStock(string id, int qty);
+        void RemoveMedicineStock(string medId, int qtyToRemove);
         void DeleteSupply(string id, User user);
 
         List<MedicalSupply> GetLowStockSupplies();

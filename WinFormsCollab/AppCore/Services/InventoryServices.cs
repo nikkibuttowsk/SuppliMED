@@ -35,13 +35,21 @@ namespace AppCore.Services
         private void SeedInitialData()
         {
             // Adding dummy Medicine
-            AddSupply(new Medicine { 
+            var paracetamol = new Medicine { 
                 Id = "MED001", 
                 Name = "Paracetamol", 
-                CurrentStock = 120, 
-                MinimumStock = 100, 
+                Brand = "Biogesic",
+                MinimumStock = 100 
+            };
+
+            // Add stock batches
+            paracetamol.Batches.Add(new Batch { 
+                BatchNumber = "B-001", 
+                Quantity = 120, 
                 ExpirationDate = DateTime.Now.AddDays(10) 
             });
+
+            AddSupply(paracetamol);
 
             // Adding dummy Equipment
             AddSupply(new Equipment { 
@@ -77,7 +85,6 @@ namespace AppCore.Services
             }
         }
 
-        // Consolidated Delete: Requires Admin check as per your Flowchart
         public void DeleteSupply(string id, User user)
         {
             if (user is not Admin)
@@ -88,24 +95,92 @@ namespace AppCore.Services
                 supplies.Remove(supply);
         }
 
-        public void AddStock(string id, int qty)
+        public void AddStock(string id, int qty, string batchNumber = "AUTO", DateTime? expiry = null)
         {
             var supply = GetSupplyById(id);
-            if (supply != null)
+            if (supply == null) return;
+
+            if (supply is Medicine med)
             {
-                supply.AddStock(qty);
-                RecordTransaction(supply, qty, "RESTOCK");
+                // Medicine needs a batch
+                med.Batches.Add(new Batch 
+                { 
+                    BatchNumber = batchNumber, 
+                    Quantity = qty, 
+                    ExpirationDate = expiry ?? DateTime.Now.AddMonths(6) // Default 6 months if null
+                });
             }
+            else
+            {
+                // Equipment just adds to the base property
+                supply.AddStock(qty);
+            }
+
+            RecordTransaction(supply, qty, "RESTOCK", "System");
         }
 
         public void RemoveStock(string id, int qty)
         {
             var supply = GetSupplyById(id);
-            if (supply != null)
+            if (supply == null) return;
+
+            if (supply is Medicine med)
+            {
+                int remainingToRemove = qty;
+                
+                // Sort batches: Earliest Expiration first (FEFO)
+                var sortedBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
+
+                foreach (var batch in sortedBatches)
+                {
+                    if (remainingToRemove <= 0) break;
+
+                    if (batch.Quantity >= remainingToRemove)
+                    {
+                        batch.Quantity -= remainingToRemove;
+                        remainingToRemove = 0;
+                    }
+                    else
+                    {
+                        remainingToRemove -= batch.Quantity;
+                        batch.Quantity = 0;
+                    }
+                }
+                
+                // Clean up empty batches so they don't clutter the UI
+                med.Batches.RemoveAll(b => b.Quantity <= 0);
+                
+            }
+            else
             {
                 supply.ReduceStock(qty);
-                RecordTransaction(supply, qty, "DISPENSE");
             }
+
+            RecordTransaction(supply, qty, "DISPENSE", "System");
+        }
+
+        public void RemoveMedicineStock(string medId, int qtyToRemove)
+        {
+            var med = GetSupplyById(medId) as Medicine;
+            if (med == null) return;
+
+            // Sort batches by expiration date (FEFO)
+            var activeBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
+
+            foreach (var batch in activeBatches)
+            {
+                if (qtyToRemove <= 0) break;
+
+                if (batch.Quantity >= qtyToRemove) {
+                    batch.Quantity -= qtyToRemove;
+                    qtyToRemove = 0;
+                } else {
+                    qtyToRemove -= batch.Quantity;
+                    batch.Quantity = 0;
+                }
+            }
+            // clean empty batches
+            med.Batches.RemoveAll(b => b.Quantity <= 0);
         }
 
         public List<MedicalSupply> GetLowStockSupplies()
@@ -127,13 +202,13 @@ namespace AppCore.Services
         {
             return supplies
                 .OfType<Medicine>()
-                .Where(m => m.IsExpired())
+                .Where(m => m.IsAnyBatchExpired())
                 .Cast<MedicalSupply>()
                 .ToList();
         }
 
         // Improved Transaction recording to link the object
-        private void RecordTransaction(MedicalSupply supply, int qty, string type)
+        private void RecordTransaction(MedicalSupply supply, int qty, string type, string userName)
         {
             transactions.Add(new Transaction
             {
@@ -159,6 +234,15 @@ namespace AppCore.Services
                 s.Id.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                 s.Brand.Contains(query, StringComparison.OrdinalIgnoreCase)
             ).ToList();
+        }
+
+        public List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold = 30)
+        {
+            return supplies
+                .OfType<Medicine>()
+                .Where(m => m.IsExpiringSoon(daysThreshold))
+                .Cast<MedicalSupply>()
+                .ToList();
         }
     }
 }

@@ -43,5 +43,18 @@ namespace AppCore.Models
         {
             return $"{Id} - {Name} ({Brand}) | Qty: {CurrentStock}";
         }
+
+        public string GetDisplayExpiryDate()
+        {
+            // medicine check
+            if (this is Medicine med && med.Batches != null && med.Batches.Any())
+            {
+                // Returns the date of the batch expiring the soonest
+                return med.Batches.Min(b => b.ExpirationDate).ToString("yyyy-MM-dd");
+            }
+            
+            // for non-medicine supplies
+            return "-"; 
+        }
     }
 }
