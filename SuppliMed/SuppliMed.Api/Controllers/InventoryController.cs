@@ -15,17 +15,21 @@ public class InventoryController : ControllerBase
         _inventoryService = inventoryService;
     }
 
-    [HttpGet("stats")]
-    public IActionResult GetStats()
+    [HttpGet("dashboard-summary")]
+    public IActionResult GetDashboardSummary()
     {
-        var supplies = _inventoryService.GetAllSupplies();
-        var lowStock = _inventoryService.GetLowStockSupplies();
+        var all = _inventoryService.GetAllSupplies();
+        var low = _inventoryService.GetLowStockSupplies();
         var expired = _inventoryService.GetExpiredSupplies();
-        
+        // assumption of 30 days for "Expiring Soon"
+        var expiring = _inventoryService.GetFilteredExpiringSupplies(30); 
+
         return Ok(new {
-            totalSupply = supplies.Count,
-            lowStockCount = lowStock.Count,
-            expiredCount = expired.Count
+            totalCount = all.Count,
+            lowStockCount = low.Count,
+            expiredCount = expired.Count,
+            lowStockItems = low.Select(s => new { s.Name, Brand = s is Medicine m ? m.Brand : "N/A", s.Quantity }),
+            expiringItems = expiring.Select(s => new { s.Name, s.Id })
         });
     }
 }

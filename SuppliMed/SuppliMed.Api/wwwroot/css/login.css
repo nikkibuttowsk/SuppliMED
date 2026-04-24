@@ -101,3 +101,37 @@ input {
     opacity: 0.7;
     line-height: 1.4;
 }
+
+.options-row {
+    display: flex;
+    justify-content: space-between; /* Pushes one left, one right */
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.remember-me-group {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Controls the space between box and text */
+    white-space: nowrap; /* Prevents "Me" from dropping to the next line */
+}
+
+.remember-me-group label {
+    font-size: 13px;
+    color: white;
+    cursor: pointer;
+    margin: 0; /* Remove default label margins */
+}
+
+.forgot-link {
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}

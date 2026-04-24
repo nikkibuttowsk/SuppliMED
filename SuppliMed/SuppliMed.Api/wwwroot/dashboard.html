@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>SuppliMed Dashboard</title>
     <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
 </head>
 <body>
     <div class="app-container">
@@ -32,38 +33,31 @@
             </header>
 
             <div class="stats-row">
-                <div class="stat-card total">
-                    <div class="icon">🛍️</div>
-                    <div class="data"><h3>4</h3><p>Total Supply</p></div>
+                <div class="stat-card">
+                    <h3>Total Supplies</h3>
+                    <p id="total-supply-count">...</p> </div>
+
+                <div class="stat-card low-stock">
+                    <h3>Low Stock</h3>
+                    <p id="low-stock-count">0</p>
                 </div>
-                <div class="stat-card low">
-                    <div class="icon">📊</div>
-                    <div class="data"><h3>2</h3><p>Low Stock</p></div>
-                </div>
-                <div class="stat-card expired">
-                    <div class="icon">⌛</div>
-                    <div class="data"><h3>0</h3><p>Expired Supply</p></div>
+
+                <div class="stat-card expiring">
+                    <h3>Expired Supply</h3>
+                    <p id="expired-count">0</p>
                 </div>
             </div>
 
             <div class="details-grid">
                 <section class="details-panel">
-                    <h3>Low Stock Supplies <span class="badge yellow">2</span></h3>
-                    <div class="item-card">
-                        <div class="item-info">
-                            <strong>Nebulizer</strong>
-                            <p>I-care</p>
-                        </div>
-                        <div class="item-qty">
-                            <span>10</span>
-                            <div class="progress-bar"><div class="progress red" style="width: 10%"></div></div>
-                        </div>
-                    </div>
+                    <h3>Low Stock Supplies <span id="low-stock-badge" class="badge yellow">0</span></h3>
+                    <div id="low-stock-list"></div>
                 </section>
 
                 <section class="details-panel">
-                    <h3>Expiring Soon <span class="badge green">1</span></h3>
-                    </section>
+                    <h3>Expiring Soon <span id="expiring-badge" class="badge green">0</span></h3>
+                    <div id="expiring-list"></div>
+                </section>
 
                 <div class="action-column">
                     <button class="action-btn add"><span>+</span> Add Supply</button>

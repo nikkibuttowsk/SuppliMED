@@ -23,7 +23,7 @@ async function handleLogin() {
             const userVal = document.getElementById('username').value.trim();
             const passVal = document.getElementById('password').value;
             const msg = document.getElementById('message');
-            const loginButton = document.querySelector('button'); // Select your login button
+            const loginButton = document.querySelector('button');
 
             // Quick validation
             if (!userVal || !passVal) {
@@ -45,6 +45,15 @@ async function handleLogin() {
                     const data = await response.json();
                     localStorage.setItem('userRole', data.role); 
 
+                    const rememberMe = document.getElementById('rememberMe').checked;
+                    const userVal = document.getElementById('username').value.trim();
+
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedUsername', userVal);
+                    } else {
+                        localStorage.removeItem('rememberedUsername');
+                    }
+
                     // Redirect to the new file
                     window.location.href = '/dashboard.html';
                 } 
@@ -58,6 +67,8 @@ async function handleLogin() {
                     msg.style.color = "red";
                     msg.innerText = "Invalid credentials. Please try again.";
                 }
+
+                
             } catch (error) {
                 console.error("Error:", error);
                 msg.innerText = "A server error occurred.";

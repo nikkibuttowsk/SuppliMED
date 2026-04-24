@@ -17,7 +17,7 @@ namespace AppCore.Services
         // 1. Private constructor with Dummy Data Seeding
         private InventoryServices() 
         { 
-            SeedInitialData();
+            supplies = InventoryDataSeeder.GetSeedData();
         }
 
         public static InventoryServices Instance 
@@ -32,34 +32,6 @@ namespace AppCore.Services
             }
         }
 
-        private void SeedInitialData()
-        {
-            // Adding dummy Medicine
-            var paracetamol = new Medicine { 
-                Id = "MED001", 
-                Name = "Paracetamol", 
-                Brand = "Biogesic",
-                MinimumStock = 100 
-            };
-
-            // Add stock batches
-            paracetamol.Batches.Add(new Batch { 
-                BatchNumber = "B-001", 
-                Quantity = 120, 
-                ExpirationDate = DateTime.Now.AddDays(10) 
-            });
-
-            AddSupply(paracetamol);
-
-            // Adding dummy Equipment
-            AddSupply(new Equipment { 
-                Id = "EQ001", 
-                Name = "Digital Thermometer", 
-                Quantity = 5, 
-                MinimumStock = 10, 
-                SerialNumber = "SN-9921"
-            });
-        }
 
         public void AddSupply(MedicalSupply supply)
         {
