@@ -8,7 +8,7 @@ namespace AppCore.Services
 {
     public class InventoryServices : IInventoryService
     {
-        private static InventoryServices _instance;
+        private static InventoryServices? _instance = null;
         private static readonly object _lock = new object();
 
         private List<MedicalSupply> supplies = new List<MedicalSupply>();
@@ -55,7 +55,7 @@ namespace AppCore.Services
             AddSupply(new Equipment { 
                 Id = "EQ001", 
                 Name = "Digital Thermometer", 
-                CurrentStock = 5, 
+                Quantity = 5, 
                 MinimumStock = 10, 
                 SerialNumber = "SN-9921"
             });
@@ -80,7 +80,7 @@ namespace AppCore.Services
             if (existing != null)
             {
                 existing.Name = supply.Name;
-                existing.CurrentStock = supply.CurrentStock;
+                existing.Quantity = supply.Quantity;
                 existing.MinimumStock = supply.MinimumStock;
             }
         }
@@ -102,17 +102,15 @@ namespace AppCore.Services
 
             if (supply is Medicine med)
             {
-                // Medicine needs a batch
                 med.Batches.Add(new Batch 
                 { 
                     BatchNumber = batchNumber, 
                     Quantity = qty, 
-                    ExpirationDate = expiry ?? DateTime.Now.AddMonths(6) // Default 6 months if null
+                    ExpirationDate = expiry ?? DateTime.Now.AddMonths(6)
                 });
             }
             else
             {
-                // Equipment just adds to the base property
                 supply.AddStock(qty);
             }
 
@@ -128,7 +126,7 @@ namespace AppCore.Services
             {
                 int remainingToRemove = qty;
                 
-                // Sort batches: Earliest Expiration first (FEFO)
+                // sort batches by expiration date 
                 var sortedBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
 
                 foreach (var batch in sortedBatches)
@@ -147,7 +145,6 @@ namespace AppCore.Services
                     }
                 }
                 
-                // Clean up empty batches so they don't clutter the UI
                 med.Batches.RemoveAll(b => b.Quantity <= 0);
                 
             }
@@ -232,7 +229,7 @@ namespace AppCore.Services
             return supplies.Where(s => 
                 s.Name.Contains(query, StringComparison.OrdinalIgnoreCase) || 
                 s.Id.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                s.Brand.Contains(query, StringComparison.OrdinalIgnoreCase)
+                (s.Brand?? "").Contains(query, StringComparison.OrdinalIgnoreCase)
             ).ToList();
         }
 

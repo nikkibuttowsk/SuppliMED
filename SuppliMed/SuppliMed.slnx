@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AppCore/AppCore.csproj" />
+  <Project Path="SuppliMed.Api/SuppliMed.Api.csproj" />
+</Solution>

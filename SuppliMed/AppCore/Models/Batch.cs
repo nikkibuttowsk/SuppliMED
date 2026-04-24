@@ -4,7 +4,7 @@ namespace AppCore.Models
 {
     public class Batch
     {
-        public string BatchNumber { get; set; }
+        public required string BatchNumber { get; set; }
         public int Quantity { get; set; }
         public DateTime ExpirationDate { get; set; }
         

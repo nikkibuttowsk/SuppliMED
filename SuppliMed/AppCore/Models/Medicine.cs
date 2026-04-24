@@ -9,16 +9,16 @@ namespace AppCore.Models
         public List<Batch> Batches { get; set; } = new List<Batch>();
 
         // Total stock is the sum of all batch quantities
-        public new int CurrentStock => Batches.Sum(b => b.Quantity);
+        public new int Quantity => Batches.Sum(b => b.Quantity);
 
         // This replaces the old static ExpirationDate property
         // It dynamically finds the earliest expiration date among active batches
         public DateTime? EarliestExpirationDate => 
             Batches.Where(b => b.Quantity > 0)
-                   .OrderBy(b => b.ExpirationDate)
-                   .Select(b => b.ExpirationDate)
-                   .Cast<DateTime?>()
-                   .FirstOrDefault();
+                .OrderBy(b => b.ExpirationDate)
+                .Select(b => b.ExpirationDate)
+                .Cast<DateTime?>()
+                .FirstOrDefault();
 
         public bool IsAnyBatchExpired() => Batches.Any(b => b.IsExpired());
         

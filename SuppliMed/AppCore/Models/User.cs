@@ -2,9 +2,9 @@ namespace AppCore.Models
 {
     public abstract class User
     {
-        public string UserID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public required string UserID { get; set; }
+        public required string Username { get; set; }
+        public required string Password { get; set; }
 
         public UserRole Role { get; set; }
         public abstract string GetRole();
