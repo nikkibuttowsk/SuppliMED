@@ -6,13 +6,12 @@ namespace AppCore.Models
 {
     public class Medicine : MedicalSupply
     {
-        public List<Batch> Batches { get; set; } = new List<Batch>();
-
         // Total stock is the sum of all batch quantities
-        public new int Quantity => Batches.Sum(b => b.Quantity);
-
-        // This replaces the old static ExpirationDate property
-        // It dynamically finds the earliest expiration date among active batches
+        public override int Quantity 
+        { 
+            get => Batches?.Sum(b => b.Quantity) ?? 0;
+            set {}
+        }
         public DateTime? EarliestExpirationDate => 
             Batches.Where(b => b.Quantity > 0)
                 .OrderBy(b => b.ExpirationDate)

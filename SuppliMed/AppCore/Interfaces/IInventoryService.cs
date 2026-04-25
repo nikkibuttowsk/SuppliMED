@@ -17,6 +17,7 @@ namespace AppCore.Interfaces
 
         List<MedicalSupply> GetExpiringSupplies(int days);
         List<MedicalSupply> GetExpiredSupplies();
+        List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold);
         List<Transaction> GetAllTransactions();
         List<MedicalSupply> SearchSupplies(string query);
     }

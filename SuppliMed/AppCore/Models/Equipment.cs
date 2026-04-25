@@ -2,7 +2,7 @@ namespace AppCore.Models
 {
     public class Equipment : MedicalSupply
     {
-        public required string SerialNumber { get; set; }
+        public string? SerialNumber { get; set; }
         public DateTime LastMaintenanceDate { get; set; }
 
         public bool NeedsMaintenance(int months)
