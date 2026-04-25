@@ -111,27 +111,31 @@ input {
     margin-bottom: 20px;
 }
 
-.remember-me-group {
+.remember-me {
     display: flex;
-    align-items: center;
-    gap: 6px; /* Controls the space between box and text */
-    white-space: nowrap; /* Prevents "Me" from dropping to the next line */
-}
-
-.remember-me-group label {
+    align-items: center; /* Vertically aligns box and text */
+    gap: 8px;           /* Perfect spacing between box and "Remember Me" */
+    cursor: pointer;
     font-size: 13px;
     color: white;
+    white-space: nowrap; /* CRITICAL: Prevents "Me" from dropping to a new line */
+}
+
+.remember-me input[type="checkbox"] {
+    margin: 0; /* Removes default browser margins that cause misalignment */
     cursor: pointer;
-    margin: 0; /* Remove default label margins */
+    width: 16px;
+    height: 16px;
 }
 
 .forgot-link {
     font-size: 13px;
     color: white;
     text-decoration: none;
-    white-space: nowrap;
+    opacity: 0.8;
 }
 
 .forgot-link:hover {
+    opacity: 1;
     text-decoration: underline;
 }
