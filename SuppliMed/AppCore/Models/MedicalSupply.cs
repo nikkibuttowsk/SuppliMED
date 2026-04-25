@@ -5,12 +5,14 @@ namespace AppCore.Models
     public abstract class MedicalSupply
     {
         public required string Id { get; set; }
-        public required string Name { get; set; }
+        public string? Name { get; set; }
         
         public string? Brand { get; set; } 
         
-        public int Quantity { get; set; }
+        public virtual int Quantity { get; set; }
         public int MinimumStock { get; set; }
+        public string Category { get; set;} = string.Empty;
+        public ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
         public void AddStock(int amount)
         {
@@ -44,17 +46,17 @@ namespace AppCore.Models
             return $"{Id} - {Name} ({Brand}) | Qty: {Quantity} | Status: {GetStatusText()}";
         }
 
-        public string GetDisplayExpiryDate()
+        public virtual string GetDisplayExpiryDate() 
         {
-            // medicine check
-            if (this is Medicine med && med.Batches != null && med.Batches.Any())
+            // no expiry for equipment or if batches are missing
+            if (this is not Medicine med || med.Batches == null || !med.Batches.Any()) 
             {
-                // Returns the date of the batch expiring the soonest
-                return med.Batches.Min(b => b.ExpirationDate).ToString("yyyy-MM-dd");
+                return "N/A";
             }
-            
-            // for non-medicine supplies
-            return "-"; 
+
+            // For Medicine, find the batch that expires SOONEST
+            var soonest = med.Batches.OrderBy(b => b.ExpirationDate).First();
+            return soonest.ExpirationDate.ToString("MMM dd, yyyy");
         }
     }
 }

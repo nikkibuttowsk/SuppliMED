@@ -13,6 +13,8 @@ public static class AuthService
         new Staff { UserID = "2", Username = "staff", Password = "staff123" }
     };
 
+    public static List<User> GetAllUsers() => _users;
+
     // The "Database" of login attempts
     private static List<LoginAttempt> _attempts = new List<LoginAttempt>();
 

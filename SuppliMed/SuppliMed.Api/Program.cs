@@ -1,30 +1,65 @@
+using AppCore.Data;
+using Microsoft.EntityFrameworkCore;
 using AppCore.Interfaces; 
 using AppCore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ✅ Get connection string once
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+// ✅ Register DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString)
+    ));
 
+// ✅ Add services
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // This is crucial for Polymorphic (Medicine/Equipment) data
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<InventoryServices>();
 
-builder.Services.AddSingleton<IInventoryService>(sp => InventoryServices.Instance);
-builder.Services.AddSingleton<AppCore.Services.InventoryServices>(sp => 
-    AppCore.Services.InventoryServices.Instance);
+builder.Services.AddScoped<IInventoryService, InventoryServices>();
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", policy => {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
-
-// 2. CONFIGURE MIDDLEWARE
+// ✅ Middleware
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
-app.MapControllers();
+app.UseHttpsRedirection();
+app.UseAuthorization();
+
+// ✅ Static files (optional for frontend)
 app.UseDefaultFiles(); 
 app.UseStaticFiles();  
+
+app.MapControllers();
+
+// ✅ Seed database safely
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    InventoryDataSeeder.Seed(context);
+}
 
 app.Run();

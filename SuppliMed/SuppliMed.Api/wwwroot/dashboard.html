@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>SuppliMed Dashboard</title>
+    <link rel="stylesheet" href="/css/mainLayout.css">
     <link rel="stylesheet" href="/css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
+    <link rel="stylesheet" href="/css/inventory.css">
+    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/transactionLog.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/inventory.js"></script>
+    <script src="/js/action.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/modals.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -13,60 +24,122 @@
                 <img src="/avatar.png" alt="Admin">
             </div>
             <div class="nav-icons">
-                <button class="nav-item active">🏠</button>
+                <button class="nav-item">🏠</button>
                 <button class="nav-item">📦</button>
                 <button class="nav-item">📊</button>
             </div>
             <div class="bottom-icons">
-                <button class="nav-item">🚪</button>
+                <button id="btn-logout" class="logout-btn" title="Logout">
+                    <img src="icons/logout.png" alt="Logout"> 
+                </button>
                 <button class="nav-item">⚙️</button>
             </div>
         </nav>
 
         <main class="main-content">
-            <header class="dashboard-header">
-                <h1 class="logo">Suppli<span>Med</span></h1>
-                <div class="header-info">
-                    <p>● Hello</p>
-                    <p id="current-date">19 April 2026 12:43:02</p>
+            <!-- dashboard -->
+            <div id="view-dashboard" class="content-view">
+                <header class="dashboard-header">
+                    <h1 class="logo">Suppli<span>Med</span></h1>
+                    <div class="header-info">
+                        <p>● Hello</p>
+                        <p id="current-date">19 April 2026 12:43:02</p>
+                    </div>
+                </header>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <h3>Total Supplies</h3>
+                        <p id="total-supply-count">...</p> </div>
+
+                    <div class="stat-card low-stock">
+                        <h3>Low Stock</h3>
+                        <p id="low-stock-count">0</p>
+                    </div>
+
+                    <div class="stat-card expiring">
+                        <h3>Expired Supply</h3>
+                        <p id="expired-count">0</p>
+                    </div>
                 </div>
-            </header>
 
-            <div class="stats-row">
-                <div class="stat-card">
-                    <h3>Total Supplies</h3>
-                    <p id="total-supply-count">...</p> </div>
+                <div class="details-grid">
+                    <section class="details-panel">
+                        <h3>Low Stock Supplies <span id="low-stock-badge" class="badge yellow">0</span></h3>
+                        <div id="low-stock-list"></div>
+                    </section>
 
-                <div class="stat-card low-stock">
-                    <h3>Low Stock</h3>
-                    <p id="low-stock-count">0</p>
+                    <section class="details-panel">
+                        <h3>Expiring Soon <span id="expiring-badge" class="badge green">0</span></h3>
+                        <div id="expiring-list"></div>
+                    </section>
+
+                    <div class="action-column">
+                        <button id="btn-add" class="action-btn action-add"><span>+</span> Add Supply</button>
+                        <button id="btn-delete" class="action-btn action-delete"><span>🗑️</span> Delete Supply</button>
+                        <button id="btn-update" class="action-btn action-update"><span>📝</span> Update Supply</button>
+                    </div>
+
+                    <div id="action-modal" class="modal-overlay">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 id="modal-title">Action Title</h2>
+                                <button class="close-btn" onclick="closeModal()">&times;</button>
+                            </div>
+                            
+                            <form id="action-form">
+                                <div id="form-fields">
+                                    </div>
+                                <button type="submit" class="submit-btn">Confirm Action</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
+            </div>  
+            <!-- end of dashboard -->
 
-                <div class="stat-card expiring">
-                    <h3>Expired Supply</h3>
-                    <p id="expired-count">0</p>
+            <!-- inventory -->
+            <div id="view-inventory" class="content-view hidden">
+                <div class="inventory-container">
+                    <header class="view-header">
+                        <h2>Medical Supply Registry</h2>
+                        <div class="search-box">
+                            <input type="text" id="inventorySearch" placeholder="Search medicines or equipment..." onkeyup="filterTable()">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                    </header>
+
+                    <div class="table-wrapper">
+                        <table id="mainInventoryTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Brand/Serial</th>
+                                    <th>Quantity</th>
+                                    <th>Expiration</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryBody">
+                                <tr>
+                                    <td colspan="6" style="text-align:center; padding: 20px; color: #888;">
+                                        Loading inventory data...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+                <!-- end of inventory -->
 
-            <div class="details-grid">
-                <section class="details-panel">
-                    <h3>Low Stock Supplies <span id="low-stock-badge" class="badge yellow">0</span></h3>
-                    <div id="low-stock-list"></div>
-                </section>
-
-                <section class="details-panel">
-                    <h3>Expiring Soon <span id="expiring-badge" class="badge green">0</span></h3>
-                    <div id="expiring-list"></div>
-                </section>
-
-                <div class="action-column">
-                    <button class="action-btn add"><span>+</span> Add Supply</button>
-                    <button class="action-btn delete"><span>🗑️</span> Delete Supply</button>
-                    <button class="action-btn update"><span>📝</span> Update Supply</button>
+            <div id="view-transactions" class="content-view hidden">
+                <h2>Transactions</h2>
+                <p>Transaction history and management will be implemented here.</p>
                 </div>
-            </div>
         </main>
     </div>
-    <script src="/js/dashboard.js"></script>
 </body>
 </html>

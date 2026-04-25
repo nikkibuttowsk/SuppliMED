@@ -95,3 +95,22 @@ function startLockoutCountdown(seconds, msgElement, buttonElement) {
         }
     }, 1000);
 }
+
+const AuthController = {
+    async logout() {
+        if (!confirm("Are you sure you want to log out?")) return;
+
+        try {
+            // Change '/api/logout' to '/api/Logout' (case sensitive depends on OS, but safer to match)
+            await fetch('/api/Logout', { method: 'POST' });
+            
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html'; 
+        } catch (error) {
+            console.error("Logout failed:", error);
+            window.location.href = 'login.html';
+        }
+    }
+};
+

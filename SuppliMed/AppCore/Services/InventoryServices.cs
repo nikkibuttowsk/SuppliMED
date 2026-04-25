@@ -3,70 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using AppCore.Interfaces;
 using AppCore.Models;
+using AppCore.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppCore.Services
 {
     public class InventoryServices : IInventoryService
     {
-        private static InventoryServices? _instance = null;
-        private static readonly object _lock = new object();
+        private readonly AppDbContext _context;
 
-        private List<MedicalSupply> supplies = new List<MedicalSupply>();
-        private List<Transaction> transactions = new List<Transaction>();
-
-        // 1. Private constructor with Dummy Data Seeding
-        private InventoryServices() 
-        { 
-            supplies = InventoryDataSeeder.GetSeedData();
-        }
-
-        public static InventoryServices Instance 
+        public InventoryServices(AppDbContext context)
         {
-            get 
-            {
-                lock (_lock) 
-                {
-                    if (_instance == null) _instance = new InventoryServices();
-                    return _instance;
-                }
-            }
+            _context = context;
         }
 
-
+        // --- CREATE ---
         public void AddSupply(MedicalSupply supply)
         {
             if (supply == null) return;
-            supplies.Add(supply);
+            _context.Supplies.Add(supply);
+            _context.SaveChanges();
         }
 
-        public List<MedicalSupply> GetAllSupplies() => supplies;
+        // --- READ ---
+        public List<MedicalSupply> GetAllSupplies()
+        {
+            return _context.Supplies
+                .Include(s => s.Batches)
+                .ToList();
+        }
 
+        // Removed the '?' to match IInventoryService contract and used '!' to handle nullability
         public MedicalSupply GetSupplyById(string id)
         {
-            return supplies.FirstOrDefault(s => s.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            var supply = _context.Supplies
+                .Include(s => s.Batches)
+                .FirstOrDefault(s => s.Id == id);
+            
+            return supply!; 
         }
 
+        // --- UPDATE ---
         public void UpdateSupply(MedicalSupply supply)
         {
             var existing = GetSupplyById(supply.Id);
             if (existing != null)
             {
                 existing.Name = supply.Name;
-                existing.Quantity = supply.Quantity;
                 existing.MinimumStock = supply.MinimumStock;
+                existing.Brand = supply.Brand;
+                existing.Category = supply.Category;
+                
+                if (existing is not Medicine)
+                {
+                    existing.Quantity = supply.Quantity;
+                }
+                
+                _context.SaveChanges();
             }
         }
 
+        // --- DELETE ---
         public void DeleteSupply(string id, User user)
         {
             if (user is not Admin)
                 throw new UnauthorizedAccessException("Only Admins can remove supplies from the registry.");
 
-            var supply = GetSupplyById(id);
+            var supply = _context.Supplies.Find(id);
             if (supply != null)
-                supplies.Remove(supply);
+            {
+                _context.Supplies.Remove(supply);
+                _context.SaveChanges();
+            }
         }
 
+        // --- INTERFACE IMPLEMENTATIONS (Add/Remove Stock) ---
         public void AddStock(string id, int qty, string batchNumber = "AUTO", DateTime? expiry = null)
         {
             var supply = GetSupplyById(id);
@@ -78,7 +89,8 @@ namespace AppCore.Services
                 { 
                     BatchNumber = batchNumber, 
                     Quantity = qty, 
-                    ExpirationDate = expiry ?? DateTime.Now.AddMonths(6)
+                    ExpirationDate = expiry ?? DateTime.Now.AddMonths(6),
+                    MedicalSupplyId = supply.Id
                 });
             }
             else
@@ -86,54 +98,41 @@ namespace AppCore.Services
                 supply.AddStock(qty);
             }
 
-            RecordTransaction(supply, qty, "RESTOCK", "System");
+            RecordTransaction(supply, qty, "RESTOCK");
+            _context.SaveChanges();
         }
 
         public void RemoveStock(string id, int qty)
         {
-            var supply = GetSupplyById(id);
+            var supply = GetSupplyById(id) as MedicalSupply;
             if (supply == null) return;
 
             if (supply is Medicine med)
             {
-                int remainingToRemove = qty;
-                
-                // sort batches by expiration date 
-                var sortedBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
-
-                foreach (var batch in sortedBatches)
-                {
-                    if (remainingToRemove <= 0) break;
-
-                    if (batch.Quantity >= remainingToRemove)
-                    {
-                        batch.Quantity -= remainingToRemove;
-                        remainingToRemove = 0;
-                    }
-                    else
-                    {
-                        remainingToRemove -= batch.Quantity;
-                        batch.Quantity = 0;
-                    }
-                }
-                
-                med.Batches.RemoveAll(b => b.Quantity <= 0);
-                
+                RemoveMedicineStockInternal(med, qty);
             }
             else
             {
                 supply.ReduceStock(qty);
             }
 
-            RecordTransaction(supply, qty, "DISPENSE", "System");
+            RecordTransaction(supply, qty, "DISPENSE");
+            _context.SaveChanges();
         }
 
         public void RemoveMedicineStock(string medId, int qtyToRemove)
         {
             var med = GetSupplyById(medId) as Medicine;
-            if (med == null) return;
+            if (med != null)
+            {
+                RemoveMedicineStockInternal(med, qtyToRemove);
+                _context.SaveChanges();
+            }
+        }
 
-            // Sort batches by expiration date (FEFO)
+        // Private Helper for FEFO Logic
+        private void RemoveMedicineStockInternal(Medicine med, int qtyToRemove)
+        {
             var activeBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
 
             foreach (var batch in activeBatches)
@@ -148,70 +147,84 @@ namespace AppCore.Services
                     batch.Quantity = 0;
                 }
             }
-            // clean empty batches
-            med.Batches.RemoveAll(b => b.Quantity <= 0);
+
+            var emptyBatches = med.Batches.Where(b => b.Quantity <= 0).ToList();
+            foreach (var batch in emptyBatches)
+            {
+                med.Batches.Remove(batch);
+            }
         }
 
+        // --- QUERIES & ANALYTICS ---
         public List<MedicalSupply> GetLowStockSupplies()
         {
-            // Uses the method from your MedicalSupply base class
-            return supplies.Where(s => s.IsLowStock()).ToList();
+            return GetAllSupplies()
+                .Where(s => s.IsLowStock())
+                .OrderBy(s => s.Quantity)
+                .ToList();
         }
 
         public List<MedicalSupply> GetExpiringSupplies(int days)
         {
-            return supplies
+            return _context.Supplies
                 .OfType<Medicine>()
+                .Include(m => m.Batches)
+                .AsEnumerable() 
                 .Where(m => m.IsExpiringSoon(days))
                 .Cast<MedicalSupply>()
                 .ToList();
         }
-        
+
         public List<MedicalSupply> GetExpiredSupplies()
         {
-            return supplies
+            return _context.Supplies
                 .OfType<Medicine>()
+                .Include(m => m.Batches)
+                .AsEnumerable()
                 .Where(m => m.IsAnyBatchExpired())
                 .Cast<MedicalSupply>()
                 .ToList();
         }
 
-        // Improved Transaction recording to link the object
-        private void RecordTransaction(MedicalSupply supply, int qty, string type, string userName)
+        public List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold = 30)
         {
-            transactions.Add(new Transaction
-            {
-                // Generate a unique ID for the history log
-                TransactionID = "TXN-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper(),
-                AddedBy = "abc123", // Placeholder for user ID, ideally should be passed as a parameter
-                Date = DateTime.Now,
-                Quantity = qty,
-                Type = $"{type}: {supply.Name} ({supply.Id})"
-            });
+            // This points the Controller's request to our existing expiring logic
+            return GetExpiringSupplies(daysThreshold);
         }
 
-        public List<Transaction> GetAllTransactions() => transactions;
-
-        public int GetTotalSupplyCount() => supplies.Count;
 
         public List<MedicalSupply> SearchSupplies(string query)
         {
-            if (string.IsNullOrWhiteSpace(query)) return supplies;
+            if (string.IsNullOrWhiteSpace(query)) return GetAllSupplies();
 
-            return supplies.Where(s => 
-                s.Name.Contains(query, StringComparison.OrdinalIgnoreCase) || 
-                s.Id.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                (s.Brand?? "").Contains(query, StringComparison.OrdinalIgnoreCase)
-            ).ToList();
+            return _context.Supplies
+                .Where(s => s.Name.Contains(query) || 
+                            s.Id.Contains(query) ||
+                            (s.Brand != null && s.Brand.Contains(query)))
+                .ToList();
         }
 
-        public List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold = 30)
+        public int GetTotalSupplyCount() => _context.Supplies.Count();
+        public int GetLowStockCount() => GetLowStockSupplies().Count;
+        public int GetExpiredCount() => GetExpiredSupplies().Count;
+
+        public List<Transaction> GetAllTransactions()
         {
-            return supplies
-                .OfType<Medicine>()
-                .Where(m => m.IsExpiringSoon(daysThreshold))
-                .Cast<MedicalSupply>()
-                .ToList();
+            // Note: Update your AppDbContext to include public DbSet<Transaction> Transactions { get; set; }
+            // return _context.Transactions.ToList(); 
+            return new List<Transaction>(); 
+        }
+
+        private void RecordTransaction(MedicalSupply supply, int qty, string type)
+        {
+            // Placeholder: Add transaction to _context.Transactions if you have the table created
+        }
+
+        // Unified method often used by Controllers
+        public void ProcessStockUpdate(string id, int qty, string? batchNumber = "AUTO")
+        {
+            if (qty > 0) AddStock(id, qty, batchNumber ?? "AUTO");
+            else if (qty < 0) RemoveStock(id, Math.Abs(qty));
         }
     }
 }

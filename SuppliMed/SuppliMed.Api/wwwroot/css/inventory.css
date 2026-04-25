@@ -1,0 +1,53 @@
+.inventory-container {
+    padding: 20px;
+    background: var(--card-bg); /* Use the variable from mainLayout */
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    text-align: left;
+}
+
+th {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    font-weight: 600;
+    color: var(--accent-green);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Status Badges */
+.status-pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-pill.good { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+.status-pill.low { background: rgba(241, 196, 15, 0.2); color: #f1c40f; }

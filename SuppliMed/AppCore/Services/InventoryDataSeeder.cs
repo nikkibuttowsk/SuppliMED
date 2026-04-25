@@ -1,44 +1,23 @@
 using System;
 using System.Collections.Generic;
 using AppCore.Models;
+using AppCore.Data;
 
 namespace AppCore.Services;
 
 public static class InventoryDataSeeder
 {
-    public static List<MedicalSupply> GetSeedData()
+    public static void Seed(AppDbContext context)
     {
-        var supplies = new List<MedicalSupply>();
+        if (context.Supplies.Any()) return;
 
-        var paracetamol = new Medicine { 
-            Id = "MED001", 
-            Name = "Paracetamol", 
-            Brand = "Biogesic",
-            MinimumStock = 100 
+        var items = new List<MedicalSupply>
+        {
+            new Medicine { Id = "MED001", Name = "Ibuprofen", Brand = "Advil", Category = "Analgesic" },
+            new Equipment { Id = "EQ001", Name = "Stethoscope", Brand = "Littmann", Category = "Diagnostic" }
         };
-        paracetamol.Batches.Add(new Batch { 
-            BatchNumber = "B-001", 
-            Quantity = 120, 
-            ExpirationDate = DateTime.Now.AddDays(10) 
-        });
-        supplies.Add(paracetamol);
 
-        supplies.Add(new Equipment { 
-            Id = "EQ001", 
-            Name = "Digital Thermometer", 
-            Quantity = 5, 
-            MinimumStock = 10, 
-            SerialNumber = "SN-9921"
-        });
-
-        supplies.Add(new Equipment { 
-            Id = "EQ002", 
-            Name = "Nebulizer", 
-            Quantity = 2, 
-            MinimumStock = 5, 
-            SerialNumber = "SN-9925"
-        });
-
-        return supplies;
+        context.Supplies.AddRange(items);
+        context.SaveChanges();
     }
 }
