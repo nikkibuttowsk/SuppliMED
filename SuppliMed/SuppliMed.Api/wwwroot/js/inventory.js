@@ -1,29 +1,123 @@
-async function loadInventoryTable() {
-    try {
-        const response = await fetch('/api/inventory'); // Ensure your Controller has a GET all
-        const supplies = await response.json();
-        
-        const tbody = document.getElementById('inventoryBody');
-        tbody.innerHTML = ''; // Clear the "Loading..." text
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-        supplies.forEach(item => {
-            const isLow = item.quantity <= (item.minimumStock || 10);
-            const statusClass = isLow ? 'low' : 'good';
-            const statusText = isLow ? 'Low Stock' : 'In Stock';
+let mode = ""; // add, delete, update
+let selectedRow = null;
 
-            const row = `
-                <tr>
-                    <td>${item.id}</td>
-                    <td>${item.name}</td>
-                    <td>${item.brand || item.serialNumber || 'N/A'}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.expirationDate}</td>
-                    <td><span class="status-pill ${statusClass}">${statusText}</span></td>
-                </tr>
-            `;
-            tbody.innerHTML += row;
-        });
-    } catch (error) {
-        console.error("Error loading table:", error);
+// SELECT ROW
+document.querySelectorAll("#mainInventoryTable tbody tr").forEach(row => {
+    row.addEventListener("click", () => {
+        document.querySelectorAll("#mainInventoryTable tbody tr")
+            .forEach(r => r.classList.remove("selected"));
+
+        row.classList.add("selected");
+        selectedRow = row;
+    });
+});
+
+// BUTTON EVENTS
+document.getElementById("btn-add").onclick = () => openModal("add");
+document.getElementById("btn-delete").onclick = () => openModal("delete");
+document.getElementById("btn-update").onclick = () => openModal("update");
+
+// OPEN MODAL
+function openModal(action) {
+    mode = action;
+    document.getElementById("supplyModal").classList.remove("hidden");
+
+    const title = document.getElementById("modalTitle");
+
+    if (action === "add") {
+        title.innerText = "Add New Supply";
+        clearInputs();
+    }
+
+    if (action === "update") {
+        if (!selectedRow) return alert("Select a row first");
+
+        title.innerText = "Update Supply";
+
+        const cells = selectedRow.children;
+        document.getElementById("supplyId").value = cells[0].innerText;
+        document.getElementById("genericName").value = cells[1].innerText;
+        document.getElementById("brandName").value = cells[2].innerText;
+
+        const stockParts = cells[3].innerText.split(" ");
+        document.getElementById("stock").value = stockParts[0];
+        document.getElementById("unit").value = stockParts[1];
+
+        document.getElementById("expiry").value = cells[4].innerText;
+    }
+
+    if (action === "delete") {
+        if (!selectedRow) return alert("Select a row first");
+        title.innerText = "Delete Supply?";
     }
 }
+
+// CLOSE MODAL
+function closeModal() {
+    document.getElementById("supplyModal").classList.add("hidden");
+}
+
+// CLEAR INPUTS
+function clearInputs() {
+    document.querySelectorAll(".modal-box input").forEach(i => i.value = "");
+}
+
+// CONFIRM ACTION
+document.getElementById("confirmBtn").onclick = () => {
+
+    if (mode === "add") {
+        const table = document.getElementById("inventoryBody");
+        const row = document.createElement("tr");
+
+        const id = supplyId.value;
+        const name = genericName.value;
+        const brand = brandName.value;
+        const stockVal = stock.value + " " + unit.value;
+        const expiryVal = expiry.value;
+
+        row.innerHTML = `
+            <td>${id}</td>
+            <td>${name}</td>
+            <td>${brand}</td>
+            <td>${stockVal}</td>
+            <td>${expiryVal}</td>
+            <td><div class="v3-status green"></div></td>
+        `;
+
+        table.appendChild(row);
+        attachRowClick(row);
+    }
+
+    if (mode === "delete") {
+        selectedRow.remove();
+        selectedRow = null;
+    }
+
+    if (mode === "update") {
+        const cells = selectedRow.children;
+
+        cells[0].innerText = supplyId.value;
+        cells[1].innerText = genericName.value;
+        cells[2].innerText = brandName.value;
+        cells[3].innerText = stock.value + " " + unit.value;
+        cells[4].innerText = expiry.value;
+    }
+
+    closeModal();
+};
+
+// REATTACH CLICK (for new rows)
+function attachRowClick(row) {
+    row.addEventListener("click", () => {
+        document.querySelectorAll("#mainInventoryTable tbody tr")
+            .forEach(r => r.classList.remove("selected"));
+
+        row.classList.add("selected");
+        selectedRow = row;
+    });
+}
+
+</script>

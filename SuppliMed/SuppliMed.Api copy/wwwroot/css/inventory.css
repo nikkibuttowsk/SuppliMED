@@ -1,0 +1,190 @@
+/* =========================================
+   INVENTORY VIEW STYLES (Figma Design)
+   ========================================= */
+
+#view-inventory {
+    color: #F4EFE6;
+}
+
+/* Header Styling */
+#view-inventory .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+#view-inventory .logo {
+    font-size: 64px;
+    font-weight: 700;
+    margin: 0;
+    color: #F4EFE6;
+}
+
+#view-inventory .logo .highlight { color: #24C239; }
+#view-inventory .logo .subtitle {
+    font-size: 16px;
+    font-weight: normal;
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+#view-inventory .header-info {
+    text-align: right;
+    font-size: 20px;
+}
+
+#view-inventory .header-info p { margin: 5px 0; }
+#view-inventory .status-dot {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    background: #33D218;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+/* Dashboard Controls (Cards & Search) */
+#view-inventory .dashboard-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+#view-inventory .stat-cards {
+    display: flex;
+    gap: 20px;
+}
+
+#view-inventory .stat-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 23px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 200px;
+}
+
+#view-inventory .stat-icon {
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    background: transparent;
+}
+#view-inventory .stat-icon.green { border: 2px solid #1C9A33; }
+#view-inventory .stat-icon.yellow { border: 2px solid #B29F54; }
+#view-inventory .stat-icon.red { border: 2px solid #C20A0A; }
+
+#view-inventory .stat-card h2 {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+#view-inventory .stat-card p {
+    margin: 0;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height: 1.2;
+}
+
+#view-inventory .stat-card p span {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+/* Actions Panel */
+#view-inventory .action-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#view-inventory .search-box {
+    background: #606C58;
+    padding: 8px 15px;
+    border-radius: 1000px;
+    display: flex;
+    align-items: center;
+}
+
+#view-inventory .search-box input {
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    margin-left: 10px;
+    width: 200px;
+    font-size: 15px;
+}
+
+#view-inventory .search-box input::placeholder { color: #D1D1D1; }
+
+#view-inventory .action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+#view-inventory .action-btn {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 80px;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+#view-inventory .action-btn:hover { background: rgba(0, 0, 0, 0.4); }
+#view-inventory .action-btn span { font-size: 20px; }
+#view-inventory .action-btn .icon-add { color: #1C9A33; }
+#view-inventory .action-btn .icon-delete { color: #C20A0A; }
+#view-inventory .action-btn .icon-update { color: #1E88E5; }
+
+/* Table Styles */
+#view-inventory .table-wrapper {
+    background: rgba(0, 0, 0, 0.26);
+    border-radius: 23px;
+    padding: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#mainInventoryTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+#mainInventoryTable th {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#mainInventoryTable td {
+    padding: 15px;
+    font-size: 16px;
+}
+
+/* Status Colors */
+.status-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    box-shadow: inset 0px 4px 4px rgba(0,0,0,0.25);
+}
+.status-indicator.green { background: #1C9A33; }
+.status-indicator.yellow { background: #B29F54; }
+.status-indicator.red { background: #C20A0A; }

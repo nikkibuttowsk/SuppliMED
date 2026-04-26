@@ -1,30 +1,15 @@
 /* SuppliMed Core UI Logic */
 
 // 1. Helper Functions (Global Scope)
-let clockInterval;
-
-function updateClock() {
-    const now = new Date();
-
-    const formatted =
-        now.toLocaleDateString('en-US', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-        }) +
-        ' ' +
-        now.toLocaleTimeString();
-
-    const dashboard = document.getElementById("current-date");
-    const inventory = document.querySelector(".v3-date");
-
-    if (dashboard) dashboard.textContent = formatted;
-    if (inventory) inventory.textContent = formatted;
-}
-
 function startClock() {
-    updateClock();
-    clockInterval = setInterval(updateClock, 1000);
+    const clockElement = document.getElementById('current-date');
+    if (!clockElement) return;
+    const update = () => {
+        const now = new Date();
+        clockElement.textContent = now.toLocaleString('en-GB');
+    };
+    setInterval(update, 1000);
+    update();
 }
 
 async function handleLogout() {
@@ -45,19 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
         transactions: document.getElementById('view-transactions')
     };
 
-function navigateTo(viewId) {
-    Object.values(views).forEach(view => {
-        if (view) view.classList.add('hidden');
-    });
+    function navigateTo(viewId) {
+        Object.values(views).forEach(view => {
+            if (view) view.classList.add('hidden');
+        });
 
-    const targetView = views[viewId];
-    if (targetView) {
-        targetView.classList.remove('hidden');
-
-        // 🔥 ADD THIS LINE
-        setTimeout(updateClock, 50);
+        const targetView = views[viewId];
+        if (targetView) {
+            targetView.classList.remove('hidden');
+            if (viewId === 'dashboard' && typeof updateDashboard === 'function') updateDashboard();
+            if (viewId === 'inventory' && typeof loadInventoryTable === 'function') loadInventoryTable();
+        }
     }
-}
 
     // Single Click Listener for everything (Nav + Logout)
     document.addEventListener('click', (e) => {
@@ -90,30 +74,3 @@ function navigateTo(viewId) {
     startClock();
     navigateTo('dashboard'); 
 });
-
-function updateDateTime() {
-    const now = new Date();
-
-    // 24-hour format + readable date
-    const formatted = now.toLocaleString('en-GB', {
-        year: 'numeric',
-        month: 'long',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-
-    const dashboard = document.getElementById("dashboard-date");
-    if (dashboard) dashboard.textContent = formatted;
-
-    const inventory = document.getElementById("inventory-date");
-    if (inventory) inventory.textContent = formatted;
-}
-
-// run immediately
-updateDateTime();
-
-// update every second
-setInterval(updateDateTime, 1000);
