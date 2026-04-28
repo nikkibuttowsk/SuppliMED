@@ -1,6 +1,0 @@
-@SuppliMed.Api_HostAddress = http://localhost:5078
-
-GET {{SuppliMed.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
