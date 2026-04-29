@@ -1,31 +1,7 @@
-/* SuppliMed Core UI Logic */
+/* Core UI Logic */
 
 // 1. Helper Functions (Global Scope)
 let clockInterval;
-
-function updateClock() {
-    const now = new Date();
-
-    const formatted =
-        now.toLocaleDateString('en-US', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-        }) +
-        ' ' +
-        now.toLocaleTimeString();
-
-    const dashboard = document.getElementById("current-date");
-    const inventory = document.querySelector(".v3-date");
-
-    if (dashboard) dashboard.textContent = formatted;
-    if (inventory) inventory.textContent = formatted;
-}
-
-function startClock() {
-    updateClock();
-    clockInterval = setInterval(updateClock, 1000);
-}
 
 async function handleLogout() {
     console.log("Attempting logout...");
@@ -55,7 +31,7 @@ function navigateTo(viewId) {
         targetView.classList.remove('hidden');
 
         // 🔥 ADD THIS LINE
-        setTimeout(updateClock, 50);
+        setTimeout(updateDateTime, 50);
     }
 }
 

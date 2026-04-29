@@ -129,22 +129,37 @@ body {
 .stats-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .stat-card {
     background-color: var(--card-bg);
-    padding: 25px;
-    border-radius: 15px;
+    padding: 12px 20px;
+    border-radius: 12px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    border-bottom: 8px solid rgba(255,255,255,0.1); /* The highlight bottom bar */
+    height: 60px;
+    border-bottom: 4px solid rgba(255,255,255,0.1); 
+}
+
+.stat-card h3 {
+    font-size: 1rem !important; 
+    margin: 0;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.stat-card p {
+    font-size: 1.4rem !important; 
+    font-weight: 800;
+    margin: 0;
+    color: var(--accent-green);
 }
 
 .stat-card .icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
     opacity: 0.8;
 }
 
@@ -152,22 +167,29 @@ body {
 .stat-card.low { border-bottom-color: #524f3e; }
 .stat-card.expired { border-bottom-color: #523e3e; }
 
-.stat-card h3 {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-}
-
 /* --- DETAILS GRID --- */
 .details-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 200px;
-    gap: 25px;
+    grid-template-columns: 1fr 1fr 220px;
+    gap: 20px;
+    /* This makes the grid fill the remaining height of the app-container */
+    height: calc(100% - 150px); 
 }
 
 .details-panel {
     background-color: rgba(255,255,255,0.03);
     padding: 20px;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Keeps things neat */
+}
+
+/* Allow the lists inside to scroll if they get long */
+#low-stock-list, #expiring-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .details-panel h3 {
