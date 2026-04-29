@@ -11,3 +11,34 @@
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Image sizing */
+.nav-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    transition: 0.2s ease-in-out;
+}
+
+.nav-item:hover .icon-home,
+.nav-item.active .icon-home {
+    content: url('/icons/1-colored.png'); 
+}
+
+/* INVENTORY (2) */
+.nav-item:hover .icon-box,
+.nav-item.active .icon-box {
+    content: url('/icons/2-colored.png');
+}
+
+/* CHART (3) */
+.nav-item:hover .icon-chart,
+.nav-item.active .icon-chart {
+    content: url('/icons/3-colored.png');
+}
+
+/* LOGOUT (5) */
+.nav-item:hover .icon-logout,
+.nav-item.active .icon-logout {
+    content: url('/icons/5-colored.png');
+}

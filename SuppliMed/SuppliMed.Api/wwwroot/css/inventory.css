@@ -1,21 +1,4 @@
-/* ===== FULL DARK GLASS BACKGROUND ===== */
-#view-inventory {
-    background: radial-gradient(circle at top left, #1b3a3a, #0b1f1f);
-    min-height: 100vh;
-    padding: 25px;
-    color: #EDEDED;
-    font-family: 'Segoe UI', sans-serif;
-}
 
-/* ===== MAIN CARD ===== */
-.v3-container {
-    background: rgba(10, 25, 25, 0.75);
-    border-radius: 18px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-/* ===== HEADER ===== */
 .v3-header-layout {
     display: flex;
     justify-content: space-between;
@@ -35,7 +18,7 @@
     display: block;
     font-size: 13px;
     opacity: 0.7;
-    margin-top: -5px;
+    margin-top: 10px;
 }
 
 .v3-user-area {
@@ -46,7 +29,7 @@
 .v3-dot {
     width: 7px;
     height: 7px;
-    background: #22c55e;
+    background: #101E1F;
     border-radius: 50%;
     display: inline-block;
     margin-right: 5px;
@@ -74,11 +57,12 @@
 .v3-stat-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: rgba(0,0,0,0.4);
-    padding: 14px 18px;
-    border-radius: 14px;
-    width: 180px;
+    gap: 25px; 
+    background: rgba(0,0,0,0.4); 
+    padding: 22px 22px; 
+    border-radius: 12px;
+    width: 230px; 
+    border: 1px solid rgba(255,255,255,0.05); 
 }
 
 .v3-icon-box {
@@ -90,6 +74,7 @@
 .v3-border-green { border: 2px solid #22c55e; }
 .v3-border-yellow { border: 2px solid #facc15; }
 .v3-border-red { border: 2px solid #ef4444; }
+.v3-border-blue { border: 2px solid #3b82f6;}
 
 .v3-stat-data h2 {
     font-size: 24px;
@@ -113,25 +98,34 @@
 .v3-search-bar {
     display: flex;
     align-items: center;
-    background: rgba(255,255,255,0.08);
+    
+    background: transparent; 
+    border: 2px solid #606C58; 
     padding: 7px 12px;
     border-radius: 20px;
-    width: 220px;
+    width: 300px; 
+    box-sizing: border-box;
 }
 
 .v3-search-bar input {
     background: transparent;
-    border: none;
-    outline: none;
+    border: #606C58;
+    outline: #606C58;
     color: white;
     margin-left: 6px;
     font-size: 13px;
+    width: 300px;
+}
+
+.v3-search-bar input::placeholder {
+    color: #ffffff;
+    opacity: 1;  
 }
 
 /* BUTTONS */
 .v3-buttons-row {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .v3-action-sq {
@@ -139,7 +133,10 @@
     border: none;
     border-radius: 12px;
     padding: 10px;
-    width: 80px;
+    
+    /* REMOVE width: 80px; */
+    flex: 1; /* ADD THIS: Automatically stretches the buttons to fill the space evenly */
+    
     color: white;
     font-size: 10px;
     cursor: pointer;
@@ -155,29 +152,37 @@
 }
 
 .v3-btn-icon {
-    padding: 6px;
-    border-radius: 6px;
-    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;  
+    height: 32px; 
+    border-radius: 8px; 
+    font-size: 16px;
 }
 
-/* ===== TABLE ===== */
 .v3-table-wrapper {
     margin-top: 20px;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.4); 
     border-radius: 14px;
     padding: 15px;
 }
 
 .v3-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; 
+    border-spacing: 5px 0; /* Adds a 5px horizontal gap between the header bubbles */
 }
 
 .v3-table th {
     text-align: left;
-    font-size: 13px;
-    padding: 10px;
-    opacity: 0.7;
+    font-size: 14px;
+    font-weight: 700; /* Makes the text bold */
+    color: white; /* Solid white text */
+    padding: 12px 18px; /* Adds space around the text to create the bubble */
+    background: rgba(255, 255, 255, 0.05); /* Creates that subtle dark background */
+    border-radius: 12px; /* Rounds the edges of the background */
+    border: none; /* Ensures no weird borders interfere */
 }
 
 .v3-table td {
