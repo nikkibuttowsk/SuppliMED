@@ -120,4 +120,40 @@ function attachRowClick(row) {
     });
 }
 
+function updateInventoryStats() {
+    const tbody = document.getElementById('inventoryBody');
+    if (!tbody) return; 
+
+    const rows = tbody.getElementsByTagName('tr');
+    
+    let totalCount = rows.length; 
+    let lowCount = 0;
+    let expiredCount = 0;
+
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].querySelector('.v3-status.yellow')) {
+            lowCount++;
+        }
+        else if (rows[i].querySelector('.v3-status.red')) {
+            expiredCount++;
+        }
+    }
+
+    const totalEl = document.getElementById('inv-total-count');
+    const lowEl = document.getElementById('inv-low-count');
+    const expiredEl = document.getElementById('inv-expired-count');
+
+    if (totalEl) totalEl.innerText = totalCount;
+    if (lowEl) lowEl.innerText = lowCount;
+    if (expiredEl) expiredEl.innerText = expiredCount;
+}
+
+function addNewSupply() {
+    updateInventoryStats(); 
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateInventoryStats();
+});
+
 </script>

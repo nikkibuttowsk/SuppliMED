@@ -93,3 +93,4 @@ updateDateTime();
 
 // update every second
 setInterval(updateDateTime, 1000);
+

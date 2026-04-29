@@ -42,3 +42,23 @@
 .nav-item.active .icon-logout {
     content: url('/icons/5-colored.png');
 }
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background-color: #1a2524; /* Changes any leftover background to match your app */
+}
+
+.app-container {
+    display: flex;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important; 
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+    max-width: none !important; /* Forces it to stretch entirely */
+}

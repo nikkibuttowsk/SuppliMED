@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/inventory.css?v=3">
     <link rel="stylesheet" href="/css/modals.css">
-    <link rel="stylesheet" href="/css/transactionLog.css">
+    <link rel="stylesheet" href="/css/audit.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
     <script src="/js/dashboard.js"></script>
@@ -16,23 +16,37 @@
     <script src="js/auth.js"></script>
     <script src="/js/modals.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/audit.js"></script>
 </head>
 <body>
     <div class="app-container">
         <nav class="sidebar">
             <div class="user-profile">
-                <img src="/avatar.png" alt="Admin">
+                <img src="/icons/0.png" alt="Admin" class="profile-img">
             </div>
+            
             <div class="nav-icons">
-                <button class="nav-item">🏠</button>
-                <button class="nav-item">📦</button>
-                <button class="nav-item">📊</button>
-            </div>
-            <div class="bottom-icons">
-                <button id="btn-logout" class="logout-btn" title="Logout">
-                    <img src="icons/logout.png" alt="Logout"> 
+                <button class="nav-item active" id="btn-nav-dashboard">
+                    <img class="nav-icon icon-home" src="/icons/1-default.png" alt="Home">
                 </button>
-                <button class="nav-item">⚙️</button>
+                
+                <button class="nav-item" id="btn-nav-inventory">
+                    <img class="nav-icon icon-box" src="/icons/2-default.png" alt="Inventory">
+                </button>
+                
+                <button class="nav-item" id="btn-nav-audit">
+                    <img class="nav-icon icon-chart" src="/icons/3-default.png" alt="Audit">
+                </button>
+            </div>
+            
+            <div class="bottom-icons">
+                <button class="nav-item" id="btn-nav-settings">
+                    <img class="nav-icon icon-settings" src="/icons/4-default.png" alt="Settings">
+                </button>
+                
+                <button id="btn-logout" class="logout-btn nav-item" title="Logout">
+                    <img class="nav-icon icon-logout" src="/icons/5-default.png" alt="Logout"> 
+                </button>
             </div>
         </nav>
 
@@ -97,122 +111,143 @@
 
                 </div>
             </div>  
+
             <div id="view-inventory" class="content-view hidden">
                 <div class="v3-container">
+                    <div class="v3-header-layout">
+                        <div class="v3-title-area">
+                            <h1 class="v3-logo">Suppli<span class="v3-logo-green">Med</span></h1>
+                            <span class="v3-subtitle">Inventory</span>
+                        </div>
+                        <div class="v3-user-area">
+                            <div class="v3-hello"><span class="v3-dot"></span> Hello</div>
+                            <p id="inventory-date">19 April 2026 12:43:02</p>
+                        </div>
+                    </div>
+                    
+                    <hr class="v3-divider">
+
+                    <div class="v3-middle-section">
+                        
+                        <div class="v3-stats-group">
+    <div class="v3-stat-card">
+        <div class="v3-icon-box v3-border-green">🛍️</div>
+        <div class="v3-stat-data">
+            <h2 id="inv-total-count">0</h2> 
+            <p>Total Supplies<br><span>(By Supply ID)</span></p>
+        </div>
+    </div>
+    <div class="v3-stat-card">
+        <div class="v3-icon-box v3-border-yellow">📊</div>
+        <div class="v3-stat-data">
+            <h2 id="inv-low-count">0</h2>
+            <p>Low Stocks</p>
+        </div>
+    </div>
+    <div class="v3-stat-card">
+        <div class="v3-icon-box v3-border-red">⏳</div>
+        <div class="v3-stat-data">
+            <h2 id="inv-expired-count">0</h2>
+            <p>Expired Supplies<br><span>(By Supply ID)</span></p>
+        </div>
+    </div>
+</div>
+
+                        <div class="v3-action-group">
+                            <div class="v3-search-bar">
+                                <span>🔍</span>
+                                <input type="text" id="inventorySearch" placeholder="Search for supplies..." onkeyup="filterTable()">
+                            </div>
+                            <div class="v3-buttons-row">
+                                <button class="v3-action-sq">
+                                    <div class="v3-btn-icon v3-border-green">+</div>
+                                    <span>Add Supply</span>
+                                </button>
+                                <button class="v3-action-sq">
+                                    <div class="v3-btn-icon v3-border-red">🗑️</div>
+                                    <span>Delete Supply</span>
+                                </button>
+                                <button class="v3-action-sq">
+                                    <div class="v3-btn-icon v3-border-blue">📝</div>
+                                    <span>Update Supply</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="v3-bottom-layout">
+                    
+                        <div class="v3-legend-panel">
+                            <div class="v3-legend-item">
+                                <div class="v3-status green"></div>
+                                <span>Good Stock</span>
+                            </div>
+                            <div class="v3-legend-item">
+                                <div class="v3-status yellow"></div>
+                                <span>Low Stock</span>
+                            </div>
+                            <div class="v3-legend-item">
+                                <div class="v3-status red"></div>
+                                <span>Expired/Expiring</span>
+                            </div>
+                        </div>
+
+                        <div class="v3-table-wrapper">
+                            <table class="v3-table" id="mainInventoryTable">
+                                <thead>
+                                    <tr>
+                                        <th>SupplyID</th>
+                                        <th>Name</th>
+                                        <th>Brand</th>
+                                        <th>Current Stock</th>
+                                        <th>Expiry Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody id="inventoryBody">
+                                    </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-audit" class="content-view hidden">
     <div class="v3-header-layout">
         <div class="v3-title-area">
             <h1 class="v3-logo">Suppli<span class="v3-logo-green">Med</span></h1>
-            <span class="v3-subtitle">Inventory</span>
-        </div>
-        <div class="v3-user-area">
-            <div class="v3-hello"><span class="v3-dot"></span> Hello</div>
-            <p id="inventory-date">19 April 2026 12:43:02</p>
+            <span class="v3-subtitle">Audit Logs</span>
         </div>
     </div>
     
     <hr class="v3-divider">
 
-    <div class="v3-middle-section">
-        
-        <div class="v3-stats-group">
-            <div class="v3-stat-card">
-                <div class="v3-icon-box v3-border-green">🛍️</div>
-                <div class="v3-stat-data">
-                    <h2>4</h2>
-                    <p>Total Supplies<br><span>(By Supply ID)</span></p>
-                </div>
-            </div>
-            <div class="v3-stat-card">
-                <div class="v3-icon-box v3-border-yellow">📊</div>
-                <div class="v3-stat-data">
-                    <h2>2</h2>
-                    <p>Low Stocks</p>
-                </div>
-            </div>
-            <div class="v3-stat-card">
-                <div class="v3-icon-box v3-border-red">⏳</div>
-                <div class="v3-stat-data">
-                    <h2>0</h2>
-                    <p>Expired Supplies<br><span>(By Supply ID)</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="v3-action-group">
-            <div class="v3-search-bar">
-                <span>🔍</span>
-                <input type="text" id="inventorySearch" placeholder="Search for supplies..." onkeyup="filterTable()">
-            </div>
-            <div class="v3-buttons-row">
-                <button class="v3-action-sq">
-                    <div class="v3-btn-icon v3-border-green">+</div>
-                    <span>Add Supply</span>
-                </button>
-                <button class="v3-action-sq">
-                    <div class="v3-btn-icon v3-border-red">🗑️</div>
-                    <span>Delete Supply</span>
-                </button>
-                <button class="v3-action-sq">
-                    <div class="v3-btn-icon v3-border-blue">📝</div>
-                    <span>Update Supply</span>
-                </button>
-            </div>
+    <div class="v3-audit-controls" style="margin-top: 20px; display: flex; justify-content: flex-start;">
+        <div class="v3-search-bar">
+            <span>🔍</span>
+            <input type="text" id="auditSearch" placeholder="Search audit logs..." onkeyup="filterAuditTable()">
         </div>
     </div>
-
-    <div class="v3-table-wrapper">
-        <table class="v3-table" id="mainInventoryTable">
+    <div class="v3-table-wrapper" style="margin-top: 20px;">
+        <table class="v3-table" id="auditTable">
             <thead>
                 <tr>
-                    <th>SupplyID</th>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Current Stock</th>
-                    <th>Expiry Date</th>
-                    <th>Status</th>
+                    <th>Log ID</th>
+                    <th>Date & Time</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Item</th>
+                    <th>Details</th>
                 </tr>
             </thead>
-            <tbody id="inventoryBody">
-                <tr>
-                    <td>E0001</td>
-                    <td>Nebulizer</td>
-                    <td>I-care</td>
-                    <td>10 units</td>
-                    <td>-</td>
-                    <td><div class="v3-status yellow"></div></td>
-                </tr>
-                <tr>
-                    <td>M0001</td>
-                    <td>Paracetamol</td>
-                    <td>Biogesic</td>
-                    <td>18,231 pcs</td>
-                    <td>2028-01-31</td>
-                    <td><div class="v3-status green"></div></td>
-                </tr>
-                <tr>
-                    <td>M0002</td>
-                    <td>Loperamide</td>
-                    <td>Diatabs</td>
-                    <td>213 pcs</td>
-                    <td>2029-09-31</td>
-                    <td><div class="v3-status green"></div></td>
-                </tr>
-                <tr>
-                    <td>M0003</td>
-                    <td>Antihistamine</td>
-                    <td>Citirizine</td>
-                    <td>103 pcs</td>
-                    <td>2026-04-30</td>
-                    <td><div class="v3-status red"></div></td>
-                </tr>
+            <tbody id="auditBody">
             </tbody>
         </table>
     </div>
 </div>
-            <div id="view-transactions" class="content-view hidden">
-                <h2>Transactions</h2>
-                <p>Transaction history and management will be implemented here.</p>
-            </div>
+
         </main>
     </div>
 </body>

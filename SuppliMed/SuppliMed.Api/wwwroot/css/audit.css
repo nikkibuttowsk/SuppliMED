@@ -1,5 +1,5 @@
-
-.v3-header-layout {
+.view-audit
+ {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -134,8 +134,8 @@
     border-radius: 12px;
     padding: 10px;
     
-    
-    flex: 1; 
+    /* REMOVE width: 80px; */
+    flex: 1; /* ADD THIS: Automatically stretches the buttons to fill the space evenly */
     
     color: white;
     font-size: 10px;
