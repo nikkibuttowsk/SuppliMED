@@ -221,4 +221,23 @@ public class InventoryController : ControllerBase
         public string BatchNumber { get; set; }
     }
 
+    [HttpGet("transactions")]
+    public IActionResult GetTransactions()
+    {
+        // Fetches the list of transactions from the service
+        var transactions = _inventoryService.GetAllTransactions()
+            .Select(t => new {
+                logId = t.LogId,
+                dateTime = t.DateTime.ToString("yyyy-MM-ddTHH:mm:ssZ"), // ISO Format for JS
+                user = t.User,
+                action = t.Action,
+                item = t.Item,
+                details = t.Details
+            })
+            .OrderByDescending(t => t.dateTime) // Newest logs first
+            .ToList();
+
+        return Ok(transactions);
+    }
+
 }

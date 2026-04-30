@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
     // 1. Get the buttons
     const btnDashboard = document.getElementById('btn-nav-dashboard');
     const btnInventory = document.getElementById('btn-nav-inventory');
@@ -30,9 +29,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Add Click Listeners
     if(btnDashboard) btnDashboard.addEventListener('click', () => switchPage(btnDashboard, viewDashboard));
     if(btnInventory) btnInventory.addEventListener('click', () => switchPage(btnInventory, viewInventory));
-    if(btnAudit) btnAudit.addEventListener('click', () => switchPage(btnAudit, viewAudit)); // UPDATED HERE
+    if(btnAudit) btnAudit.addEventListener('click', () => switchPage(btnAudit, viewAudit));
 
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Only handle data loading here
+    loadAuditLogs();
+    setInterval(loadAuditLogs, 30000);
+});
+
+async function loadAuditLogs() {
+    try {
+        const response = await fetch('/api/inventory/transactions');
+        if (!response.ok) throw new Error("Backend unreachable");
+        
+        const logs = await response.json();
+        const tbody = document.getElementById('auditBody');
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        logs.forEach(log => {
+            const tr = document.createElement("tr");
+            
+            let actionStyle = "";
+            if (log.action === "ADD") actionStyle = "color: #4ade80; font-weight: bold;";
+            if (log.action === "UPDATE") actionStyle = "color: #facc15; font-weight: bold;";
+            if (log.action === "DELETE") actionStyle = "color: #f87171; font-weight: bold;";
+
+            tr.innerHTML = `
+                <td>#${log.logId}</td>
+                <td>${new Date(log.dateTime).toLocaleString()}</td>
+                <td>${log.user}</td>
+                <td style="${actionStyle}">${log.action}</td>
+                <td>${log.item}</td>
+                <td style="color: #9ca3af; font-size: 0.85rem;">${log.details}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Audit Sync Error:", error);
+    }
+}
 
 function filterAuditTable() {
     // 1. Get the value the user typed in the search box

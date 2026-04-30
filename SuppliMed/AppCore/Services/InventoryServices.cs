@@ -22,6 +22,7 @@ namespace AppCore.Services
         {
             if (supply == null) return;
             _context.Supplies.Add(supply);
+            RecordTransaction(supply, supply.Quantity, "ADD");
             _context.SaveChanges();
         }
 
@@ -72,6 +73,7 @@ namespace AppCore.Services
             var supply = _context.Supplies.Find(id);
             if (supply != null)
             {
+                RecordTransaction(supply, 0, "DELETE");
                 _context.Supplies.Remove(supply);
                 _context.SaveChanges();
             }
@@ -210,14 +212,30 @@ namespace AppCore.Services
 
         public List<Transaction> GetAllTransactions()
         {
-            // Note: Update your AppDbContext to include public DbSet<Transaction> Transactions { get; set; }
-            // return _context.Transactions.ToList(); 
-            return new List<Transaction>(); 
+            return _context.Transactions
+                .OrderByDescending(t => t.DateTime) //most recent action appear at the top
+                .ToList(); 
         }
 
         private void RecordTransaction(MedicalSupply supply, int qty, string type)
         {
-            // Placeholder: Add transaction to _context.Transactions if you have the table created
+            var transaction = new Transaction
+            {
+                Action = type,
+                Item = supply.Name,
+                DateTime = DateTime.Now,
+                User = "Admin", // For now, hardcode or get from session
+                Details = type switch
+                {
+                    "ADD" => $"Registered new supply with {qty} units.",
+                    "DELETE" => $"Removed item {supply.Id} from registry.",
+                    "RESTOCK" => $"Increased stock by {qty}.",
+                    "DISPENSE" => $"Decreased stock by {Math.Abs(qty)}.",
+                    _ => $"Updated {supply.Name}"
+                }
+            };
+
+            _context.Transactions.Add(transaction);
         }
 
         // Unified method often used by Controllers

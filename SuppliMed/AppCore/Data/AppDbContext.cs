@@ -9,6 +9,7 @@ namespace AppCore.Data
 
         public DbSet<MedicalSupply> Supplies { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<Transaction> Transactions { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,13 @@ namespace AppCore.Data
                 .WithMany(s => s.Batches)
                 .HasForeignKey(b => b.MedicalSupplyId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasKey(t => t.LogId); // Defines LogId as Primary Key
+                entity.Property(t => t.Action).IsRequired();
+                entity.Property(t => t.Item).IsRequired();
+            });
         }
     }
 }

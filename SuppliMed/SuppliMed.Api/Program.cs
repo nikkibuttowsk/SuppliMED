@@ -5,23 +5,25 @@ using AppCore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Get connection string once
+// connection string once
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// ✅ Register DbContext
+// DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         connectionString,
         ServerVersion.AutoDetect(connectionString)
     ));
 
-// ✅ Add services
+// services
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         // This is crucial for Polymorphic (Medicine/Equipment) data
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = 
+            System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

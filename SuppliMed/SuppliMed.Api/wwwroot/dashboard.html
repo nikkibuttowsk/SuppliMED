@@ -97,7 +97,7 @@
                     <div id="action-modal" class="modal-overlay">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 id="modal-title">Action Title</h2>
+                                <h2 id="modal-title">You are login as Admin</h2>
                                 <button class="close-btn" onclick="closeModal()">&times;</button>
                             </div>
                             
@@ -130,28 +130,28 @@
                     <div class="v3-middle-section">
                         
                         <div class="v3-stats-group">
-    <div class="v3-stat-card">
-        <div class="v3-icon-box v3-border-green">🛍️</div>
-        <div class="v3-stat-data">
-            <h2 id="inv-total-count">0</h2> 
-            <p>Total Supplies<br><span>(By Supply ID)</span></p>
-        </div>
-    </div>
-    <div class="v3-stat-card">
-        <div class="v3-icon-box v3-border-yellow">📊</div>
-        <div class="v3-stat-data">
-            <h2 id="inv-low-count">0</h2>
-            <p>Low Stocks</p>
-        </div>
-    </div>
-    <div class="v3-stat-card">
-        <div class="v3-icon-box v3-border-red">⏳</div>
-        <div class="v3-stat-data">
-            <h2 id="inv-expired-count">0</h2>
-            <p>Expired Supplies<br><span>(By Supply ID)</span></p>
-        </div>
-    </div>
-</div>
+                            <div class="v3-stat-card">
+                                <div class="v3-icon-box v3-border-green">🛍️</div>
+                                <div class="v3-stat-data">
+                                    <h2 id="inv-total-count">0</h2> 
+                                    <p>Total Supplies<br><span>(By Supply ID)</span></p>
+                                </div>
+                            </div>
+                            <div class="v3-stat-card">
+                                <div class="v3-icon-box v3-border-yellow">📊</div>
+                                <div class="v3-stat-data">
+                                    <h2 id="inv-low-count">0</h2>
+                                    <p>Low Stocks</p>
+                                </div>
+                            </div>
+                            <div class="v3-stat-card">
+                                <div class="v3-icon-box v3-border-red">⏳</div>
+                                <div class="v3-stat-data">
+                                    <h2 id="inv-expired-count">0</h2>
+                                    <p>Expired Supplies<br><span>(By Supply ID)</span></p>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="v3-action-group">
                             <div class="v3-search-bar">
@@ -215,38 +215,38 @@
             </div>
 
             <div id="view-audit" class="content-view hidden">
-    <div class="v3-header-layout">
-        <div class="v3-title-area">
-            <h1 class="v3-logo">Suppli<span class="v3-logo-green">Med</span></h1>
-            <span class="v3-subtitle">Audit Logs</span>
-        </div>
-    </div>
-    
-    <hr class="v3-divider">
+                <div class="v3-header-layout">
+                    <div class="v3-title-area">
+                        <h1 class="v3-logo">Suppli<span class="v3-logo-green">Med</span></h1>
+                        <span class="v3-subtitle">Audit Logs</span>
+                    </div>
+                </div>
+                
+                <hr class="v3-divider">
 
-    <div class="v3-audit-controls" style="margin-top: 20px; display: flex; justify-content: flex-start;">
-        <div class="v3-search-bar">
-            <span>🔍</span>
-            <input type="text" id="auditSearch" placeholder="Search audit logs..." onkeyup="filterAuditTable()">
-        </div>
-    </div>
-    <div class="v3-table-wrapper" style="margin-top: 20px;">
-        <table class="v3-table" id="auditTable">
-            <thead>
-                <tr>
-                    <th>Log ID</th>
-                    <th>Date & Time</th>
-                    <th>User</th>
-                    <th>Action</th>
-                    <th>Item</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody id="auditBody">
-            </tbody>
-        </table>
-    </div>
-</div>
+                <div class="v3-audit-controls" style="margin-top: 20px; display: flex; justify-content: flex-start;">
+                    <div class="v3-search-bar">
+                        <span>🔍</span>
+                        <input type="text" id="auditSearch" placeholder="Search audit logs..." onkeyup="filterAuditTable()">
+                    </div>
+                </div>
+                <div class="v3-table-wrapper" style="margin-top: 20px;">
+                    <table class="v3-table" id="auditTable">
+                        <thead>
+                            <tr>
+                                <th>Log ID</th>
+                                <th>Date & Time</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Item</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </main>
     </div>
