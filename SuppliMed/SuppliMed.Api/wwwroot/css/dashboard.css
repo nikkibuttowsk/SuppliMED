@@ -101,29 +101,6 @@ body {
     overflow-y: auto;
 }
 
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 30px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 15px;
-}
-
-.logo {
-    font-size: 3rem;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.logo span {
-    color: var(--accent-green);
-}
-
-.header-info {
-    text-align: right;
-    color: var(--text-muted);
-}
 
 /* --- STAT CARDS --- */
 .stats-row {
