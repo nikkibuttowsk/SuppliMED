@@ -86,6 +86,9 @@ function updateDateTime() {
 
     const inventory = document.getElementById("inventory-date");
     if (inventory) inventory.textContent = formatted;
+
+    const audit = document.getElementById('audit-date');
+    if (audit) audit.textContent = formatted;
 }
 
 // run immediately
