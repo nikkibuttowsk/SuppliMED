@@ -14,11 +14,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #0d1110; /* Darkest outer background */
+    background-color: #101E1F; /* Darkest outer background */
     color: var(--text-main);
     display: flex;
     justify-content: center;
