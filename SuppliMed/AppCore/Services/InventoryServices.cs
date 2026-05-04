@@ -172,7 +172,10 @@ namespace AppCore.Services
                 .OfType<Medicine>()
                 .Include(m => m.Batches)
                 .AsEnumerable() 
-                .Where(m => m.IsExpiringSoon(days))
+                .Where(m => 
+                    m.GetNextExpirationDate() != null &&
+                    !m.IsAnyBatchExpired() &&
+                    m.IsExpiringSoon(days))
                 .Cast<MedicalSupply>()
                 .ToList();
         }
@@ -190,8 +193,17 @@ namespace AppCore.Services
 
         public List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold = 30)
         {
-            // This points the Controller's request to our existing expiring logic
-            return GetExpiringSupplies(daysThreshold);
+            var threshold = DateTime.Now.AddDays(daysThreshold);
+                return _context.Supplies
+                    .OfType<Medicine>()
+                    .Include(m => m.Batches)
+                    .AsEnumerable()
+                    .Where(m => 
+                            m.GetNextExpirationDate() != null &&
+                            m.GetNextExpirationDate() > DateTime.Now && 
+                            (m.GetNextExpirationDate().Value - DateTime.Now).TotalDays <= daysThreshold)
+                    .Cast<MedicalSupply>()
+                    .ToList();
         }
 
 
@@ -243,6 +255,21 @@ namespace AppCore.Services
         {
             if (qty > 0) AddStock(id, qty, batchNumber ?? "AUTO");
             else if (qty < 0) RemoveStock(id, Math.Abs(qty));
+        }
+
+        public string GenerateNextId(string category)
+        {
+            var supplies = GetAllSupplies();
+
+            string prefix = category == "Medicine" ? "MED" : "EQP";
+
+            var numbers = supplies
+                .Where(s => s.Id.StartsWith(prefix))
+                .Select(s => int.TryParse(s.Id.Substring(3), out int num) ? num : 0);
+
+            int next = numbers.Any() ? numbers.Max() + 1 : 1;
+
+            return $"{prefix}{next:D3}"; // MED001, EQP001
         }
     }
 }

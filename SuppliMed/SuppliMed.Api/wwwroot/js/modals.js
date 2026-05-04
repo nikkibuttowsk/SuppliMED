@@ -30,6 +30,15 @@ const ModalController = {
     },
 
     open(type) {
+        if (!this.modal) this.modal = document.getElementById('action-modal');
+            if (!this.fields) this.fields = document.getElementById('form-fields');
+            if (!this.title) this.title = document.getElementById('modal-title');
+
+            if (!this.modal) {
+                console.error("Modal element not found in the DOM!");
+                return;
+            }
+            
         this.modal.style.display = 'flex';
         this.fields.innerHTML = ''; // Reset
 
@@ -61,7 +70,7 @@ const ModalController = {
                     <option value="Medicine">Medicine</option>
                 </select>
             </div>
-            <div class="form-group"><label>ID</label><input id="field-id" required></div>
+            <div class="form-group"><p><strong>ID:</strong> Auto-generated</p></div>
             <div class="form-group"><label>Name</label><input id="field-name" required></div>
             <div class="form-group"><label>Brand</label><input id="field-brand"></div>
             <div class="form-group"><label>Min Stock</label><input type="number" id="field-min" value="10"></div>
@@ -134,7 +143,6 @@ const ModalController = {
     
                 endpoint = "/api/inventory/add";
                 payload = {
-                    id: getVal('field-id'),
                     name: getVal('field-name'),
                     brand: getVal('field-brand'),
                     minimumStock: parseInt(getVal('field-min')),
@@ -144,6 +152,8 @@ const ModalController = {
                     batchNumber: getVal('field-batch')|| "",
                     expiryDate: getVal('field-expiry') || null
                 };
+                const result = await response.json();
+                alert(`Supply added! ID: ${result.id}`);
             } 
             else if (title.includes("delete")) {
                 const deleteId = document.getElementById('field-id').value.trim(); 

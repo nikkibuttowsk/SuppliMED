@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="/css/modals.css">
     <link rel="stylesheet" href="/css/audit.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/modals.js"></script>  
     <script src="/js/dashboard.js"></script>
     <script src="/js/inventory.js"></script>
     <script src="/js/action.js"></script>
     <script src="js/auth.js"></script>
-    <script src="/js/modals.js"></script>
-    <script src="/js/app.js"></script>
     <script src="/js/audit.js"></script>
+    <script src="/js/app.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -99,21 +99,6 @@
                         <button id="btn-update" class="action-btn action-update"><span>📝</span> Update Supply</button>
                     </div>
 
-                    <div id="action-modal" class="modal-overlay">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2 id="modal-title">You are login as Admin</h2>
-                                <button class="close-btn" onclick="closeModal()">&times;</button>
-                            </div>
-                            
-                            <form id="action-form">
-                                <div id="form-fields">
-                                    </div>
-                                <button type="submit" class="submit-btn">Confirm Action</button>
-                            </form>
-                        </div>
-                    </div>
-
                 </div>
             </div>  
 
@@ -187,15 +172,15 @@
                 </div>
 
                 <div class="v3-buttons-row">
-                    <button class="v3-action-sq">
+                    <button id="btn-inv-add"class="v3-action-sq">
                         <div class="v3-btn-icon v3-border-green">+</div>
                         <span>Add Supply</span>
                     </button>
-                    <button class="v3-action-sq">
+                    <button id="btn-inv-delete" class="v3-action-sq">
                         <div class="v3-btn-icon v3-border-red">🗑️</div>
                         <span>Delete Supply</span>
                     </button>
-                    <button class="v3-action-sq">
+                    <button id="btn-inv-update" class="v3-action-sq">
                         <div class="v3-btn-icon v3-border-blue">📝</div>
                         <span>Update Supply</span>
                     </button>
@@ -232,9 +217,11 @@
                         <h1 class="v3-logo">Suppli<span class="v3-logo-green">Med</span></h1>
                         <span class="v3-subtitle">Audit Logs</span>
                     </div>
-            <div class="v3-user-area">
-                <div class="v3-hello"><span class="v3-dot"></span> Hello</div>
-                    <p id="audit-date">Loading date...</p>
+                    
+                    <div class="v3-user-area">
+                        <div class="v3-hello"><span class="v3-dot"></span> Hello</div>
+                        <p id="audit-date">Loading time...</p>
+                    </div>
                 </div>
             </div>
 
@@ -265,6 +252,20 @@
             </div>
 
         </main>
+    </div>
+
+    <div id="action-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Action Title</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+                            
+            <form id="action-form">
+                <div id="form-fields"></div>
+                <button type="submit" class="submit-btn">Confirm Action</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

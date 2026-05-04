@@ -24,15 +24,18 @@ namespace AppCore.Models
         // Checks if ANY batch is expiring soon (based on your dashboard threshold)
         public bool IsExpiringSoon(int days)
         {
-            var nextDate = GetNextExpirationDate();
-            if (nextDate == null) return false;
+            var today = DateTime.Today;
 
-            return (nextDate.Value - DateTime.Now).TotalDays <= days;
+            return Batches.Any(b =>
+                b.Quantity > 0 &&
+                !b.IsExpired() &&
+                b.ExpirationDate.Date <= today.AddDays(days)
+            );
         }
 
         // Returns the date for the batch that will expire next
         public DateTime? GetNextExpirationDate() => 
-            Batches.Where(b => !b.IsExpired() && b.Quantity > 0)
+            Batches.Where(b => b.Quantity > 0)
                 .OrderBy(b => b.ExpirationDate)
                 .Select(b => b.ExpirationDate)
                 .Cast<DateTime?>()

@@ -151,6 +151,13 @@
     overflow: hidden;
     white-space: nowrap;
     font-size: 0.85em; /* Slightly smaller button text */
+    z-index: 10; /* Ensures hover effect doesn't get cut off */
+    pointer-events: auto !important;
+}
+
+.v3-action-sq:active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .v3-action-sq span {
@@ -232,10 +239,10 @@
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.6);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1000;
 }
 
 .hidden { display: none; }

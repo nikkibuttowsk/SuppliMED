@@ -3,38 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadInventoryTable();
 
-    // BUTTON EVENTS (make sure IDs exist in HTML)
-    const addBtn = document.getElementById("btn-add");
-    const deleteBtn = document.getElementById("btn-delete");
-    const updateBtn = document.getElementById("btn-update");
-
-    if (addBtn) 
-        {
-            addBtn.onclick = () => 
-            {
-                if (typeof ModalController !== 'undefined') 
-                {
-                    ModalController.open('add');
-                } 
-                else 
-                {
-                    console.error("ModalController not loaded");
-                }
-            };
-        }
-        
-    if (deleteBtn) deleteBtn.onclick = () => deleteSelected();
-    if (updateBtn) 
-        {
-            updateBtn.onclick = () => 
-                {
-                if (typeof ModalController !== 'undefined') 
-                    {
-                        ModalController.open('update');
-                    }
-                };
-        }
-
     // LOAD TABLE FROM API
     async function loadInventoryTable() {
         try {
@@ -48,13 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             supplies.forEach(item => {
                 const today = new Date();
-                const expiryDate = new Date(item.expirationDate);
+                const expiryDate = item.expirationDate 
+                    ? new Date(item.expirationDate) 
+                    : null;
 
                 let statusClass = 'green';
 
-                if (expiryDate < today) {
+                if (expiryDate && expiryDate < today) {
                     statusClass = 'red';
-                } else if (item.quantity <= (item.minimumStock || 10)) {
+                } else if (expiryDate && expiryDate <= new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000)) {
+                    statusClass = 'red';
+                }
+                else if (item.quantity <= (item.minimumStock || 10)) {
                     statusClass = 'yellow';
                 }
 
@@ -89,19 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
             row.classList.add("selected");
             selectedRow = row;
         });
-    }
-
-    // DELETE SELECTED ROW
-    function deleteSelected() {
-        if (!selectedRow) {
-            alert("Select a row first");
-            return;
-        }
-
-        selectedRow.remove();
-        selectedRow = null;
-
-        updateInventoryStats();
     }
 
     // UPDATE STATS (top cards)
@@ -140,4 +100,40 @@ document.addEventListener("DOMContentLoaded", () => {
             row.style.display = text.includes(filter) ? "" : "none";
         });
     };
+
+    // Inventory Action Buttons
+    const invButtons = {
+        add: document.getElementById('btn-inv-add'),
+        delete: document.getElementById('id-inv-delete'),
+        update: document.getElementById('btn-inv-update')
+    };
+
+    // Attach listeners only if the elements exist in the DOM
+    if (invButtons.add) {
+        invButtons.add.addEventListener('click', () => {
+            console.log("Opening Add Modal from Inventory");
+            ModalController.open('add');
+        });
+    }
+
+    if (invButtons.delete) {
+        invButtons.delete.addEventListener('click', () => {
+            ModalController.open('delete');
+        });
+    }
+
+    if (invButtons.update) {
+        invButtons.update.addEventListener('click', () => {
+            ModalController.open('update');
+        });
+    }
+
+    const invDeleteBtn = document.getElementById('btn-inv-delete');
+
+if (invDeleteBtn) {
+    invDeleteBtn.addEventListener('click', () => {
+        console.log("DELETE BUTTON CLICKED");
+        ModalController.open('delete');
+    });
+}
 });

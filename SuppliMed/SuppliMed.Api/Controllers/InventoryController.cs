@@ -56,8 +56,10 @@ public class InventoryController : ControllerBase
                 .Select(s => new {
                     name = s.Name ?? "Unknown",
                     id = s.Id,
-                    // Ensure this method handles null batches safely
-                    expiryDate = s.GetDisplayExpiryDate() ?? "No Date" 
+                    expiryDate = s is Medicine med 
+                        ? med.GetNextExpirationDate()?.ToString("MMM dd, yyyy") 
+                        : "N/A",
+                    isExpired = s is Medicine m && m.IsAnyBatchExpired()
                 })
                 .ToList();
 
@@ -92,17 +94,21 @@ public class InventoryController : ControllerBase
     {
         try 
         {
+            // auto generate ID
+            string newId = _inventoryService.GenerateNextId(request.Category);
+
             MedicalSupply newSupply;
+
             if (request.Category == "Medicine")
             {
                 newSupply = new Medicine {
-                    Id = request.Id,
+                    Id = newId,
                     Name = request.Name,
                     Brand = request.Brand,
                     MinimumStock = request.MinimumStock,
                     Batches = new List<Batch> {
                         new Batch { 
-                            MedicalSupplyId = request.Id,
+                            MedicalSupplyId = newId,
                             BatchNumber = request.BatchNumber, 
                             Quantity = request.Quantity, 
                             ExpirationDate = request.ExpiryDate ?? DateTime.Now.AddMonths(6)
@@ -113,7 +119,7 @@ public class InventoryController : ControllerBase
             else
             {
                 newSupply = new Equipment {
-                    Id = request.Id,
+                    Id = newId,
                     Name = request.Name,
                     Brand = request.Brand,
                     MinimumStock = request.MinimumStock,
@@ -123,7 +129,8 @@ public class InventoryController : ControllerBase
             }
 
             _inventoryService.AddSupply(newSupply);
-            return Ok(new { message = "Successfully registered new supply" });
+
+            return Ok(new { message = "Supply added", id = newId }); // return ID
         }
         catch (Exception ex) { return BadRequest(ex.Message); }
     }
