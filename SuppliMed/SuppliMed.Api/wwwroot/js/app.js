@@ -1,14 +1,37 @@
 /* Core UI Logic */
 
-// 1. Helper Functions (Global Scope)
 let clockInterval;
 
+// Define the missing startClock function
+function startClock() {
+    //  prevent memory leaks
+    if (clockInterval) clearInterval(clockInterval);
+    
+    updateDateTime();
+    
+    // interval to update every second
+    clockInterval = setInterval(updateDateTime, 1000);
+}
+
+function updateDateTime() {
+    const now = new Date();
+    const dateOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+    const formattedDate = now.toLocaleDateString('en-GB', dateOptions);
+    const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+
+    const ids = ["dashboard-date", "inventory-date", "audit-date"];
+    ids.forEach(id => {
+        const display = document.getElementById(id);
+        if (display) display.textContent = `${formattedDate} | ${formattedTime}`;
+    })
+}
+
 async function handleLogout() {
-    console.log("Attempting logout...");
     if (confirm("Are you sure you want to end your session?")) {
         localStorage.clear();
         sessionStorage.clear();
-        console.log("Memory cleared. Redirecting...");
         window.location.href = 'index.html';
     }
 }
@@ -21,37 +44,31 @@ document.addEventListener('DOMContentLoaded', () => {
         transactions: document.getElementById('view-transactions')
     };
 
-function navigateTo(viewId) {
-    Object.values(views).forEach(view => {
-        if (view) view.classList.add('hidden');
-    });
+    function navigateTo(viewId) {
+        Object.values(views).forEach(view => {
+            if (view) view.classList.add('hidden');
+        });
 
-    const targetView = views[viewId];
-    if (targetView) {
-        targetView.classList.remove('hidden');
-
-        // 🔥 ADD THIS LINE
-        setTimeout(updateDateTime, 50);
+        const targetView = views[viewId];
+        if (targetView) {
+            targetView.classList.remove('hidden');
+            // Refresh time immediately on navigation
+            setTimeout(updateDateTime, 50);
+        }
     }
-}
 
-    // Single Click Listener for everything (Nav + Logout)
+    // click listener for nav items
     document.addEventListener('click', (e) => {
-        // Handle Logout
-        if (e.target.closest('#btn-logout')) {
+        const logoutBtn = e.target.closest('#btn-logout');
+        // logout
+        if (logoutBtn) {
             e.preventDefault();
-            
-            // Use the AuthController we defined in auth.js
-            if (typeof AuthController !== 'undefined') {
-                AuthController.logout();
-            } else {
-                // Fallback to your local function if AuthController isn't loaded
-                handleLogout();
-            }
+            console.log("Logout triggered");
+            handleLogout();
             return;
         }
 
-        // Handle Tabs
+        // for the nav tabs
         const navItem = e.target.closest('.nav-item');
         if (navItem) {
             const navItems = Array.from(document.querySelectorAll('.nav-item'));
@@ -59,41 +76,10 @@ function navigateTo(viewId) {
             
             if (index === 0) navigateTo('dashboard');
             if (index === 1) navigateTo('inventory');
-            if (index === 2) navigateTo('transactions');
+            if (index === 2) navigateTo('audit');
         }
     });
 
     startClock();
     navigateTo('dashboard'); 
 });
-
-function updateDateTime() {
-    const now = new Date();
-
-    // 24-hour format + readable date
-    const formatted = now.toLocaleString('en-GB', {
-        year: 'numeric',
-        month: 'long',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-
-    const dashboard = document.getElementById("dashboard-date");
-    if (dashboard) dashboard.textContent = formatted;
-
-    const inventory = document.getElementById("inventory-date");
-    if (inventory) inventory.textContent = formatted;
-
-    const audit = document.getElementById('audit-date');
-    if (audit) audit.textContent = formatted;
-}
-
-// run immediately
-updateDateTime();
-
-// update every second
-setInterval(updateDateTime, 1000);
-

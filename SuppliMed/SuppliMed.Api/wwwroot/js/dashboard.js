@@ -31,31 +31,45 @@ async function updateDashboard() {
             `;
         }).join('');
 
+        // expiring soon list
         const expiringContainer = document.getElementById('expiring-list');
-        expiringContainer.innerHTML = data.expiringItems.map(item => `
-            <div class="item-card">
-                <div class="item-info">
-                    <strong>${item.name}</strong>
-                    <p>ID: ${item.id}</p>
+        expiringContainer.innerHTML = data.expiringItems.map(item => {
+            const expiry = new Date(item.expiryDate);
+            const daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+            const today = new Date();
+
+            let label = "Expiring Soon";
+            let labelClass = "yellow";
+
+            if (daysLeft <= 7) {
+                label = "Urgent";
+                labelClass = "red";
+            }
+
+            return `
+                <div class="expiring-item-row">
+                    <div class="expiring-status-line ${labelClass}"></div> 
+                    <div class="expiring-details">
+                        <span class="expiring-name">${item.name}</span>
+                        <span class="expiring-id">ID: ${item.id}</span>
+                        <span class="expiring-label ${labelClass}">${label}</span>
+                    </div>
+                    <span class="expiring-date-badge">${item.expiryDate || "No Date"}</span>
                 </div>
-                <div>${item.expiryDate}</div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
     } catch (error) {
         console.error("Dashboard Sync Error:", error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    updateDashboard();
-    setInterval(updateDashboard, 30000);
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initial data load
     updateDashboard();
-
+    setInterval(updateDashboard, 30000);
     // Button Listeners
     document.getElementById('btn-add').addEventListener('click', () => {
         ModalController.open('add'); //calling the modal controller

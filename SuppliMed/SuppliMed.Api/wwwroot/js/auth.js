@@ -3,18 +3,21 @@ const eyeOpen = "M12 4.5C7.3 4.5 3.3 8.3 2 12c1.3 3.7 5.3 7.5 10 7.5s8.7-3.8 10-
 const eyeClosed = "M12,7c-2.76,0-5,2.24-5,5c0,0.65,0.13,1.26,0.36,1.82l2.92-2.92C10.74,10.13,11.35,10,12,10c2.76,0,5,2.24,5,5 c0,0.65-0.13,1.26-0.36,1.82l2.92-2.92C19.87,13.26,20,12.65,20,12C20,9.24,17.76,7,12,7z M2,4.27l2.28,2.28l0.46,0.46 C3.08,8.3,1.78,10.03,1,12c1.73,4.39,6,7.5,11,7.5c1.55,0,3.03-0.3,4.38-0.84l0.42,0.42L19.73,22L21,20.73L3.27,3L2,4.27z M7.53,9.8l1.55,1.55c-0.05,0.21-0.08,0.43-0.08,0.65c0,1.66,1.34,3,3,3c0.22,0,0.44-0.03,0.65-0.08l1.55,1.55 C12.67,16.67,11.93,16.87,11.14,16.87c-2.76,0-5-2.24-5-5C6.14,11.08,6.34,10.34,6.67,9.67L7.53,9.8z";
 
 // Password Toggle logic
-document.getElementById('togglePassword').addEventListener('click', function() {
-    const passInput = document.getElementById('password');
-    const eyePath = document.querySelector('#eyeIcon path');
+const toggle = document.getElementById('togglePassword');
+if (toggle) {
+    toggle.addEventListener('click', function() {
+        const passInput = document.getElementById('password');
+        const eyePath = document.querySelector('#eyeIcon path');
     
-    if (passInput.type === 'password') {
-        passInput.type = 'text';
-        eyePath.setAttribute('d', eyeClosed);
-    } else {
-        passInput.type = 'password';
-        eyePath.setAttribute('d', eyeOpen);
-    }
-});
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+            eyePath.setAttribute('d', eyeClosed);
+        } else {
+            passInput.type = 'password';
+            eyePath.setAttribute('d', eyeOpen);
+        }
+    });
+}
 
 async function handleLogin() {
             // If a timer is already running, do nothing until it's finished
