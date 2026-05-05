@@ -14,6 +14,11 @@ public static class AuthService
     };
 
     public static List<User> GetAllUsers() => _users;
+    public static User? GetUserByUsername(string? username)
+    {
+        if (string.IsNullOrEmpty(username)) return null;
+        return _users.FirstOrDefault(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+    }
 
     // The "Database" of login attempts
     private static List<LoginAttempt> _attempts = new List<LoginAttempt>();

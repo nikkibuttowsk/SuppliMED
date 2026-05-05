@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const views = {
         dashboard: document.getElementById('view-dashboard'),
         inventory: document.getElementById('view-inventory'),
-        transactions: document.getElementById('view-transactions')
+        audit: document.getElementById('view-audit')
     };
 
     function navigateTo(viewId) {
@@ -83,3 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
     startClock();
     navigateTo('dashboard'); 
 });
+
+function applyRoleRestrictions() {
+    const role = localStorage.getItem('userRole');
+    console.log("Applying restrictions for role:", role);
+
+    if (role === "staff") {
+        // Hide the action column buttons on the dashboard
+        const restrictedButtons = [
+            'btn-add', 
+            'btn-delete'
+        ];
+
+        restrictedButtons.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.style.display = "none";
+        });
+
+        // Hide the action group in the Inventory view
+        const inventoryActions = document.querySelector('.v3-action-group');
+        if (inventoryActions) inventoryActions.style.display = "none";
+    }
+}

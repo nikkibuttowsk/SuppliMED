@@ -18,23 +18,19 @@ namespace AppCore.Services
         }
 
         // --- CREATE ---
-        public void AddSupply(MedicalSupply supply)
+        public void AddSupply(MedicalSupply supply, User user)
         {
-            if (supply == null) return;
+            if (user is not Admin) throw new UnauthorizedAccessException("Only Admins can add new supplies.");
             _context.Supplies.Add(supply);
-            RecordTransaction(supply, supply.Quantity, "ADD");
+            RecordAuditLog(supply, supply.Quantity, "ADD", user);
             _context.SaveChanges();
         }
 
-        // --- READ ---
         public List<MedicalSupply> GetAllSupplies()
         {
-            return _context.Supplies
-                .Include(s => s.Batches)
-                .ToList();
+            return _context.Supplies.Include(s => s.Batches).ToList();
         }
 
-        // Removed the '?' to match IInventoryService contract and used '!' to handle nullability
         public MedicalSupply GetSupplyById(string id)
         {
             var supply = _context.Supplies
@@ -45,7 +41,7 @@ namespace AppCore.Services
         }
 
         // --- UPDATE ---
-        public void UpdateSupply(MedicalSupply supply)
+        public void UpdateSupply(MedicalSupply supply, User user)
         {
             var existing = GetSupplyById(supply.Id);
             if (existing != null)
@@ -59,7 +55,8 @@ namespace AppCore.Services
                 {
                     existing.Quantity = supply.Quantity;
                 }
-                
+
+                RecordAuditLog(existing, 0, "UPDATE", user);
                 _context.SaveChanges();
             }
         }
@@ -67,20 +64,17 @@ namespace AppCore.Services
         // --- DELETE ---
         public void DeleteSupply(string id, User user)
         {
-            if (user is not Admin)
-                throw new UnauthorizedAccessException("Only Admins can remove supplies from the registry.");
-
+            if (user is not Admin) throw new UnauthorizedAccessException("Only Admins can delete supplies.");
             var supply = _context.Supplies.Find(id);
             if (supply != null)
             {
-                RecordTransaction(supply, 0, "DELETE");
+                RecordAuditLog(supply, 0, "DELETE", user);
                 _context.Supplies.Remove(supply);
                 _context.SaveChanges();
             }
         }
 
-        // --- INTERFACE IMPLEMENTATIONS (Add/Remove Stock) ---
-        public void AddStock(string id, int qty, string batchNumber = "AUTO", DateTime? expiry = null)
+        public void AddStock(string id, int qty, User user, string batchNumber = "AUTO", DateTime? expiry = null)
         {
             var supply = GetSupplyById(id);
             if (supply == null) return;
@@ -100,11 +94,11 @@ namespace AppCore.Services
                 supply.AddStock(qty);
             }
 
-            RecordTransaction(supply, qty, "RESTOCK");
+            RecordAuditLog(supply, qty, "RESTOCK", user);
             _context.SaveChanges();
         }
 
-        public void RemoveStock(string id, int qty)
+        public void RemoveStock(string id, int qty, User user)
         {
             var supply = GetSupplyById(id) as MedicalSupply;
             if (supply == null) return;
@@ -118,29 +112,16 @@ namespace AppCore.Services
                 supply.ReduceStock(qty);
             }
 
-            RecordTransaction(supply, qty, "DISPENSE");
+            RecordAuditLog(supply, qty, "DISPENSE", user);
             _context.SaveChanges();
         }
 
-        public void RemoveMedicineStock(string medId, int qtyToRemove)
-        {
-            var med = GetSupplyById(medId) as Medicine;
-            if (med != null)
-            {
-                RemoveMedicineStockInternal(med, qtyToRemove);
-                _context.SaveChanges();
-            }
-        }
-
-        // Private Helper for FEFO Logic
         private void RemoveMedicineStockInternal(Medicine med, int qtyToRemove)
         {
             var activeBatches = med.Batches.OrderBy(b => b.ExpirationDate).ToList();
-
             foreach (var batch in activeBatches)
             {
                 if (qtyToRemove <= 0) break;
-
                 if (batch.Quantity >= qtyToRemove) {
                     batch.Quantity -= qtyToRemove;
                     qtyToRemove = 0;
@@ -149,36 +130,48 @@ namespace AppCore.Services
                     batch.Quantity = 0;
                 }
             }
-
             var emptyBatches = med.Batches.Where(b => b.Quantity <= 0).ToList();
             foreach (var batch in emptyBatches)
             {
+                _context.Batches.Remove(batch);
                 med.Batches.Remove(batch);
-            }
+            } 
         }
 
-        // --- QUERIES & ANALYTICS ---
-        public List<MedicalSupply> GetLowStockSupplies()
+        // --- AUDIT LOGS ---
+        public List<AuditLog> GetAllAuditLogs()
         {
-            return GetAllSupplies()
-                .Where(s => s.IsLowStock())
-                .OrderBy(s => s.Quantity)
-                .ToList();
+            return _context.AuditLogs
+                .OrderByDescending(t => t.DateTime)
+                .ToList(); 
         }
 
-        public List<MedicalSupply> GetExpiringSupplies(int days)
+        // FIXED: Added User parameter and correct argument types
+        private void RecordAuditLog(MedicalSupply supply, int qty, string type, User user)
         {
-            return _context.Supplies
-                .OfType<Medicine>()
-                .Include(m => m.Batches)
-                .AsEnumerable() 
-                .Where(m => 
-                    m.GetNextExpirationDate() != null &&
-                    !m.IsAnyBatchExpired() &&
-                    m.IsExpiringSoon(days))
-                .Cast<MedicalSupply>()
-                .ToList();
+            var auditLog = new AuditLog
+            {
+                LogId = Guid.NewGuid().ToString(),
+                DateTime = DateTime.Now,
+                User = user.Username ?? "Unknown",
+                Action = type,
+                Item = supply.Name,
+                Details = type switch
+                {
+                    "ADD" => $"Registered new supply with {qty} units.",
+                    "DELETE" => $"Removed item {supply.Id} from registry.",
+                    "RESTOCK" => $"Increased stock by {qty}.",
+                    "DISPENSE" => $"Decreased stock by {Math.Abs(qty)}.",
+                    "UPDATE" => $"Updated basic info for {supply.Name}.",
+                    _ => $"Action {type} performed on {supply.Name}"
+                }
+            };
+            _context.AuditLogs.Add(auditLog);
         }
+
+        // --- QUERIES ---
+        public List<MedicalSupply> GetLowStockSupplies() => GetAllSupplies().Where(s => s.IsLowStock()).ToList();
+        public int GetLowStockCount() => GetLowStockSupplies().Count;
 
         public List<MedicalSupply> GetExpiredSupplies()
         {
@@ -191,21 +184,39 @@ namespace AppCore.Services
                 .ToList();
         }
 
+        public int GetExpiredCount() => GetExpiredSupplies().Count;
+
         public List<MedicalSupply> GetFilteredExpiringSupplies(int daysThreshold = 30)
         {
-            var threshold = DateTime.Now.AddDays(daysThreshold);
-                return _context.Supplies
-                    .OfType<Medicine>()
-                    .Include(m => m.Batches)
-                    .AsEnumerable()
-                    .Where(m => 
-                            m.GetNextExpirationDate() != null &&
-                            m.GetNextExpirationDate() > DateTime.Now && 
-                            (m.GetNextExpirationDate().Value - DateTime.Now).TotalDays <= daysThreshold)
-                    .Cast<MedicalSupply>()
-                    .ToList();
+            var today = DateTime.Now;
+            return _context.Supplies
+                .OfType<Medicine>()
+                .Include(m => m.Batches)
+                .AsEnumerable()
+                .Where(m => {
+                    DateTime? nextExpiry = m.GetNextExpirationDate();
+                    return nextExpiry.HasValue && 
+                        nextExpiry.Value > today && 
+                        (nextExpiry.Value - today).TotalDays <= daysThreshold;
+                })
+                .Cast<MedicalSupply>()
+                .ToList();
         }
 
+        // FIXED: Added User parameter to satisfy AddStock/RemoveStock calls
+        public void ProcessStockUpdate(string id, int qty, User user, string? batchNumber = "AUTO")
+        {
+            if (qty > 0) AddStock(id, qty, user, batchNumber ?? "AUTO");
+            else if (qty < 0) RemoveStock(id, Math.Abs(qty), user);
+        }
+
+        public string GenerateNextId(string category)
+        {
+            string prefix = category == "Medicine" ? "MED" : "EQP";
+            var numbers = GetAllSupplies().Where(s => s.Id.StartsWith(prefix))
+                .Select(s => int.TryParse(s.Id.Substring(3), out int num) ? num : 0);
+            return $"{prefix}{(numbers.Any() ? numbers.Max() + 1 : 1):D3}";
+        }
 
         public List<MedicalSupply> SearchSupplies(string query)
         {
@@ -216,60 +227,6 @@ namespace AppCore.Services
                             s.Id.Contains(query) ||
                             (s.Brand != null && s.Brand.Contains(query)))
                 .ToList();
-        }
-
-        public int GetTotalSupplyCount() => _context.Supplies.Count();
-        public int GetLowStockCount() => GetLowStockSupplies().Count;
-        public int GetExpiredCount() => GetExpiredSupplies().Count;
-
-        public List<Transaction> GetAllTransactions()
-        {
-            return _context.Transactions
-                .OrderByDescending(t => t.DateTime) //most recent action appear at the top
-                .ToList(); 
-        }
-
-        private void RecordTransaction(MedicalSupply supply, int qty, string type)
-        {
-            var transaction = new Transaction
-            {
-                Action = type,
-                Item = supply.Name,
-                DateTime = DateTime.Now,
-                User = "Admin", // For now, hardcode or get from session
-                Details = type switch
-                {
-                    "ADD" => $"Registered new supply with {qty} units.",
-                    "DELETE" => $"Removed item {supply.Id} from registry.",
-                    "RESTOCK" => $"Increased stock by {qty}.",
-                    "DISPENSE" => $"Decreased stock by {Math.Abs(qty)}.",
-                    _ => $"Updated {supply.Name}"
-                }
-            };
-
-            _context.Transactions.Add(transaction);
-        }
-
-        // Unified method often used by Controllers
-        public void ProcessStockUpdate(string id, int qty, string? batchNumber = "AUTO")
-        {
-            if (qty > 0) AddStock(id, qty, batchNumber ?? "AUTO");
-            else if (qty < 0) RemoveStock(id, Math.Abs(qty));
-        }
-
-        public string GenerateNextId(string category)
-        {
-            var supplies = GetAllSupplies();
-
-            string prefix = category == "Medicine" ? "MED" : "EQP";
-
-            var numbers = supplies
-                .Where(s => s.Id.StartsWith(prefix))
-                .Select(s => int.TryParse(s.Id.Substring(3), out int num) ? num : 0);
-
-            int next = numbers.Any() ? numbers.Max() + 1 : 1;
-
-            return $"{prefix}{next:D3}"; // MED001, EQP001
         }
     }
 }

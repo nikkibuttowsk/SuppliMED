@@ -33,11 +33,12 @@ async function updateDashboard() {
 
         // expiring soon list
         const expiringContainer = document.getElementById('expiring-list');
+        const today = new Date();
+
         expiringContainer.innerHTML = data.expiringItems.map(item => {
             const expiry = new Date(item.expiryDate);
             const daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
 
-            const today = new Date();
 
             let label = "Expiring Soon";
             let labelClass = "yellow";
@@ -82,4 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-update').addEventListener('click', () => {
         ModalController.open('update');
     });
+
+    applyRoleRestrictions(); // for admin vs staff UI differences
+    
 });

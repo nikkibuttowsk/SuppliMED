@@ -77,7 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let row of rows) {
             if (row.querySelector('.v3-status.yellow')) low++;
-            else if (row.querySelector('.v3-status.red')) expired++;
+            else if (row.querySelector('.v3-status.red')) 
+                {
+                    const expiryText = row.cells[4].innerText;
+                    if (expiryText && expiryText !== 'N/A') {
+                        const expiryDate = new Date(expiryText);
+                        const today = new Date();
+                        if (expiryDate < today) {
+                            expired++;
+                        }
+                    }
+                }                
         }
 
         const totalEl = document.getElementById('inv-total-count');

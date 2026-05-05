@@ -1,4 +1,4 @@
-/* Modal controller logic*/
+/* Modal controller logic */
 
 const ModalController = {
     modal: document.getElementById('action-modal'),
@@ -7,7 +7,6 @@ const ModalController = {
     title: document.getElementById('modal-title'),
 
     init() {
-        // Elements
         this.modal = document.getElementById('action-modal');
         this.form = document.getElementById('action-form');
         this.fields = document.getElementById('form-fields');
@@ -31,13 +30,13 @@ const ModalController = {
 
     open(type) {
         if (!this.modal) this.modal = document.getElementById('action-modal');
-            if (!this.fields) this.fields = document.getElementById('form-fields');
-            if (!this.title) this.title = document.getElementById('modal-title');
+        if (!this.fields) this.fields = document.getElementById('form-fields');
+        if (!this.title) this.title = document.getElementById('modal-title');
 
-            if (!this.modal) {
-                console.error("Modal element not found in the DOM!");
-                return;
-            }
+        if (!this.modal) {
+            console.error("Modal element not found in the DOM!");
+            return;
+        }
             
         this.modal.style.display = 'flex';
         this.fields.innerHTML = ''; // Reset
@@ -57,7 +56,9 @@ const ModalController = {
 
     close() {
         this.modal.style.display = 'none';
-        this.form.reset();
+        if (this.form) {
+            this.form.reset();
+        }
     },
 
     setupAddForm() {
@@ -120,10 +121,12 @@ const ModalController = {
                 </select>
             </div>
             <div class="form-group"><label>Quantity</label><input type="number" id="field-qty" required></div>
+            <input type="hidden" id="field-batch" value="">
         `;
     },
 
     async handleSubmit() {
+        const BASE_URL = "http://localhost:5000";
         // 1. Identify which mode we are in
         const title = this.title.innerText.toLowerCase();
         let endpoint = "";
@@ -133,6 +136,9 @@ const ModalController = {
         // Common selectors
         const getVal = (id) => document.getElementById(id)?.value;
 
+        // DEBUG: Check the detected title
+        console.log("Current Modal Title:", this.title.innerText);
+
         try {
             if (title.includes("add")) {
                 const existingIds = Array.from(document.querySelectorAll('.id-column')).map(el => el.innerText);
@@ -141,19 +147,17 @@ const ModalController = {
                     return;
                 }
     
-                endpoint = "/api/inventory/add";
+                endpoint = `${BASE_URL}/api/inventory/add`;
                 payload = {
                     name: getVal('field-name'),
                     brand: getVal('field-brand'),
-                    minimumStock: parseInt(getVal('field-min')),
+                    minimumStock: parseInt(getVal('field-min')) || 10,
                     category: getVal('field-category'),
-                    quantity: parseInt(getVal('field-qty')),
+                    quantity: parseInt(getVal('field-qty')) || 1,
                     serialNumber: getVal('field-serial') || "",
-                    batchNumber: getVal('field-batch')|| "",
+                    batchNumber: getVal('field-batch') || "",
                     expiryDate: getVal('field-expiry') || null
                 };
-                const result = await response.json();
-                alert(`Supply added! ID: ${result.id}`);
             } 
             else if (title.includes("delete")) {
                 const deleteId = document.getElementById('field-id').value.trim(); 
@@ -165,47 +169,89 @@ const ModalController = {
 
                 if (!confirm(`Are you sure you want to delete ${deleteId}?`)) return;
                 
-                endpoint = `/api/inventory/${deleteId}`; // This matches the [HttpDelete("{id}")]
+                endpoint = `${BASE_URL}/api/inventory/${deleteId}`;
                 method = "DELETE";
                 payload = null;
             } 
             else if (title.includes("update")) {
-                endpoint = "/api/inventory/update-stock";
-                const multiplier = parseInt(getVal('field-update-type'));
-                const baseQty = parseInt(getVal('field-qty'));
+                endpoint = `${BASE_URL}/api/inventory/update-stock`;
+
+                const multiplier = parseInt(getVal('field-update-type')) || 1;
+
                 payload = {
                     id: getVal('field-id'),
-                    quantity: parseInt(getVal('field-qty')),
-                    batchNumber: getVal('field-batch')
+                    quantity: parseInt(getVal('field-qty')) || 0,
+                    batchNumber: getVal('field-batch') || ""
                 };
             }
 
-            // 2. Send the request
-            const response = await fetch(endpoint, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: payload ? JSON.stringify(payload) : null
-            });
+            // DEBUG: Log the final endpoint and payload before the fetch
+            console.log("Endpoint:", endpoint);
+            console.log("Payload:", JSON.stringify(payload));
 
-            // 3. Handle Result
-            if (response.ok) {
-                console.log("Action Successful");
-                this.close(); // Close Modal
-                await updateDashboard(); // Refresh UI real-time
-            } else {
-                const errorText = await response.text();
-                console.error("Server Error:", errorText);
-                alert("Delete Failed: " + errorText);
+            // // 2. Send the request
+            // const response = await fetch(endpoint, {
+            //     method: method,
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: payload ? JSON.stringify(payload) : null
+            // });
+
+            // // 3. Handle Result
+            // if (response.ok) {
+            //     console.log("Action Successful");
+            //     this.close(); // Close Modal
+                
+            //     if (typeof updateDashboard === 'function') {
+            //         await updateDashboard(); // Refresh UI real-time
+            //     }
+            // } else {
+            //     const errorText = await response.text();
+            //     console.error("Server Error:", errorText);
+            //     alert("Action Failed: " + errorText);
+            // }
+            
+            let response; // 👈 declare first
+
+            try {
+                response = await fetch(endpoint, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload ? JSON.stringify(payload) : null,
+                    credentials: 'include'
+                });
+
+                if (!response) {
+                    throw new Error("No response from server");
+                }
+
+                if (response.ok) {
+                    console.log("Action Successful");
+                    this.close();
+
+                    if (typeof updateDashboard === 'function') {
+                        await updateDashboard();
+                    }
+                } else {
+                    const errorText = await response.text();
+                    console.error("Server Error:", errorText);
+                    alert("Action Failed: " + errorText);
+                }
+
+            } catch (err) {
+                console.error("Fetch error:", err);
+                alert("Network Error");
             }
+
         } catch (err) {
-            alert("Network Error: Could not connect to server.");
-            console.error(err);
+            alert("Network Error: Could not connect to server. Check the console for details.");
+            console.error("Fetch/Network Error details:", err);
         }
     }
 };
 
-function closeModal() 
-{
+function closeModal() {
     ModalController.close();
 }
 

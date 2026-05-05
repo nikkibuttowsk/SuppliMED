@@ -10,9 +10,31 @@ public class InventoryController : ControllerBase
 {
     private readonly InventoryServices _inventoryService;
 
+    private bool IsAdmin() 
+    {
+        return HttpContext.Session.GetString("Role") == "Admin";
+    }
+
     public InventoryController(InventoryServices inventoryService)
     {
         _inventoryService = inventoryService;
+    }
+
+    [HttpGet("audit-logs")]
+    public IActionResult GetAuditLogs()
+    {
+        var logs = _inventoryService.GetAllAuditLogs()
+            .Select(t => new {
+                logId = t.LogId,
+                dateTime = t.DateTime,
+                user = t.User,
+                action = t.Action,
+                item = t.Item,
+                details = t.Details
+            })
+            .ToList();
+
+        return Ok(logs);
     }
 
     [HttpGet]
@@ -94,6 +116,9 @@ public class InventoryController : ControllerBase
     {
         try 
         {
+            var sessionUsername = HttpContext.Session.GetString("Username");
+            var currentUser = AuthService.GetUserByUsername(sessionUsername);
+            if (currentUser == null) return Unauthorized("User not found in session.");
             // auto generate ID
             string newId = _inventoryService.GenerateNextId(request.Category);
 
@@ -128,7 +153,7 @@ public class InventoryController : ControllerBase
                 };
             }
 
-            _inventoryService.AddSupply(newSupply);
+            _inventoryService.AddSupply(newSupply, currentUser);
 
             return Ok(new { message = "Supply added", id = newId }); // return ID
         }
@@ -139,10 +164,14 @@ public class InventoryController : ControllerBase
     [HttpPost("add-stock")]
     public IActionResult AddStock([FromBody] StockRequest request)
     {
+        var sessionUsername = HttpContext.Session.GetString("Username");
+        var currentUser = AuthService.GetUserByUsername(sessionUsername);
+        if (currentUser == null) return Unauthorized("User not found in session.");
+
         var existing = _inventoryService.GetSupplyById(request.Id);
         if (existing == null) return NotFound("Supply ID not found. Use 'Add' to register it first.");
 
-        _inventoryService.AddStock(request.Id, request.Quantity, request.BatchNumber);
+        _inventoryService.AddStock(request.Id, request.Quantity, currentUser, request.BatchNumber);
         return Ok(new { message = "Stock updated successfully" });
     }
 
@@ -151,7 +180,11 @@ public class InventoryController : ControllerBase
     public IActionResult RemoveStock([FromBody] StockRequest request)
     {
         try {
-            _inventoryService.RemoveStock(request.Id, request.Quantity);
+            var sessionUsername = HttpContext.Session.GetString("Username");
+            var currentUser = AuthService.GetUserByUsername(sessionUsername);
+            if (currentUser == null) return Unauthorized("User not found in session.");
+
+            _inventoryService.RemoveStock(request.Id, request.Quantity, currentUser);
             return Ok();
         } catch (Exception ex) {
             return BadRequest(ex.Message);
@@ -161,14 +194,13 @@ public class InventoryController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteSupply(string id)
     {
+        var sessionUsername = HttpContext.Session.GetString("Username");
+        var currentUser = AuthService.GetUserByUsername(sessionUsername);
+        if (currentUser == null) return Unauthorized("User not found in session.");
+
         try
         {
-            var adminUser = AuthService.GetAllUsers().OfType<Admin>().FirstOrDefault();
-
-            if (adminUser == null) 
-                return StatusCode(500, "System Error: No Admin account exists in AuthService.");
-                
-            _inventoryService.DeleteSupply(id, adminUser);
+            _inventoryService.DeleteSupply(id, currentUser);
             return Ok(new { message = $"Item {id} deleted successfully." });
         }
         catch (UnauthorizedAccessException ex)
@@ -185,12 +217,16 @@ public class InventoryController : ControllerBase
     [HttpPost("update-stock")]
     public IActionResult UpdateStock([FromBody] UpdateStockRequest request)
     {
+        var sessionUsername = HttpContext.Session.GetString("Username");
+        var currentUser = AuthService.GetUserByUsername(sessionUsername);
+        if (currentUser == null) return Unauthorized("User not found in session.");
+
         var supply = _inventoryService.GetSupplyById(request.Id);
         if (supply == null) return NotFound("Supply ID not found.");
 
         try
         {
-            _inventoryService.ProcessStockUpdate(request.Id, request.Quantity, request.BatchNumber);
+            _inventoryService.ProcessStockUpdate(request.Id, request.Quantity, currentUser, request.BatchNumber);
             return Ok(new { status = "Success", message = "Inventory synchronized." });
         }
         catch (Exception ex)
@@ -226,25 +262,6 @@ public class InventoryController : ControllerBase
         public string Id { get; set; }
         public int Quantity { get; set; }
         public string BatchNumber { get; set; }
-    }
-
-    [HttpGet("transactions")]
-    public IActionResult GetTransactions()
-    {
-        // Fetches the list of transactions from the service
-        var transactions = _inventoryService.GetAllTransactions()
-            .Select(t => new {
-                logId = t.LogId,
-                dateTime = t.DateTime.ToString("yyyy-MM-ddTHH:mm:ssZ"), // ISO Format for JS
-                user = t.User,
-                action = t.Action,
-                item = t.Item,
-                details = t.Details
-            })
-            .OrderByDescending(t => t.dateTime) // Newest logs first
-            .ToList();
-
-        return Ok(transactions);
     }
 
 }

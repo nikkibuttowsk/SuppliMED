@@ -17,7 +17,14 @@ public class AuthController : ControllerBase
 
         if (result.Status == AuthService.LoginResultStatus.Success)
         {
-            return Ok(new { message = "Welcome back!", user = result.User?.Username });
+            HttpContext.Session.SetString("Role", result.User.GetRole());
+
+            HttpContext.Session.SetString("Username", result.User.Username);
+            return Ok(new { 
+                message = "Welcome back!", 
+                user = result.User?.Username, 
+                role = result.User?.GetRole()
+                });
         }
         
         if (result.Status == AuthService.LoginResultStatus.LockedOut)

@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadAuditLogs() {
     try {
-        const response = await fetch('/api/inventory/transactions');
+        const response = await fetch('/api/inventory/audit-logs');
         if (!response.ok) throw new Error("Backend unreachable");
         
         const logs = await response.json();
