@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using AppCore.Interfaces; 
 using AppCore.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    WebRootPath = null
+});
 
 // connection string once
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -40,7 +44,7 @@ builder.Services.AddScoped<InventoryServices>();
 builder.Services.AddScoped<IInventoryService, InventoryServices>();
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowAll", policy => {
+    options.AddPolicy("AllowFrotend", policy => {
         policy.WithOrigins("http://localhost:5000", "http://127.0.0.1:5500") // Add your frontend URL
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -51,8 +55,8 @@ builder.Services.AddCors(options => {
 var app = builder.Build();
 
 // 1. Static files should be outside the HTTPS/Auth logic for performance
-app.UseDefaultFiles();
-app.UseStaticFiles();
+// app.UseDefaultFiles();
+// app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
@@ -64,7 +68,7 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 
 // 3. CORS must come BEFORE Session and Authorization
-app.UseCors("AllowAll");
+app.UseCors("AllowFrotend");
 
 // 4. Session must come AFTER Routing/CORS but BEFORE MapControllers
 app.UseSession();

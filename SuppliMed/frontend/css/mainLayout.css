@@ -40,7 +40,7 @@
 /* LOGOUT (5) */
 .nav-item:hover .icon-logout,
 .nav-item.active .icon-logout {
-    content: url('/icons/5-default.svg');
+    content: url('icons/5-default.svg');
 }
 html, body {
     margin: 0 !important;

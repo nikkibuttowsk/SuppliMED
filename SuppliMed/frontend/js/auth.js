@@ -111,7 +111,7 @@ const AuthController = {
 
         try {
             // Change '/api/logout' to '/api/Logout' (case sensitive depends on OS, but safer to match)
-            await fetch('/api/Logout', { method: 'POST' });
+            await fetch('http://localhost:5000/api/Logout', { method: 'POST' });
             
             localStorage.clear();
             sessionStorage.clear();

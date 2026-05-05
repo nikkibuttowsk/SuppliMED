@@ -123,7 +123,7 @@
 .v3-search-bar {
     width: 100% !important; /* Spans full width of the action group */
     background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(249, 130, 130, 0.15) !important;
     border-radius: 10px;
     padding: 10px 15px !important; 
     display: flex;

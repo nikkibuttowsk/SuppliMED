@@ -30,6 +30,11 @@ function updateDateTime() {
 
 async function handleLogout() {
     if (confirm("Are you sure you want to end your session?")) {
+        try {
+            await fetch('http://localhost:5000/api/Logout', { method: 'POST' });
+        } catch (e) {
+            console.log("Server logout failed, clearing locally.");
+        }
         localStorage.clear();
         sessionStorage.clear();
         window.location.href = 'index.html';
@@ -82,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startClock();
     navigateTo('dashboard'); 
+
+    applyRoleRestrictions();
 });
 
 function applyRoleRestrictions() {

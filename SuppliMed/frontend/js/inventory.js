@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // LOAD TABLE FROM API
     async function loadInventoryTable() {
         try {
-            const response = await fetch('/api/inventory');
+            const response = await fetch('http://localhost:5000/api/inventory', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json'},
+                credentials: 'include' 
+            });
             const supplies = await response.json();
 
             const tbody = document.getElementById('inventoryBody');

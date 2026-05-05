@@ -1,6 +1,6 @@
 async function updateDashboard() {
     try {
-        const response = await fetch('/api/inventory/dashboard-summary');
+        const response = await fetch('http://localhost:5000/api/inventory/dashboard-summary');
         const data = await response.json();
 
         console.log(data);
