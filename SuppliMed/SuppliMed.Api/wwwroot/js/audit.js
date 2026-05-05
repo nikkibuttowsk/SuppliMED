@@ -52,14 +52,19 @@ async function loadAuditLogs() {
 
         logs.forEach(log => {
             const tr = document.createElement("tr");
+
+            const shortId = log.logId.length > 8 ? log.logId.substring(0, 8) : log.logId;
             
             let actionStyle = "";
             if (log.action === "ADD") actionStyle = "color: #4ade80; font-weight: bold;";
-            if (log.action === "UPDATE") actionStyle = "color: #facc15; font-weight: bold;";
+            if (log.action === "RESTOCK") actionStyle = "color: #82a727; font-weight: bold;";
+            if (log.action === "DISPENSE") actionStyle = "color: #b16b20; font-weight: bold;";
             if (log.action === "DELETE") actionStyle = "color: #f87171; font-weight: bold;";
 
             tr.innerHTML = `
-                <td>#${log.logId}</td>
+                <td style="font-family: monospace; color: #9ca3af;" title="${log.logId}">
+                    #${shortId}
+                </td>
                 <td>${new Date(log.dateTime).toLocaleString()}</td>
                 <td>${log.user}</td>
                 <td style="${actionStyle}">${log.action}</td>

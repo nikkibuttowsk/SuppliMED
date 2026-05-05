@@ -86,22 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function applyRoleRestrictions() {
     const role = localStorage.getItem('userRole');
-    console.log("Applying restrictions for role:", role);
+    console.log("Applying role restrictions for role:", role);
 
+    document.body.classList.add('is-staff');
+    
     if (role === "staff") {
-        // Hide the action column buttons on the dashboard
-        const restrictedButtons = [
-            'btn-add', 
-            'btn-delete'
+        // IDs of buttons only Admins should see
+        const adminOnlyIds = [
+            'btn-add',      // Dashboard Add
+            'btn-delete',   // Dashboard Delete
+            'btn-inv-add',  // Inventory Add
+            'btn-inv-delete'// Inventory Delete
         ];
 
-        restrictedButtons.forEach(id => {
+        adminOnlyIds.forEach(id => {
             const btn = document.getElementById(id);
             if (btn) btn.style.display = "none";
         });
 
-        // Hide the action group in the Inventory view
-        const inventoryActions = document.querySelector('.v3-action-group');
-        if (inventoryActions) inventoryActions.style.display = "none";
     }
 }

@@ -149,6 +149,7 @@ const ModalController = {
     
                 endpoint = `${BASE_URL}/api/inventory/add`;
                 payload = {
+                    id: "TEMP",
                     name: getVal('field-name'),
                     brand: getVal('field-brand'),
                     minimumStock: parseInt(getVal('field-min')) || 10,
@@ -178,9 +179,11 @@ const ModalController = {
 
                 const multiplier = parseInt(getVal('field-update-type')) || 1;
 
+                const baseQty = parseInt(getVal('field-qty')) || 0;
+
                 payload = {
                     id: getVal('field-id'),
-                    quantity: parseInt(getVal('field-qty')) || 0,
+                    quantity: baseQty * multiplier,
                     batchNumber: getVal('field-batch') || ""
                 };
             }
@@ -189,28 +192,6 @@ const ModalController = {
             console.log("Endpoint:", endpoint);
             console.log("Payload:", JSON.stringify(payload));
 
-            // // 2. Send the request
-            // const response = await fetch(endpoint, {
-            //     method: method,
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: payload ? JSON.stringify(payload) : null
-            // });
-
-            // // 3. Handle Result
-            // if (response.ok) {
-            //     console.log("Action Successful");
-            //     this.close(); // Close Modal
-                
-            //     if (typeof updateDashboard === 'function') {
-            //         await updateDashboard(); // Refresh UI real-time
-            //     }
-            // } else {
-            //     const errorText = await response.text();
-            //     console.error("Server Error:", errorText);
-            //     alert("Action Failed: " + errorText);
-            // }
             
             let response; // 👈 declare first
 

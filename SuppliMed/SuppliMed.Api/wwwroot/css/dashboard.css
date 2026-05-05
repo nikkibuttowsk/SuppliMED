@@ -39,7 +39,7 @@ body {
 /* --- SIDEBAR --- */
 .sidebar {
     width: 80px;
-    background-color: var(--sidebar-bg);
+    background-color: rgba(2, 6, 4, 0.484);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,7 +114,7 @@ body {
     background: linear-gradient(145deg, #14211f, #0f1a18);
     padding: 20px;
     border-radius: 20px;
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
     align-items: center;
     height: 90px;
@@ -397,4 +397,106 @@ body {
 .expiring-item-row,
 .action-btn {
     composes: card;
+}
+
+/* --- COMMAND CENTER HEADER STYLE --- */
+
+/* --- REFINED HEADER STYLE --- */
+.v3-user-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    justify-content: center;
+}
+
+.v3-hello {
+    font-size: 0.8rem !important;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+#dashboard-date, #inventory-date, #audit-date {
+    font-size: 1rem !important; /* Back to a readable, balanced size */
+    font-weight: 600;
+    color: var(--accent-green);
+    font-family: inherit; /* Clean sans-serif */
+    text-shadow: none; 
+    margin: 0;
+}
+
+/* Pulsing Status Dot */
+.v3-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-green);
+    animation: status-pulse 2s infinite;
+}
+
+@keyframes status-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- TEAM PANEL STYLES --- */
+
+.team-panel {
+    margin-top: 15px;
+    background: linear-gradient(145deg, #14211f, #0f1a18);
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.team-panel h3 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.member-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.member-tag:hover {
+    background: rgba(74, 222, 128, 0.05);
+    border-color: rgba(74, 222, 128, 0.2);
+    transform: translateX(5px);
+}
+
+.member-icon {
+    font-size: 1.1rem;
+}
+
+.member-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Optional: Add a subtle GitHub branding color on hover */
+.member-tag:hover .member-name {
+    color: var(--accent-green);
 }

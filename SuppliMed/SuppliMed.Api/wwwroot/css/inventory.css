@@ -111,59 +111,67 @@
     text-overflow: ellipsis; 
 }
 
-/* 4. RIGHT: ACTIONS & SEARCH */
+/* --- UNIFIED ACTION AREA --- */
+
 .v3-action-group {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    flex: 2; /* Gives actions enough room for the 3 buttons */
-    gap: 8px;
-    min-width: 0; 
-    box-sizing: border-box;
+    gap: 12px;
+    width: 320px; /* FIXED WIDTH to prevent shrinking */
 }
 
 .v3-search-bar {
-    width: 100% !important;
-    min-width: 0; 
+    width: 100% !important; /* Spans full width of the action group */
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 10px;
+    padding: 10px 15px !important; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
     box-sizing: border-box;
-    padding: 5px 10px; /* Slimmer search bar */
 }
 
 .v3-search-bar input {
-    width: 100% !important;
-    min-width: 0;
-    box-sizing: border-box;
-    font-size: 0.9em;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 0.9rem;
+    width: 100%;
 }
 
 .v3-buttons-row {
-    display: flex;
-    gap: 6px; /* Tighter gap between buttons */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Forces 3 equal columns */
+    gap: 10px;
     width: 100%;
-    min-width: 0;
 }
 
 .v3-action-sq {
-    flex: 1; 
-    min-width: 0; 
-    padding: 8px 4px; /* Tighter padding so buttons don't bleed off screen */
-    box-sizing: border-box;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 0.85em; /* Slightly smaller button text */
-    z-index: 10; /* Ensures hover effect doesn't get cut off */
-    pointer-events: auto !important;
+    height: 48px; /* Standardized height */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-.v3-action-sq:active {
-    transform: scale(0.95);
-    background-color: rgba(255, 255, 255, 0.1);
+.v3-action-sq:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
 .v3-action-sq span {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis; 
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
 }
 
 .v3-action-sq:hover {
@@ -268,4 +276,22 @@
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+}
+
+/* Staff-Specific Adjustments */
+.is-staff .v3-action-group {
+    align-items: flex-end; /* Aligns both search and button to the right */
+}
+
+.is-staff .v3-search-bar {
+    width: 100px !important; /* Makes it less wide, matching the button group */
+    transition: width 0.3s ease; /* Smooth transition if needed */
+}
+
+.is-staff .v3-buttons-row {
+    justify-content: flex-end; /* Ensures the Update button stays right-aligned */
+}
+
+.is-staff .v3-action-sq {
+    flex: 0 1 100px; /* Limits the width of the update button to match search */
 }
