@@ -34,10 +34,11 @@ async function handleLogin() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch('http://localhost:5001/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ Username: userVal, Password: passVal })
+            body: JSON.stringify({ Username: userVal, Password: passVal }),
+            credentials: 'include' 
         });
 
         if (response.ok) {
@@ -111,14 +112,14 @@ const AuthController = {
 
         try {
             // Change '/api/logout' to '/api/Logout' (case sensitive depends on OS, but safer to match)
-            await fetch('http://localhost:5000/api/Logout', { method: 'POST' });
+            await fetch('http://localhost:5001/api/logout', { method: 'POST' });
             
             localStorage.clear();
             sessionStorage.clear();
-            window.location.href = 'login.html'; 
+            window.location.href = 'index.html'; 
         } catch (error) {
             console.error("Logout failed:", error);
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         }
     }
 };

@@ -43,4 +43,11 @@ public class AuthController : ControllerBase
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return Ok(new { message = "Logged out successfully" });
+    }
 }

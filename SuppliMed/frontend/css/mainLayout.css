@@ -22,19 +22,19 @@
 
 .nav-item:hover .icon-home,
 .nav-item.active .icon-home {
-    content: url('/icons/1-default.svg'); 
+    content: url('icons/1-default.svg'); 
 }
 
 /* INVENTORY (2) */
 .nav-item:hover .icon-box,
 .nav-item.active .icon-box {
-    content: url('/icons/2-default.svg');
+    content: url('icons/2-default.svg');
 }
 
 /* CHART (3) */
 .nav-item:hover .icon-chart,
 .nav-item.active .icon-chart {
-    content: url('/icons/3-default.svg');
+    content: url('icons/3-default.svg'); 
 }
 
 /* LOGOUT (5) */

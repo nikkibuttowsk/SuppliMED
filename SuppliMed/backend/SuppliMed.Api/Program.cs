@@ -30,13 +30,17 @@ builder.Services.AddControllers()
             System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 
-builder.Services.AddDistributedMemoryCache(); // Required for session state
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session expiration
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<InventoryServices>();
@@ -44,8 +48,8 @@ builder.Services.AddScoped<InventoryServices>();
 builder.Services.AddScoped<IInventoryService, InventoryServices>();
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowFrotend", policy => {
-        policy.WithOrigins("http://localhost:5000", "http://127.0.0.1:5500") // Add your frontend URL
+    options.AddPolicy("AllowFrontend", policy => {
+        policy.WithOrigins("http://127.0.0.1:5500", "http://localhost:5500", "http://localhost") // Add your frontend URL
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials(); // Required for Sessions to work
@@ -54,9 +58,6 @@ builder.Services.AddCors(options => {
 
 var app = builder.Build();
 
-// 1. Static files should be outside the HTTPS/Auth logic for performance
-// app.UseDefaultFiles();
-// app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
@@ -64,13 +65,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// 2. Add Routing before CORS and Session
+// Routing before CORS and Session
 app.UseRouting();
 
-// 3. CORS must come BEFORE Session and Authorization
-app.UseCors("AllowFrotend");
+// CORS must come before Session and Authorization
+app.UseCors("AllowFrontend");
 
-// 4. Session must come AFTER Routing/CORS but BEFORE MapControllers
+// Session must come after Routing/CORS but BEFORE MapControllers
 app.UseSession();
 
 app.UseHttpsRedirection();

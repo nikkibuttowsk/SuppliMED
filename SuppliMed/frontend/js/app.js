@@ -31,7 +31,7 @@ function updateDateTime() {
 async function handleLogout() {
     if (confirm("Are you sure you want to end your session?")) {
         try {
-            await fetch('http://localhost:5000/api/Logout', { method: 'POST' });
+            await fetch('http://localhost:5001/api/logout', { method: 'POST' });
         } catch (e) {
             console.log("Server logout failed, clearing locally.");
         }

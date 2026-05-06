@@ -88,14 +88,14 @@
 }
 
 /* ===== RIGHT SIDE CONTROLS ===== */
-.v3-action-group {
+.audit-view .v3-action-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 /* SEARCH */
-.v3-search-bar {
+.audit-view .v3-search-bar {
     display: flex;
     align-items: center;
     
@@ -107,7 +107,7 @@
     box-sizing: border-box;
 }
 
-.v3-search-bar input {
+.audit-view .v3-search-bar input {
     background: transparent;
     border: #606C58;
     outline: #606C58;
@@ -117,48 +117,14 @@
     width: 100%;
 }
 
-.v3-search-bar input::placeholder {
+.audit-view .v3-search-bar input::placeholder {
     color: #ffffff;
     opacity: 1;  
 }
 
-/* BUTTONS */
-.v3-buttons-row {
-    display: flex;
-    gap: 10px;
-}
-
-.v3-action-sq {
-    background: rgba(0,0,0,0.45);
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    
-    /* REMOVE width: 80px; */
-    flex: 1; /* ADD THIS: Automatically stretches the buttons to fill the space evenly */
-    
-    color: white;
-    font-size: 10px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    transition: 0.2s;
-}
 
 .v3-action-sq:hover {
     background: rgba(0,0,0,0.4);
-}
-
-.v3-btn-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;  
-    height: 32px; 
-    border-radius: 8px; 
-    font-size: 16px;
 }
 
 .v3-bottom-layout {
@@ -168,26 +134,6 @@
     align-items: flex-start; 
 }
 
-/* The dark box for the legend */
-.v3-legend-panel {
-    background: #111817;
-    padding: 20px;
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    min-width: 160px; /* Ensures the text doesn't wrap awkwardly */
-}
-
-/* Individual legend items inside the box */
-.v3-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
-    font-size: 13px;
-    font-weight: 600;
-}
 
 .v3-table-wrapper {
     flex: 1; 
@@ -243,10 +189,10 @@
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.6);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 999; 
 }
 
 .hidden { display: none; }
@@ -276,7 +222,6 @@
 }
 
 #auditBody td:first-child {
-    background: rgba(255, 255, 255, 0.05);
     padding: 4px 8px;
     border-radius: 4px;
     letter-spacing: 1px;

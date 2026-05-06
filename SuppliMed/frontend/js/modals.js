@@ -12,6 +12,8 @@ const ModalController = {
         this.fields = document.getElementById('form-fields');
         this.title = document.getElementById('modal-title');
 
+        this.close();
+
         // Handle Form Submission
         if (this.form) {
             this.form.onsubmit = async (e) => {
@@ -126,7 +128,7 @@ const ModalController = {
     },
 
     async handleSubmit() {
-        const BASE_URL = "http://localhost:5000";
+        const BASE_URL = "http://localhost:5001";
         // 1. Identify which mode we are in
         const title = this.title.innerText.toLowerCase();
         let endpoint = "";

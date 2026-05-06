@@ -48,7 +48,7 @@
     justify-content: space-between;
     gap: 10px; /* Tighter gap between the 3 main blocks */
     width: 100%; 
-    flex-wrap: nowrap !important; /* ABSOLUTE FORCE: Everything on one line */
+    flex-wrap: wrap; /* ABSOLUTE FORCE: Everything on one line */
     box-sizing: border-box;
 }
 
@@ -113,14 +113,14 @@
 
 /* --- UNIFIED ACTION AREA --- */
 
-.v3-action-group {
+.inventory-view .v3-action-group {
     display: flex;
     flex-direction: column;
     gap: 12px;
     width: 320px; /* FIXED WIDTH to prevent shrinking */
 }
 
-.v3-search-bar {
+.inventory-view .v3-search-bar {
     width: 100% !important; /* Spans full width of the action group */
     background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(249, 130, 130, 0.15) !important;
@@ -132,7 +132,7 @@
     box-sizing: border-box;
 }
 
-.v3-search-bar input {
+.inventory-view .v3-search-bar input {
     background: transparent;
     border: none;
     outline: none;
@@ -141,14 +141,14 @@
     width: 100%;
 }
 
-.v3-buttons-row {
+.inventory-view .v3-buttons-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Forces 3 equal columns */
     gap: 10px;
     width: 100%;
 }
 
-.v3-action-sq {
+.inventory-view .v3-action-sq {
     height: 48px; /* Standardized height */
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);

@@ -5,7 +5,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end; /* Keeps it on the right side */
-    background: #162a2c url('/background.png') no-repeat center center fixed;
+    background: #162a2c url('background.png') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Segoe UI', sans-serif;
     color: white;
