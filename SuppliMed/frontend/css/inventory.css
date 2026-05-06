@@ -100,10 +100,10 @@
 .v3-legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 9px;
     min-width: 0;
     white-space: nowrap;
-    font-size: 0.85em; /* Shrinks legend text slightly */
+    font-size: 1em;
 }
 
 .v3-legend-item span {
@@ -116,16 +116,18 @@
 .inventory-view .v3-action-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 320px; /* FIXED WIDTH to prevent shrinking */
+    gap: 10px;
+    flex: 2; 
+    min-width: 350px; 
+    width: auto;
 }
 
 .inventory-view .v3-search-bar {
-    width: 100% !important; /* Spans full width of the action group */
+    width: 100% !important; 
     background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(249, 130, 130, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important; 
     border-radius: 10px;
-    padding: 10px 15px !important; 
+    padding: 12px 15px !important; 
     display: flex;
     align-items: center;
     gap: 10px;
@@ -133,11 +135,12 @@
 }
 
 .inventory-view .v3-search-bar input {
+    flex: 1;
     background: transparent;
     border: none;
     outline: none;
     color: white;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     width: 100%;
 }
 
@@ -149,15 +152,15 @@
 }
 
 .inventory-view .v3-action-sq {
-    height: 48px; /* Standardized height */
-    background: rgba(255, 255, 255, 0.05);
+    height: 60px; 
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 4px; 
     cursor: pointer;
     transition: 0.2s ease;
 }
@@ -168,24 +171,25 @@
 }
 
 .v3-action-sq span {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     text-transform: uppercase;
     color: var(--text-muted);
 }
 
 .v3-action-sq:hover {
-    background: rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.05);
 }
 
 .v3-btn-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     border-radius: 8px;
     font-size: 16px;
+    color: white;
 }
 
 /* ===== TABLE SECTION ===== */
