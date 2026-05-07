@@ -41,11 +41,19 @@ The main goal of this system is to help small pharmacies, non-government organiz
 
 ## ✨ Key Features
 
+<details>
+  <summary> Role-Based Access Control (RBAC) </summary>
+
 ### `Role-Based Access Control (RBAC)`
 The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the `AuthService.cs` service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an administrator or staff member, enabling role-based access and permissions within the inventory system.
 
 * **`Admin`** – Has elevated privileges for managing inventory and system operations.
 * **`Staff`** – Has standard access for inventory-related tasks and monitoring.
+
+</details>
+
+<details>
+  <summary> Inventory Tracking </summary>
 
 ### `Inventory Tracking`
 The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
@@ -54,6 +62,11 @@ The system implements a structured inventory tracking mechanism that allows real
 * **`Expiration Tracking`** – Identifies items nearing expiration to prevent unsafe usage.
 * **`Low Stock Alerts`** – Notifies users when inventory falls below safe thresholds.
 
+</details>
+
+<details>
+  <summary> Real-time Search & Filtering </summary>
+
 ### `Real-time Search & Filtering`
 The system implements a real-time search and filtering mechanism that allows users to instantly locate specific inventory records as they type in the search bar. This functionality is handled through the frontend script, which continuously queries and filters displayed data without requiring page reloads. It improves usability by making large datasets easier to navigate and manage efficiently.
 
@@ -61,6 +74,10 @@ The system implements a real-time search and filtering mechanism that allows use
 * **`Instant Filtering`** – Narrows down inventory records based on keywords.
 * **`Improved Navigation`** – Enhances speed and accuracy in finding specific data.
 
+</details>
+
+<details>
+  <summary>Database Integration</summary>
 
 ### `Database Integration`
 The system integrates a SQL-based database to ensure reliable storage and retrieval of all inventory data. It supports secure processing of transactions such as adding, updating, and deleting records while maintaining data consistency across the system. This implementation improves data management efficiency and ensures that all information is properly stored and easily accessible when needed.
@@ -69,12 +86,19 @@ The system integrates a SQL-based database to ensure reliable storage and retrie
 * **`Data Consistency`** – Maintains accurate and synchronized records across all operations.
 * **`Reliable Retrieval`** – Enables fast and efficient access to stored inventory information.
 
+</details>
+
+<details>
+  <summary> Audit Log </summary>
+
 ### `Audit Log`
 The system implements an automated audit logging mechanism that continuously records user activities and system transactions. It tracks detailed information regarding who performed an action, what specific changes were made, and the exact time the event occurred. This implementation ensures accountability among staff and administrators, aids in troubleshooting, and enhances overall system security by maintaining a transparent history of all data modifications.
 
 * **`Activity Tracking`** – Monitors and records all critical system operations, including stock additions, updates, and deletions.
 * **`Timestamped Records`** – Accurately logs the exact date and time of every recorded transaction for precise tracking.
 * **`User Accountability`** – Links specific actions directly to individual administrator or staff accounts to ensure system security.
+
+</details>
 
 </div>
 <br/>
@@ -87,7 +111,8 @@ The system implements an automated audit logging mechanism that continuously rec
 The **SuppliMed Medicine Inventory System** is structured into two distinct environments: a dedicated frontend folder for all client-side assets (HTML, CSS, JavaScript, and media files) and a separate backend folder for the ASP.NET (C#) architecture. Below is the project structure overview of the system:
 
 </p>
-
+<details>
+  <summary>Project Diagram</summary>
 <pre>
 SuppliMed/
 │
@@ -169,7 +194,11 @@ SuppliMed/
 │
 └── 📄 README.md
 </pre>
+</details>
 
+<details>
+  <summary> Frontend </summary>
+        
 ### `Frontend`
 The frontend contains all client-side resources—including styles, scripts, media assets, and HTML pages—that power the visual presentation and interactive user experience of SuppliMed.
 
@@ -204,8 +233,11 @@ This directory contains all the graphical assets, vector graphics, and standard 
 * **`2-default.svg`** – Vector icon used for the Inventory Management module.
 * **`3-default.svg`** – Vector icon used for the Audit Logs or User Settings.
 * **`5-default.svg`** – Vector icon used for system configuration or logout actions.
+</details>
 
-
+<details>
+  <summary> Backend </summary>
+        
 ### `Backend`
 The backend follows a clean architecture pattern, separating the core business domain (`AppCore`) from the implementation of the web interface (`SuppliMed.Api`).
 
@@ -240,12 +272,15 @@ The bridge between our database logic and the HTML/JS frontend.
 
 </div>
 <br/>
-
+</details>
 
 ## 🚀 Getting Started
 
 <div align="justify">
 Quick setup guide for running SuppliMed locally.
+<p> </p>
+<details>
+  <summary> How to install and setup the program </summary>
 
 ### 🛠️ Installation & Setup
 
@@ -308,12 +343,15 @@ dotnet run --project SuppliMed.Api
 </div>
 <br/>
 
+</details>
 
 ## 🍵 Implementation of Object-Oriented Programming (OOP) Principles
 <div align="justify">
 
 The SuppliMed project demonstrates the correct implementation of Object-Oriented Programming (OOP) principles in C# to ensure a structured, maintainable, and scalable system design.
 
+<details>
+  <summary> Encapsulation </summary>
 
 ### `Encapsulation`
 Encapsulation is implemented by protecting core data and business logic from direct, unsafe modifications. Instead of allowing API controllers to directly modify database values, sensitive operations are handled inside the `InventoryServices` class. This ensures that stock updates are always validated, logged, and processed safely.
@@ -342,7 +380,10 @@ public class InventoryServices
 }
 ```
 
----
+</details>
+
+<details>
+  <summary> Inheritance </summary>
 
 ### `Inheritance`
 Inheritance is implemented through a class hierarchy that eliminates redundancy. Shared properties such as `Id`, `Name`, `Brand`, and `Quantity` are stored in a base class, while specific entities extend this base structure.
@@ -371,8 +412,10 @@ public class Medicine : MedicalSupply
     public List<Batch> Batches { get; set; }
 }
 ```
+</details>
 
----
+<details>
+  <summary> Polymorphism </summary>
 
 ### `Polymorphism`
 Polymorphism is implemented using method overriding, allowing different inventory types to behave differently while sharing a common structure. This is used when displaying expiry dates depending on the type of supply.
@@ -403,8 +446,10 @@ public class Medicine : MedicalSupply
     }
 }
 ```
+</details>
 
----
+<details>
+  <summary> Abstraction </summary>
 
 ### `Abstraction`
 Abstraction is implemented by hiding complex logic inside the service layer. The controller only interacts with simple methods, while internal processes such as ID generation and validation are handled behind the scenes.
@@ -425,3 +470,5 @@ public class InventoryController : ControllerBase
         return Ok(new { message = "Supply added", id = newId });
     }
 }
+```
+</details>
