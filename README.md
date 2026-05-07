@@ -348,7 +348,7 @@ dotnet run --project SuppliMed.Api
 ## 🍵 Implementation of Object-Oriented Programming (OOP) Principles
 <div align="justify">
 
-The SuppliMed project demonstrates the correct implementation of Object-Oriented Programming (OOP) principles in C# to ensure a structured, maintainable, and scalable system design.
+The SuppliMed project demonstrates the implementation of Object-Oriented Programming (OOP) principles in C# to ensure a structured, maintainable, and scalable system design.
 
 <details>
   <summary> Encapsulation </summary>
