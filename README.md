@@ -40,40 +40,41 @@ The main goal of this system is to help small pharmacies, non-government organiz
 <br/>
 
 ## ✨ Key Features
-### `Role-Based Access Control (RBAC)` 
-</p>
-    <ul>
-The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the <code>AuthService.cs</code> service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an  administrator or staff member, enabling role-based access and permissions within the inventory system.
-</p>
 
-<ul>
-    <li><code>Admin</code> – Has elevated privileges for managing inventory and system operations</li>
-    <li><code>Staff</code> – Has standard access for inventory-related tasks and monitoring</li>
-</ul>
-<p>
-</div>
+### `Role-Based Access Control (RBAC)`
+The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the `AuthService.cs` service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an administrator or staff member, enabling role-based access and permissions within the inventory system.
+
+* **`Admin`** – Has elevated privileges for managing inventory and system operations.
+* **`Staff`** – Has standard access for inventory-related tasks and monitoring.
 
 ### `Inventory Tracking`
-
-</p>
-        <ul>
 The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
-        </p>
 
-<ul>
+* **`Stock Monitoring`** – Tracks available quantities of medicines and supplies in real time.
+* **`Expiration Tracking`** – Identifies items nearing expiration to prevent unsafe usage.
+* **`Low Stock Alerts`** – Notifies users when inventory falls below safe thresholds.
 
-<li><code>Stock Monitoring</code> – Tracks available quantities of medicines and supplies in real time
-<li><code>Expiration Tracking</code> – Identifies items nearing expiration to prevent unsafe usage
-<li><code>Low Stock Alerts</code> – Notifies users when inventory falls below safe thresholds
+### `Real-time Search & Filtering`
+The system implements a real-time search and filtering mechanism that allows users to instantly locate specific inventory records as they type in the search bar. This functionality is handled through the frontend script, which continuously queries and filters displayed data without requiring page reloads. It improves usability by making large datasets easier to navigate and manage efficiently.
 
-</ul>
-<p>
-</div>
+* **`Live Search`** – Dynamically filters results as the user types input.
+* **`Instant Filtering`** – Narrows down inventory records based on keywords.
+* **`Improved Navigation`** – Enhances speed and accuracy in finding specific data.
 
- 
-#### `Modern Interface:` A sleek, responsive dashboard styled with a custom dark-themed UI.
-#### `Real-time Search & Filtering:` Quickly locate specific medicines, expiration dates, or low-stock items.
-#### `Secure Database Integration:` Reliable data storage and retrieval using SQL.
+
+### `Database Integration`
+The system integrates a SQL-based database to ensure reliable storage and retrieval of all inventory data. It supports secure processing of transactions such as adding, updating, and deleting records while maintaining data consistency across the system. This implementation improves data management efficiency and ensures that all information is properly stored and easily accessible when needed.
+
+* **`SQL Database`** – Provides structured and secure storage of system data.
+* **`Data Consistency`** – Maintains accurate and synchronized records across all operations.
+* **`Reliable Retrieval`** – Enables fast and efficient access to stored inventory information.
+
+### `Audit Log`
+The system implements an automated audit logging mechanism that continuously records user activities and system transactions. It tracks detailed information regarding who performed an action, what specific changes were made, and the exact time the event occurred. This implementation ensures accountability among staff and administrators, aids in troubleshooting, and enhances overall system security by maintaining a transparent history of all data modifications.
+
+* **`Activity Tracking`** – Monitors and records all critical system operations, including stock additions, updates, and deletions.
+* **`Timestamped Records`** – Accurately logs the exact date and time of every recorded transaction for precise tracking.
+* **`User Accountability`** – Links specific actions directly to individual administrator or staff accounts to ensure system security.
 
 <br/>
 
@@ -166,64 +167,32 @@ SuppliMed/
 └── 📄 README.md
 </pre>
 
-### `Frontend` 
-<div align="justify">
-</p>
-The frontend is located in the wwwroot directory, which contains all client-side resources including styles, scripts, media, and HTML pages that power the user interface of SuppliMed. 
-</p>
-    <strong> CSS Stylesheets</strong>
-<div align="justify">
-</p>
-    <ul>
-    <p> Contains all styling resources responsible for the visual presentation of the system. 
-    These stylesheets define the layout, colors, typography, spacing, and responsiveness 
-    of the user interface to ensure a consistent and user-friendly design. </p>
-    <ul>
-      <li><code>dashboard.css</code> – Dashboard layout and components</li>
-      <li><code>inventory.css</code> – Inventory table and controls</li>
-      <li><code>login.css</code> – Login page styling</li>
-      <li><code>audit.css</code> – Audit logs interface</li>
-      <li><code>mainLayout.css</code> – Global layout (navbar, structure)</li>
-      <li><code>modals.css</code> – Modal UI components</li>
-</div>
+### `Frontend`
+The frontend is located in the `wwwroot` directory, which contains all client-side resources including styles, scripts, media, and HTML pages that power the user interface of SuppliMed.
 
-</p>
-    <strong> JavaScript Modules </strong>
- <div align="justify">
-</p>
-        <ul>
-    <p>Contains all client-side scripts responsible for handling system functionality, 
-    interactivity, and communication with the backend. These modules manage user actions, 
-    dynamic content updates, and API interactions.</p>
-    <ul>
-      <li><code>app.js</code> – Core application logic</li>
-      <li><code>auth.js</code> – User authentication handling</li>
-      <li><code>inventory.js</code> – Inventory CRUD operations</li>
-      <li><code>dashboard.js</code> – Dashboard data updates</li>
-      <li><code>audit.js</code> – Audit trail tracking</li>
-      <li><code>action.js</code> – General UI actions/events</li>
-      <li><code>modals.js</code> – Modal interactions and forms</li>
-</div>
+#### CSS Stylesheets
+Contains all styling resources responsible for the visual presentation of the system. These stylesheets define the layout, colors, typography, spacing, and responsiveness of the user interface to ensure a consistent and user-friendly design.
+* **`dashboard.css`** – Dashboard layout and components.
+* **`inventory.css`** – Inventory table and controls.
+* **`login.css`** – Login page styling.
+* **`audit.css`** – Audit logs interface.
+* **`mainLayout.css`** – Global layout (navbar, structure).
+* **`modals.css`** – Modal UI components.
 
-</p>
-    <strong> HTML Pages </strong>
- <div align="justify">
-</p>
-        <ul>
-        <p> Contains the core user interface pages of the system, serving as the structural foundation 
-    of the application. These pages define the layout and integrate styles (CSS) and functionality 
-    (JavaScript) to deliver an interactive user experience.</p>
-                
- <ul>
-     <li>
-      <code>index.html</code> – Entry point of the system, typically used for login or initial access.
-    </li>
-    <li>
-      <code>dashboard.html</code> – Main interface displaying system overview, navigation, and key data.
-    </li>
-  </ul>
+#### JavaScript Modules
+Contains all client-side scripts responsible for handling system functionality, interactivity, and communication with the backend. These modules manage user actions, dynamic content updates, and API interactions.
+* **`app.js`** – Core application logic.
+* **`auth.js`** – User authentication handling.
+* **`inventory.js`** – Inventory CRUD operations.
+* **`dashboard.js`** – Dashboard data updates.
+* **`audit.js`** – Audit trail tracking.
+* **`action.js`** – General UI actions/events.
+* **`modals.js`** – Modal interactions and forms.
 
-</p>
+#### HTML Pages
+Contains the core user interface pages of the system, serving as the structural foundation of the application. These pages define the layout and integrate styles (CSS) and functionality (JavaScript) to deliver an interactive user experience.
+* **`index.html`** – Entry point of the system, typically used for login or initial access.
+* **`dashboard.html`** – Main interface displaying system overview, navigation, and key data.
 
 
 
