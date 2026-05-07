@@ -43,43 +43,34 @@ The main goal of this system is to help small pharmacies, non-government organiz
 ### `Role-Based Access Control (RBAC)` 
 </p>
     <ul>
-The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the <code>AuthService.cs</code> service located in the backend architecture. The following code initializes the predefined system users and their corresponding roles:
-</p>
-
-<pre>
-private static List&lt;User&gt; _users = new List&lt;User&gt;
-{
-    new Admin 
-    { 
-        UserID = "1",
-        Username = "admin",
-        Password = "admin123"
-    },
-
-    new Staff 
-    { 
-        UserID = "2",
-        Username = "staff",
-        Password = "staff123"
-    }
-};
-</pre>
-
-<p>
-This implementation allows the system to identify whether the authenticated account belongs to an 
-administrator or staff member, enabling role-based access and permissions within the inventory system.
+The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the <code>AuthService.cs</code> service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an  administrator or staff member, enabling role-based access and permissions within the inventory system.
 </p>
 
 <ul>
     <li><code>Admin</code> – Has elevated privileges for managing inventory and system operations</li>
     <li><code>Staff</code> – Has standard access for inventory-related tasks and monitoring</li>
 </ul>
-
 <p>
-
 </div>
 
-#### `Inventory Tracking:` Easily add, update, and delete medicine batches from the database.
+### `Inventory Tracking`
+
+</p>
+        <ul>
+The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
+        </p>
+
+<ul>
+
+<li><code>Stock Monitoring</code> – Tracks available quantities of medicines and supplies in real time
+<li><code>Expiration Tracking</code> – Identifies items nearing expiration to prevent unsafe usage
+<li><code>Low Stock Alerts</code> – Notifies users when inventory falls below safe thresholds
+
+</ul>
+<p>
+</div>
+
+ 
 #### `Modern Interface:` A sleek, responsive dashboard styled with a custom dark-themed UI.
 #### `Real-time Search & Filtering:` Quickly locate specific medicines, expiration dates, or low-stock items.
 #### `Secure Database Integration:` Reliable data storage and retrieval using SQL.
