@@ -118,8 +118,7 @@
     flex-direction: column;
     gap: 10px;
     flex: 2; 
-    min-width: 350px; 
-    width: auto;
+    min-width: 330px; 
 }
 
 .inventory-view .v3-search-bar {
@@ -284,16 +283,16 @@
 
 /* Staff-Specific Adjustments */
 .is-staff .v3-action-group {
-    align-items: flex-end; /* Aligns both search and button to the right */
+    align-items: stretch;
 }
 
 .is-staff .v3-search-bar {
-    width: 100px !important; /* Makes it less wide, matching the button group */
+    width: 100% !important; 
     transition: width 0.3s ease; /* Smooth transition if needed */
 }
 
 .is-staff .v3-buttons-row {
-    justify-content: flex-end; /* Ensures the Update button stays right-aligned */
+    justify-content: flex-end;
 }
 
 .is-staff .v3-action-sq {
