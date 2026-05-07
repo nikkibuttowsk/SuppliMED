@@ -40,7 +40,45 @@ The main goal of this system is to help small pharmacies, non-government organiz
 <br/>
 
 ## ✨ Key Features
-#### `Role-Based Access Control (RBAC):` Secure, distinct user levels to ensure data integrity and proper system management.
+### `Role-Based Access Control (RBAC)` 
+</p>
+    <ul>
+The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the <code>AuthService.cs</code> service located in the backend architecture. The following code initializes the predefined system users and their corresponding roles:
+</p>
+
+<pre>
+private static List&lt;User&gt; _users = new List&lt;User&gt;
+{
+    new Admin 
+    { 
+        UserID = "1",
+        Username = "admin",
+        Password = "admin123"
+    },
+
+    new Staff 
+    { 
+        UserID = "2",
+        Username = "staff",
+        Password = "staff123"
+    }
+};
+</pre>
+
+<p>
+This implementation allows the system to identify whether the authenticated account belongs to an 
+administrator or staff member, enabling role-based access and permissions within the inventory system.
+</p>
+
+<ul>
+    <li><code>Admin</code> – Has elevated privileges for managing inventory and system operations</li>
+    <li><code>Staff</code> – Has standard access for inventory-related tasks and monitoring</li>
+</ul>
+
+<p>
+
+</div>
+
 #### `Inventory Tracking:` Easily add, update, and delete medicine batches from the database.
 #### `Modern Interface:` A sleek, responsive dashboard styled with a custom dark-themed UI.
 #### `Real-time Search & Filtering:` Quickly locate specific medicines, expiration dates, or low-stock items.
