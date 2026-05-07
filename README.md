@@ -40,13 +40,11 @@ The main goal of this system is to help small pharmacies, non-government organiz
 <br/>
 
 ## ✨ Key Features
-* **Role-Based Access Control (RBAC):** Secure, distinct user levels to ensure data integrity and proper system management.
-  * **👑 Admin Privileges:** Full system oversight, user account management (add/edit/remove staff credentials), and master database overrides.
-  * **🧑‍💻 Staff Access:** Streamlined day-to-day operations focused on stock updates, searching, and logging transactions without exposing sensitive system settings.
-* **Inventory Tracking:** Easily add, update, and delete medicine batches from the database.
-* **Modern Interface:** A sleek, responsive dashboard styled with a custom dark-themed UI.
-* **Real-time Search & Filtering:** Quickly locate specific medicines, expiration dates, or low-stock items.
-* **Secure Database Integration:** Reliable data storage and retrieval using SQL.
+#### `Role-Based Access Control (RBAC):` Secure, distinct user levels to ensure data integrity and proper system management.
+#### `Inventory Tracking:` Easily add, update, and delete medicine batches from the database.
+#### `Modern Interface:` A sleek, responsive dashboard styled with a custom dark-themed UI.
+#### `Real-time Search & Filtering:` Quickly locate specific medicines, expiration dates, or low-stock items.
+#### `Secure Database Integration:` Reliable data storage and retrieval using SQL.
 
 <br/>
 
@@ -58,42 +56,85 @@ The <strong>SuppliMed Medicine Inventory System</strong> is built using an ASP.N
 </p>
 
 <pre>
-SUPPLIMED/
+SuppliMed/
 │
-├── 📁 SuppliMed/
-│   └── 📁 SuppliMed.Api/
-│       │
-│       ├── 📁 wwwroot/
-│       │   ├── 📁 css/
-│       │   │   ├── audit.css
-│       │   │   ├── dashboard.css
-│       │   │   ├── inventory.css
-│       │   │   ├── login.css
-│       │   │   ├── mainLayout.css
-│       │   │   └── modals.css
-│       │   │
-│       │   ├── 📁 js/
-│       │   │   ├── action.js
-│       │   │   ├── app.js
-│       │   │   ├── audit.js
-│       │   │   ├── auth.js
-│       │   │   ├── dashboard.js
-│       │   │   ├── inventory.js
-│       │   │   └── modals.js
-│       │   │
-│       │   ├── 📁 icons/
-│       │   │   ├── 1-default.svg
-│       │   │   ├── 2-default.svg
-│       │   │   ├── 3-default.svg
-│       │   │   └── 5-default.svg
-│       │   │
-│       │   ├── background.png
-│       │   ├── dashboard.html
-│       │   └── index.html
-│       │
-│       └── (C# backend files)
+├── 📁 frontend/
+│   │
+│   ├── 📁 css/
+│   │   ├── audit.css
+│   │   ├── dashboard.css
+│   │   ├── inventory.css
+│   │   ├── login.css
+│   │   ├── mainLayout.css
+│   │   └── modals.css
+│   │
+│   ├── 📁 icons/
+│   │   ├── 0.png
+│   │   ├── 1-default.svg
+│   │   ├── 2-default.svg
+│   │   ├── 3-default.svg
+│   │   ├── 3.png
+│   │   ├── 5-default.svg
+│   │   └── medickit.png
+│   │
+│   ├── 📁 js/
+│   │   ├── action.js
+│   │   ├── app.js
+│   │   ├── audit.js
+│   │   ├── auth.js
+│   │   ├── dashboard.js
+│   │   ├── inventory.js
+│   │   └── modals.js
+│   │
+│   ├── 🖼️ background.png
+│   ├── 📄 dashboard.html
+│   └── 📄 index.html
 │
-└── README.md
+├── 📁 backend/
+│   │
+│   ├── 📁 AppCore/
+│   │   │
+│   │   ├── 📁 Data/
+│   │   │   ├── AppDbContext.cs
+│   │   │   └── AppDbContextFactory.cs
+│   │   │
+│   │   ├── 📁 Interfaces/
+│   │   │   └── IInventoryService.cs
+│   │   │
+│   │   ├── 📁 Migrations/
+│   │   ├── 📁 Models/
+│   │   ├── 📁 Services/
+│   │   └── 📄 AppCore.csproj
+│   │
+│   ├── 📁 SuppliMed.Api/
+│   │   │
+│   │   ├── 📁 Controllers/
+│   │   │   ├── AuthController.cs
+│   │   │   ├── InventoryController.cs
+│   │   │   └── LogoutController.cs
+│   │   │
+│   │   ├── 📁 DTOs/
+│   │   │   ├── AuditLogDTO.cs
+│   │   │   ├── InventoryDTO.cs
+│   │   │   └── UserDTO.cs
+│   │   │
+│   │   ├── 📁 Properties/
+│   │   │   └── launchSettings.json
+│   │   │
+│   │   ├── 📄 Program.cs
+│   │   ├── 📄 appsettings.json
+│   │   ├── 📄 appsettings.Development.json
+│   │   ├── 📄 SuppliMed.Api.csproj
+│   │   └── 📄 SuppliMed.Api.http
+│   │
+│   ├── 📁 TestApp/
+│   │   ├── TestApp.csproj
+│   │   └── testcheck.cs
+│   │
+│   ├── 📄 .gitignore
+│   └── 📄 SuppliMed.slnx
+│
+└── 📄 README.md
 </pre>
 
 ### `Frontend` 
