@@ -82,7 +82,8 @@ The system implements an automated audit logging mechanism that continuously rec
 
 <div align="justify">
 
-The <strong>SuppliMed Medicine Inventory System</strong> is built using an ASP.NET (C#) backend  with a structured <code>wwwroot</code> directory for frontend assets such as HTML, CSS, JavaScript, and media files. Below is a diagram-like structure of the other primary helper classes defined inside the file:
+The **SuppliMed Medicine Inventory System** is structured into two distinct environments: a dedicated frontend folder for all client-side assets (HTML, CSS, JavaScript, and media files) and a separate backend folder for the ASP.NET (C#) architecture. Below is the project structure overview of the system:
+
 </p>
 
 <pre>
@@ -167,8 +168,8 @@ SuppliMed/
 └── 📄 README.md
 </pre>
 
-### `Frontend`
-The frontend is located in the `wwwroot` directory, which contains all client-side resources including styles, scripts, media, and HTML pages that power the user interface of SuppliMed.
+### 🖥️ Frontend
+The frontend contains all client-side resources—including styles, scripts, media assets, and HTML pages—that power the visual presentation and interactive user experience of SuppliMed.
 
 #### CSS Stylesheets
 Contains all styling resources responsible for the visual presentation of the system. These stylesheets define the layout, colors, typography, spacing, and responsiveness of the user interface to ensure a consistent and user-friendly design.
@@ -194,7 +195,46 @@ Contains the core user interface pages of the system, serving as the structural 
 * **`index.html`** – Entry point of the system, typically used for login or initial access.
 * **`dashboard.html`** – Main interface displaying system overview, navigation, and key data.
 
+#### Icons Directory
+This directory contains all the graphical assets, vector graphics, and standard imagery used to build the visual components of the SuppliMed user interface. 
+* **`0.png`** – Default avatar icon used for user profile pictures.
+* **`1-default.svg`** – Vector icon used for the Dashboard navigation link.
+* **`2-default.svg`** – Vector icon used for the Inventory Management module.
+* **`3-default.svg`** – Vector icon used for the Audit Logs or User Settings.
+* **`5-default.svg`** – Vector icon used for system configuration or logout actions.
 
+
+### ⚙️ Backend
+The backend follows a clean architecture pattern, separating the core business domain (`AppCore`) from the implementation of the web interface (`SuppliMed.Api`).
+
+#### AppCore (Domain & Data Layer)
+This layer manages the application's state, database schema, and core logic.
+* **`Data/`** – Contains the `AppDbContext.cs` for Entity Framework Core operations.
+* **`Interfaces/`** – Defines `IInventoryService.cs` to decouple the API from the implementation.
+* **`Models/`** – The heart of the system, representing our database entities and business objects:
+  * `Admin.cs` & `Staff.cs` – Specialized user roles.
+  * `Medicine.cs` & `MedicalSupply.cs` – Core inventory items.
+  * `Batch.cs` & `Equipment.cs` – Advanced tracking for supplies.
+  * `AuditLog.cs` & `LoginAttempt.cs` – Security and tracking entities.
+* **`Services/`** – The "brains" of the operation:
+  * `AuthService.cs` – Handles logic for secure sign-ins.
+  * `InventoryServices.cs` – Manages complex stock logic.
+  * `InventoryDataSeeder.cs` – Populates the database with initial medicine records.
+
+#### SuppliMed.Api (Web API Layer)
+The bridge between our database logic and the HTML/JS frontend.
+* **`Controllers/`** – Handles incoming web requests:
+  * `AuthController.cs` – Validates login credentials.
+  * `InventoryController.cs` – Exposes stock data to the UI.
+  * `LogoutController.cs` – Securely clears user sessions.
+* **`DTOs/`** – Data Transfer Objects like `AuditLogDTO.cs` ensure that we only send necessary data across the network, optimizing speed and security.
+* **`Program.cs`** – Configures the web server and hooks up dependency injection.
+* **`appsettings.json`** – Stores the database connection string and API settings.
+
+#### Development & Tooling
+* **`Migrations/`** – Records of database schema updates (Initial, AddTable, etc.).
+* **`launchSettings.json`** – Configures how the API starts up during development.
+* **`.gitignore`** – Keeps sensitive files and local builds out of the repository.
 
 <div align="center">
 
