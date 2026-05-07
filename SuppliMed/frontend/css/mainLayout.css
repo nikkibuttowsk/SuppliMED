@@ -2,7 +2,6 @@
     display: none !important;
 }
 
-/* Optional: Add a fade-in animation to make tab switching look smooth */
 .content-view {
     animation: fadeIn 0.3s ease-in-out;
 }

@@ -195,7 +195,7 @@ const ModalController = {
             console.log("Payload:", JSON.stringify(payload));
 
             
-            let response; // 👈 declare first
+            let response;
 
             try {
                 response = await fetch(endpoint, {

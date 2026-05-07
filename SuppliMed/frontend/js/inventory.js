@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (expiredEl) expiredEl.innerText = expired;
     }
 
-    // OPTIONAL: SEARCH FILTER
+    // SEARCH FILTER
     window.filterTable = function () {
         const input = document.getElementById("inventorySearch");
         const filter = input.value.toLowerCase();

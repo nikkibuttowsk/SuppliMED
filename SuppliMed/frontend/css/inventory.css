@@ -77,7 +77,7 @@
 
 .v3-stat-data p,
 .v3-stat-data h2 {
-    white-space: normal !important; /* MAGIC RULE: Allows the text to drop to the next line */
+    white-space: normal !important;
     margin: 0;
     font-size: 0.9em; 
     line-height: 1.2; /* Keeps the stacked text tight and neat */

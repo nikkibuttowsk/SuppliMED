@@ -1,1 +1,0 @@
-/* action buttons for dashboard view */

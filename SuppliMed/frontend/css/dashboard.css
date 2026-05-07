@@ -165,7 +165,6 @@ body {
     display: grid;
     grid-template-columns: 1.2fr 1.2fr 0.6fr;
     gap: 25px;
-    /* This makes the grid fill the remaining height of the app-container */
     height: calc(100% - 150px); 
 }
 
@@ -214,7 +213,6 @@ body {
     align-items: center;
 
     backdrop-filter: blur(6px);
-    /* border: 1px solid rgba(255,255,255,0.05); */
 }
 
 .item-card:hover {
@@ -401,7 +399,6 @@ body {
 
 /* --- COMMAND CENTER HEADER STYLE --- */
 
-/* --- REFINED HEADER STYLE --- */
 .v3-user-area {
     display: flex;
     flex-direction: column;
@@ -496,7 +493,6 @@ body {
     font-weight: 500;
 }
 
-/* Optional: Add a subtle GitHub branding color on hover */
 .member-tag:hover .member-name {
     color: var(--accent-green);
 }
