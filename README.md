@@ -99,7 +99,7 @@ The **SuppliMed Medicine Inventory System** is organized into two separate envir
 </p>
 
 <details>
-  <summary>System Architectutre</summary>
+  <summary>System Architecture</summary>
 
 </details>
 
