@@ -316,7 +316,7 @@ dotnet run --project SuppliMed.Api
 #### 5. Run the Frontend (UI)
 
 - Go to the frontend folder
-- Right-click `index.html`
+- Right-click `login.html`
 - Click **"Open with Live Server"**
 
 
