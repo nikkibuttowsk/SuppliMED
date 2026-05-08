@@ -15,7 +15,7 @@
 
 .v3-subtitle {
     display: block;
-    font-size: 13px;
+    font-size: 18px;
     opacity: 0.7;
     margin-top: 10px;
 }
@@ -71,6 +71,17 @@
     overflow: hidden; 
 }
 
+.icon-box.inv-stat{
+    width: auto;
+    height: auto;
+    /* background: rgba(35, 52, 62, 0.118); */
+    /* border: #6a6969 solid 2px; */
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .v3-stat-data {
     min-width: 0; 
 }
@@ -79,7 +90,7 @@
 .v3-stat-data h2 {
     white-space: normal !important;
     margin: 0;
-    font-size: 0.9em; 
+    font-size: 1em; 
     line-height: 1.2; /* Keeps the stacked text tight and neat */
 }
 
@@ -88,11 +99,11 @@
     flex: 0.8; /* Gives legend the minimum needed room */
     background: rgba(0,0,0,0.4);
     border-radius: 12px;
-    padding: 11.8px 8px !important;
+    padding: 11.8px 15px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 2px;
+    gap: 8px;
     min-width: 0; 
     box-sizing: border-box;
 }
@@ -190,6 +201,33 @@
     font-size: 16px;
     color: white;
 }
+
+.inv-btn-icon img{
+    width: auto;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inv-btn-icon.add img {
+    border: #2266c5 solid 2px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.inv-btn-icon.delete img {
+    border: #c52222 solid 2px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.inv-btn-icon.update img {
+    border: #c5bd22 solid 2px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
 
 /* ===== TABLE SECTION ===== */
 .v3-bottom-layout {

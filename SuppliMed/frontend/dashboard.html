@@ -22,26 +22,26 @@
     <div class="app-container">
         <nav class="sidebar">
             <div class="user-profile">
-                <img src="icons/0.png" alt="Admin" class="profile-img">
+                <img src="icons/0.jpg" alt="Admin" class="profile-img">
             </div>
             
             <div class="nav-icons">
                 <button class="nav-item active" id="btn-nav-dashboard">
-                    <img class="nav-icon icon-home" src="icons/1-default.svg" alt="Home">
+                    <img class="nav-icon icon-home" src="icons/home.png" alt="Home">
                 </button>
                 
                 <button class="nav-item" id="btn-nav-inventory">
-                    <img class="nav-icon icon-box" src="icons/2-default.svg" alt="Inventory">
+                    <img class="nav-icon icon-inventory" src="icons/inventory.png" alt="Inventory">
                 </button>
                 
                 <button class="nav-item" id="btn-nav-audit">
-                    <img class="nav-icon icon-chart" src="icons/3-default.svg" alt="Audit">
+                    <img class="nav-icon icon-audit" src="icons/audit.png" alt="Audit">
                 </button>
             </div>
             
             <div class="bottom-icons">
                 <button id="btn-logout" class="logout-btn nav-item" title="Logout">
-                    <img class="nav-icon icon-logout" src="icons/5-default.svg" alt="Logout"> 
+                    <img class="nav-icon icon-logout" src="icons/logout.png" alt="Logout"> 
                 </button>
             </div>
         </nav>
@@ -65,17 +65,20 @@
 
                 <div class="stats-row">
                     <div class="stat-card">
-                        <h3>🛍️ Total Supplies</h3>
+                        <div class="icon-box border-total-supplies"><img src="icons/totalSupplies.png" alt="Inventory"></div>
+                        <h3>Total Supplies</h3>
                         <p id="total-supply-count">...</p> 
                     </div>
 
                     <div class="stat-card low-stock">
-                        <h3>⚠️ Low Stock</h3>
+                        <div class="icon-box border-low-stock"><img src="icons/lowStock.png" alt="Inventory"></div>
+                        <h3>Low Stock</h3>
                         <p id="low-stock-count">0</p>
                     </div>
 
                     <div class="stat-card expiring">
-                        <h3>⏳ Expired Supply</h3>
+                        <div class="icon-box border"><img src="icons/expired.png" alt="Inventory"></div>
+                        <h3>Expired Supply</h3>
                         <p id="expired-count">0</p>
                     </div>
                 </div>
@@ -87,14 +90,14 @@
                     </section>
 
                     <section class="details-panel">
-                        <h3>Expiring Soon <span id="expiring-badge" class="badge green">0</span></h3>
+                        <h3>Expiring Soon <span id="expiring-badge" class="badge red">0</span></h3>
                         <div id="expiring-list"></div>
                     </section>
 
                     <div class="action-column">
-                        <button id="btn-add" class="action-btn action-add"><span>+</span> Add Supply</button>
-                        <button id="btn-delete" class="action-btn action-delete"><span>🗑️</span> Delete Supply</button>
-                        <button id="btn-update" class="action-btn action-update"><span>📝</span> Update Supply</button>
+                        <button id="btn-add" class="action-btn action-add"><span><img src="icons/addSupply.png" alt="Add"></span> Add Supply</button>
+                        <button id="btn-delete" class="action-btn action-delete"><span><img src="icons/deleteSupply.png" alt="Delete"></span> Delete Supply</button>
+                        <button id="btn-update" class="action-btn action-update"><span><img src="icons/updateSupply.png" alt="Update"></span> Update Supply</button>
 
                         <div class="team-panel">
                             <h3>Developed By</h3>
@@ -138,7 +141,7 @@
                         
                         <div class="v3-stats-group">
                             <div class="v3-stat-card">
-                                <div class="v3-icon-box v3-border-green">🛍️</div>
+                                <div class="icon-box inv-stat"><img src="icons/totalSupplies.png" alt="Inventory"></div>
                                 <div class="v3-stat-data">
                                     <h2 id="inv-total-count">0</h2> 
                                     <p>Total Supplies</p>
@@ -146,7 +149,7 @@
                             </div>
 
                             <div class="v3-stat-card">
-                                <div class="v3-icon-box v3-border-yellow">📊</div>
+                                <div class="icon-box inv-stat"><img src="icons/lowStock.png" alt="Inventory"></div>
                                 <div class="v3-stat-data">
                                     <h2 id="inv-low-count">0</h2>
                                     <p>Low Stocks</p>
@@ -154,7 +157,7 @@
                             </div>
 
                             <div class="v3-stat-card">
-                                <div class="v3-icon-box v3-border-red">⏳</div>
+                                <div class="icon-box inv-stat"><img src="icons/expired.png" alt="Inventory"></div>
                                 <div class="v3-stat-data">
                                     <h2 id="inv-expired-count">0</h2>
                                     <p>Expired Supplies</p>
@@ -185,15 +188,15 @@
 
                             <div class="v3-buttons-row">
                                 <button id="btn-inv-add" class="v3-action-sq">
-                                    <div class="v3-btn-icon v3-border-green">+</div>
+                                    <div class="inv-btn-icon add"><img src="icons/addSupply.png" alt="Update"></div>
                                     <span>Add Supply</span>
                                 </button>
                                 <button id="btn-inv-delete" class="v3-action-sq">
-                                    <div class="v3-btn-icon v3-border-red">🗑️</div>
+                                    <div class="inv-btn-icon delete"><img src="icons/deleteSupply.png" alt="Delete"></div>
                                     <span>Delete Supply</span>
                                 </button>
                                 <button id="btn-inv-update" class="v3-action-sq">
-                                    <div class="v3-btn-icon v3-border-blue">📝</div>
+                                    <span class="inv-btn-icon update"><img src="icons/updateSupply.png" alt="Update"></span>
                                     <span>Update Supply</span>
                                 </button>
                             </div>

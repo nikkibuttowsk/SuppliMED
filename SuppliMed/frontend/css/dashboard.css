@@ -111,8 +111,8 @@ body {
 }
 
 .stat-card {
-    background: linear-gradient(145deg, #14211f, #0f1a18);
-    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    padding: 50px;
     border-radius: 20px;
     display: flex !important;
     justify-content: space-between;
@@ -140,7 +140,7 @@ body {
 .stat-card h3 {
     font-size: 1rem !important; 
     margin: 0;
-    font-weight: 500;
+    font-weight: bold;
     color: var(--text-main);
 }
 
@@ -151,14 +151,38 @@ body {
     color: var(--accent-green);
 }
 
-.stat-card .icon {
-    font-size: 2rem;
-    opacity: 0.8;
+.icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    font-size: 1px;
+    color: white;
+    padding: 12px;
 }
 
-.stat-card.total { border-bottom-color: #3e5245; }
-.stat-card.low { border-bottom-color: #524f3e; }
-.stat-card.expired { border-bottom-color: #523e3e; }
+
+.icon-box img {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-box.border-total-supplies img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.icon-box.border-low-stock img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+}
+
 
 /* --- DETAILS GRID --- */
 .details-grid {
@@ -169,7 +193,7 @@ body {
 }
 
 .details-panel {
-    background: linear-gradient(145deg, #14211f, #0f1a18);
+    background: rgba(0,0,0,0.4);
     padding: 20px;
     border-radius: 20px;
     overflow: hidden;
@@ -201,7 +225,7 @@ body {
 }
 
 .badge.yellow { background-color: var(--accent-yellow); }
-.badge.green { background-color: var(--accent-green); }
+.badge.red { background-color: rgba(226, 61, 61, 0.836); }
 
 .item-card {
     background: none;
@@ -243,7 +267,7 @@ body {
 
 /* Container for the specific rows in Expiring Soon */
 .expiring-item-row {
-    background: #101E1F;
+    background: #101614;
     padding: 12px 15px;
     border-radius: 12px;
     margin-bottom: 10px;
@@ -252,8 +276,13 @@ body {
     align-items: center;
     position: relative; /* Needed for the absolute status line */
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* border: 1px solid rgba(255, 255, 255, 0.05); */
     gap: 8px;
+}
+
+.expiring-item-row:hover {
+    background: rgba(255,255,255,0.05);
+    transform: translateY(-2px);
 }
 
 /* The vertical line on the left */
@@ -335,7 +364,7 @@ body {
 }
 
 .action-btn {
-    background: linear-gradient(145deg, #14211f, #0f1a18);
+    background: rgba(0,0,0,0.4);
     border-radius: 18px;
     height: 70px;
     width: 100%;
@@ -343,10 +372,11 @@ body {
     color: white;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* flex-direction: column; */
+    padding: 25px;
+    justify-content: left;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 
     border: 1px solid rgba(255,255,255,0.05);
 
@@ -362,8 +392,10 @@ body {
     background: #2a3833;
 }
 
-.action-btn span {
-    font-size: 1.2rem;
+.action-btn span img {
+    height: 20px;
+    width: auto;
+    font-size: 0.9rem;
 }
 
 .action-btn.add span { 
@@ -443,7 +475,7 @@ body {
 
 .team-panel {
     margin-top: 15px;
-    background: linear-gradient(145deg, #14211f, #0f1a18);
+    background: rgba(0,0,0,0.4);
     padding: 15px;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
