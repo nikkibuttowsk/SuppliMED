@@ -518,7 +518,7 @@ This section provides a visual overview of the SuppliMed user interface.
 </details>
         
 <details>
-  <summary> Snapshots of Features </summary>
+  <summary> Other Forms </summary>
 <p> </p>
 
 ### `Add Supply`
