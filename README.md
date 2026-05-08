@@ -3,7 +3,7 @@
 </h1>
 
 <h2 align="center">
-  A Medicine Inventory System powered by C# and SQL, with a modern HTML and CSS interface.
+  A Medical Supplies Inventory System powered by C# and SQL, with a modern HTML and CSS interface.
 </h2>
 
 <div align="center">
@@ -19,10 +19,9 @@
 
 <div align="justify">
 
-This project presents a Medicine Inventory System designed to efficiently manage and organize medical supplies. It is developed using C# for the backend logic, with SQL serving as the database for secure and structured data storage. The system also features a user-friendly interface built with HTML and CSS to ensure ease of use and accessibility.
+The project entitled “SuppliMed: Medical Supplies Inventory System” was developed to help organize and manage medical supplies more efficiently. The system uses C# for the backend functionality and SQL as the database to ensure secure and well-structured data management. It also includes a simple and user-friendly interface created with HTML and CSS to make the system accessible and easy to navigate.
 
-The main goal of this system is to help small pharmacies, non-government organizations (NGOs), barangay health centers, and volunteer groups improve the way they track and manage medicines. By providing an organized and reliable inventory process, the system aims to reduce errors, prevent stock shortages, and support better decision-making in distributing medical supplies to communities in need.
-
+The primary purpose of the system is to assist small pharmacies, non-government organizations (NGOs), barangay health centers, and volunteer groups in monitoring and managing medicines more effectively. Through a more organized inventory process, the system helps minimize errors, avoid medicine shortages, and support better decisions when distributing medical supplies to communities that need them most.
 <br/>
 
 ## ✨ Key Features
