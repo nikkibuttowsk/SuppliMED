@@ -218,12 +218,19 @@ Contains the core user interface pages of the system, serving as the structural 
 * **`dashboard.html`** – Main interface displaying system overview, navigation, and key data.
 
 #### Icons Directory
-This directory contains all the graphical assets, vector graphics, and standard imagery used to build the visual components of the SuppliMed user interface. 
+This directory contains all the graphical assets and standard imagery used to build the visual components of the SuppliMed user interface. 
+* **`0.jpg`** – Alternate or legacy default avatar for user profiles.
 * **`0.png`** – Default avatar icon used for user profile pictures.
-* **`1-default.svg`** – Vector icon used for the Dashboard navigation link.
-* **`2-default.svg`** – Vector icon used for the Inventory Management module.
-* **`3-default.svg`** – Vector icon used for the Audit Logs or User Settings.
-* **`5-default.svg`** – Vector icon used for system configuration or logout actions.
+* **`addSupply.png`** – Icon representing the action to register a new medical supply.
+* **`audit.png`** – Icon used for the Audit Logs navigation link or header.
+* **`deleteSupply.png`** – Icon representing the action to permanently remove a medical supply.
+* **`expired.png`** – Status icon used to highlight expired or expiring stock on the dashboard.
+* **`home.png`** – Navigation icon used for the main Dashboard view.
+* **`inventory.png`** – Navigation icon used for the Inventory Management module.
+* **`logout.png`** – Icon used for the system logout button.
+* **`lowStock.png`** – Status icon used to flag items that have dropped below their minimum stock threshold.
+* **`totalSupplies.png`** – Dashboard icon representing the aggregate count of all supplies in the system.
+* **`updateSupply.png`** – Icon representing the action to adjust or restock an existing supply.
 </details>
 
 <details>
@@ -463,6 +470,83 @@ public class InventoryController : ControllerBase
 }
 ```
 </details>
+
+</div>
+<br/>
+
+
+## 🖥️ Program Snapshots
+<div align="justify">
+
+This section provides a visual overview of the SuppliMed user interface. 
+<br/>
+
+<details>
+  <summary> Login Form </summary>
+<p> </p>
+<img width="1331" height="883" alt="login-admin" src="https://github.com/user-attachments/assets/4c1bab8d-98e9-4213-ab33-96507723fe19" />
+</details>
+
+<details>
+  <summary> Dashboard Form </summary>
+<p> </p>
+        
+### `Admin View`
+<img width="1516" height="883" alt="dashboard-adminview" src="https://github.com/user-attachments/assets/87f3105b-9a7b-4b17-af99-620d44c6bcff" />
+<p> </p>
+
+### `Staff View`
+<img width="1516" height="883" alt="dashboard-staffview" src="https://github.com/user-attachments/assets/d830d749-dac5-48cb-916c-bd769f871819" />
+</details>
+
+<details>
+  <summary> Inventory Form </summary>
+<p> </p>
+        
+### `Admin View`
+<img width="1516" height="883" alt="inventory-adminview" src="https://github.com/user-attachments/assets/aa44fcdf-0a69-4397-be1a-99482865bb92" />
+<p> </p>
+
+### `Staff View`
+<img width="1516" height="883" alt="inventory-staffview" src="https://github.com/user-attachments/assets/384ec6df-02ae-4ba0-80a0-3a23862a3be6" />
+</details>
+
+<details>
+  <summary> Audit Log Form </summary>
+<p> </p>
+<img width="1516" height="883" alt="auditlog" src="https://github.com/user-attachments/assets/4cdd4c17-940e-400d-9ecf-b10cead59ca0" />
+</details>
+        
+<details>
+  <summary> Snapshots of Features </summary>
+<p> </p>
+
+### `Add Supply`
+<img width="1516" height="883" alt="addsupplyForm" src="https://github.com/user-attachments/assets/0da65499-1be7-44a0-8948-50f7d5539ed6" />
+<p> </p>
+
+### `Delete Supply`
+<img width="1516" height="883" alt="deletesupplyForm" src="https://github.com/user-attachments/assets/9948d0ec-5ce2-4f72-884e-459e8c369132" />
+<p> </p>
+
+### `Update Supply`
+<img width="1516" height="883" alt="updatesupplyForm" src="https://github.com/user-attachments/assets/05ebade9-98c8-49f8-9621-5538fc04bf8d" />
+<p> </p>
+
+### `Inventory Search`
+<img width="1516" height="883" alt="inventory-searchName" src="https://github.com/user-attachments/assets/f65b911f-2e98-4a6b-964f-2b8102013bc7" />
+<p> </p>
+
+### `Audit Log Search`
+<img width="1516" height="883" alt="auditlog-searchUser" src="https://github.com/user-attachments/assets/c4c8977c-084d-4f17-a0ce-cd3571682164" />
+<p> </p>
+
+### `Logout`
+<img width="1516" height="883" alt="logout" src="https://github.com/user-attachments/assets/3a3137e4-33a2-44a7-8572-8ec5f439aae9" />
+<p> </p>
+
+</details>
+
 
 
 <br/>
