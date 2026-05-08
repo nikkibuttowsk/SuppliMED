@@ -116,10 +116,10 @@ const AuthController = {
             
             localStorage.clear();
             sessionStorage.clear();
-            window.location.href = 'index.html'; 
+            window.location.href = 'login.html'; 
         } catch (error) {
             console.error("Logout failed:", error);
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         }
     }
 };

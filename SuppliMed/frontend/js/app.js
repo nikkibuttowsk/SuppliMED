@@ -37,7 +37,7 @@ async function handleLogout() {
         }
         localStorage.clear();
         sessionStorage.clear();
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
 
@@ -108,7 +108,12 @@ function applyRoleRestrictions() {
 
         adminOnlyIds.forEach(id => {
             const btn = document.getElementById(id);
-            if (btn) btn.style.display = "none";
+            if (btn) {
+                btn.disabled = true;       // dili pwede i-click
+                btn.classList.add('admin-only-lock'); // for styling
+                
+                btn.title = "Administrator access required";
+            }
         });
 
     }
