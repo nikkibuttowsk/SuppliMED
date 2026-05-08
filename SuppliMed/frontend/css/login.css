@@ -29,7 +29,7 @@ body::before {
 
 .login-card {
     width: 380px; 
-    background-color: rgba(22, 42, 44, 0.85);
+    background-color: #17292bcd;
     border-radius: 20px;
     padding: 30px 35px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);

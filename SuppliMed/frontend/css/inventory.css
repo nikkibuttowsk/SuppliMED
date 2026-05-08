@@ -90,7 +90,7 @@
 .v3-stat-data h2 {
     white-space: normal !important;
     margin: 0;
-    font-size: 1em; 
+    /* font-size: 1em;  */
     line-height: 1.2; /* Keeps the stacked text tight and neat */
 }
 
@@ -99,11 +99,11 @@
     flex: 0.8; /* Gives legend the minimum needed room */
     background: rgba(0,0,0,0.4);
     border-radius: 12px;
-    padding: 11.8px 15px !important;
+    padding: 11.8px 20px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     min-width: 0; 
     box-sizing: border-box;
 }
@@ -114,7 +114,7 @@
     gap: 9px;
     min-width: 0;
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 .v3-legend-item span {
@@ -244,13 +244,13 @@
     overflow-x: auto;
 }
 
-.v3-table {
+.v3-table-inv {
     width: 100%;
     border-collapse: separate;
     border-spacing: 5px 0;
 }
-
-.v3-table th {
+/* table header */
+.v3-table-inv th {
     text-align: left;
     font-size: 14px;
     font-weight: 700;
@@ -260,13 +260,43 @@
     border-radius: 12px;
 }
 
-.v3-table td {
-    padding: 10px;
+.v3-table-inv td {
+    padding: 12px;
     font-size: 13px;
+    text-align: left;
+    justify-content: center;
 }
 
-.v3-table tbody tr {
+.v3-table-inv tbody tr {
     border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.v3-table-inv th:nth-child(1), 
+.v3-table-inv td:nth-child(1) {
+    width: 120px;
+    white-space: nowrap;
+}
+
+.v3-table-inv th:nth-child(2), 
+.v3-table-inv th:nth-child(3) {
+    width: auto;
+}
+
+.v3-table-inv th:nth-child(4), 
+.v3-table-inv td:nth-child(4) {
+    width: 200px;
+    text-align: left;
+}
+
+.v3-table-inv th:nth-child(5), 
+.v3-table-inv td:nth-child(5) {
+    width: 200px;
+}
+
+.v3-table-inv th:nth-child(6), 
+.v3-table-inv td:nth-child(6) {
+    width: 70px;
+    text-align: center;
 }
 
 /* ===== STATUS ===== */
@@ -274,6 +304,7 @@
     width: 16px;
     height: 16px;
     border-radius: 4px;
+    display: inline-block;
 }
 
 .v3-status.green { background: #22c55e; }
@@ -319,20 +350,11 @@
     margin-top: 15px;
 }
 
-/* Staff-Specific Adjustments */
-.is-staff .v3-action-group {
-    align-items: stretch;
-}
 
-.is-staff .v3-search-bar {
-    width: 100% !important; 
-    transition: width 0.3s ease; /* Smooth transition if needed */
-}
-
-.is-staff .v3-buttons-row {
-    justify-content: flex-end;
-}
-
-.is-staff .v3-action-sq {
-    flex: 0 1 100px; /* Limits the width of the update button to match search */
+.admin-only-lock {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: grayscale(100%);
+    pointer-events: none;
+    position: relative;
 }

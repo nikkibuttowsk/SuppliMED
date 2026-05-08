@@ -276,7 +276,6 @@ body {
     align-items: center;
     position: relative; /* Needed for the absolute status line */
     overflow: hidden;
-    /* border: 1px solid rgba(255, 255, 255, 0.05); */
     gap: 8px;
 }
 
@@ -368,16 +367,16 @@ body {
     border-radius: 18px;
     height: 70px;
     width: 100%;
-
-    color: white;
-
     display: flex;
     /* flex-direction: column; */
     padding: 25px;
     justify-content: left;
     align-items: center;
     gap: 10px;
-
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 550;
+    color: rgb(180, 178, 178);
     border: 1px solid rgba(255,255,255,0.05);
 
     box-shadow:
@@ -392,23 +391,10 @@ body {
     background: #2a3833;
 }
 
+
 .action-btn span img {
     height: 20px;
     width: auto;
-    font-size: 0.9rem;
-}
-
-.action-btn.add span { 
-    color: var(--accent-green);
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
-}
-.action-btn.delete span { 
-    color: var(--accent-red); 
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
-}
-.action-btn.update span { 
-    color: #3b82f6; 
-    text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
 }
 
 .card {
@@ -528,3 +514,4 @@ body {
 .member-tag:hover .member-name {
     color: var(--accent-green);
 }
+
