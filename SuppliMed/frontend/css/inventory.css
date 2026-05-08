@@ -74,8 +74,6 @@
 .icon-box.inv-stat{
     width: auto;
     height: auto;
-    /* background: rgba(35, 52, 62, 0.118); */
-    /* border: #6a6969 solid 2px; */
     border-radius: 12px;
     display: flex;
     justify-content: center;
@@ -90,7 +88,6 @@
 .v3-stat-data h2 {
     white-space: normal !important;
     margin: 0;
-    /* font-size: 1em;  */
     line-height: 1.2; /* Keeps the stacked text tight and neat */
 }
 
