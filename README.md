@@ -14,20 +14,6 @@
 <img src="https://img.shields.io/badge/Language-SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 </div>
 
-<br/>
-</div>
-<h3 align="center">CS 2204 - Group 1</h3>
-
-<div align="center">
-
-| Role | Members |
-| :---: | :---: |
-| **Project Manager / Lead Developer** | Nikki C. Limboc |
-| **GUI Developer** | Rex Anthony C. Castillano |
-
-</div>
-<br/>
-
 
 ## 📖 About the Project
 
@@ -472,3 +458,18 @@ public class InventoryController : ControllerBase
 }
 ```
 </details>
+
+
+<br/>
+</div>
+<h3 align="center">CS 2204 - Group 1</h3>
+
+<div align="center">
+
+| Role | Members |
+| :---: | :---: |
+| **Project Manager / Lead Developer** | Nikki C. Limboc |
+| **GUI Developer** | Rex Anthony C. Castillano |
+
+</div>
+<br/>
