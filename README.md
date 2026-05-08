@@ -113,13 +113,18 @@ SuppliMed/
 │   │   └── modals.css
 │   │
 │   ├── 📁 icons/
+│   │   ├── 0.jpg
 │   │   ├── 0.png
-│   │   ├── 1-default.svg
-│   │   ├── 2-default.svg
-│   │   ├── 3-default.svg
-│   │   ├── 3.png
-│   │   ├── 5-default.svg
-│   │   └── medickit.png
+│   │   ├── addSupply.png
+│   │   ├── audit.png
+│   │   ├── deleteSupply.png
+│   │   ├── expired.png
+│   │   ├── home.png
+│   │   ├── inventory.png
+│   │   ├── logout.png
+│   │   ├── lowStock.png
+│   │   ├── totalSupplies.png
+│   │   └── updateSupply.png
 │   │
 │   ├── 📁 js/
 │   │   ├── action.js
@@ -132,7 +137,7 @@ SuppliMed/
 │   │
 │   ├── 🖼️ background.png
 │   ├── 📄 dashboard.html
-│   └── 📄 index.html
+│   └── 📄 login.html
 │
 ├── 📁 backend/
 │   │
@@ -209,7 +214,7 @@ Contains all client-side scripts responsible for handling system functionality, 
 
 #### HTML Pages
 Contains the core user interface pages of the system, serving as the structural foundation of the application. These pages define the layout and integrate styles (CSS) and functionality (JavaScript) to deliver an interactive user experience.
-* **`index.html`** – Entry point of the system, typically used for login or initial access.
+* **`login.html`** – Entry point of the system, typically used for login or initial access.
 * **`dashboard.html`** – Main interface displaying system overview, navigation, and key data.
 
 #### Icons Directory
