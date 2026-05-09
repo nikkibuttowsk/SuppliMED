@@ -2,9 +2,9 @@
         <img width="1100" height="250" alt="supplimedlogo" src="https://github.com/user-attachments/assets/bfd5a536-7a62-4d36-abf1-67d9304b9e49" /
 </h1>
 
-<h2 align="center">
+<!-- <h2 align="center">
   A Medical Supplies Inventory System powered by C# and SQL, with a modern HTML and CSS interface.
-</h2>
+</h2> -->
 
 <div align="center">
 
@@ -88,6 +88,15 @@ The system implements an automated audit logging mechanism that continuously rec
 </div>
 <br/>
 
+## ⚙️ How It Works
+
+The **SuppliMed** ecosystem functions through a seamless communication loop between the client interface and the server logic:
+
+1. **User Interaction:** The user performs an action (e.g., adding a medicine) through the dashboard and inventory tab.
+2. **API Call:** The `inventory.js` module captures the input and sends a JSON-formatted request to the `InventoryController.cs` in the backend.
+3. **Logic Processing:** The `InventoryServices.cs` validates the data, checks for existing stock, and generates a unique ID using **Encapsulation** and **Abstraction**.
+4. **Data Persistence:** The `AppDbContext.cs` saves the changes to the SQL database via Entity Framework Core.
+5. **Activity Logging:** The system automatically triggers an **Audit Log** entry, recording the user identity and the specific modification made for accountability.
 
 ## 📂 Project Structure 
 
@@ -99,6 +108,23 @@ The **SuppliMed Medicine Inventory System** is organized into two separate envir
 
 <details>
   <summary>System Architecture</summary>
+
+### `Application Flow & Data Logic`
+The architecture follows a Client-Server model. The Frontend communicates with the ASP.NET Core Web API via asynchronous HTTP requests, while the Backend manages data persistence through Entity Framework Core and MySQL.
+
+#### 🔄 System Flowchart
+
+<p align="center">
+  <img src="SuppliMed/frontend/icons/READMEimages/flowchart.png" width="800" alt="Flowchart">
+</p>
+
+
+
+##### 📊 UML Class Diagram
+
+<p align="center">
+  <img src="SuppliMed/frontend/icons/READMEimages/uml.png" width="800" alt="UML Diagram">
+</p>
 
 </details>
 
@@ -120,8 +146,11 @@ SuppliMed/
 │   │   └── modals.css
 │   │
 │   ├── 📁 icons/
-│   │   ├── 0.jpg
-│   │   ├── 0.png
+│   │   ├── 📁 READMEimages/
+│   │   |   ├── flowchart.png
+│   │   |   └── uml.png
+│   │   |
+│   │   ├── userAvatar.jpg
 │   │   ├── addSupply.png
 │   │   ├── audit.png
 │   │   ├── deleteSupply.png
@@ -495,7 +524,7 @@ This section provides a visual overview of the SuppliMed user interface.
 </details>
 
 <details>
-  <summary> Dashboard Form </summary>
+  <summary> Dashboard </summary>
 <p> </p>
         
 ### `Admin View`
@@ -507,7 +536,7 @@ This section provides a visual overview of the SuppliMed user interface.
 </details>
 
 <details>
-  <summary> Inventory Form </summary>
+  <summary> Inventory Tab </summary>
 <p> </p>
         
 ### `Admin View`
@@ -519,7 +548,7 @@ This section provides a visual overview of the SuppliMed user interface.
 </details>
 
 <details>
-  <summary> Audit Log Form </summary>
+  <summary> Audit Log Tab </summary>
 <p> </p>
 <img width="1516" height="883" alt="auditlog" src="https://github.com/user-attachments/assets/4cdd4c17-940e-400d-9ecf-b10cead59ca0" />
 </details>
@@ -554,18 +583,54 @@ This section provides a visual overview of the SuppliMed user interface.
 
 </details>
 
-
-
 <br/>
 </div>
-<h3 align="center">CS 2204 - Group 1</h3>
 
-<div align="center">
+## 🌱 Future Enhancements
+<div align="justify">
 
-| Role | Members |
-| :---: | :---: |
-| **Project Manager / Lead Developer** | Nikki C. Limboc |
-| **GUI Developer** | Rex Anthony C. Castillano |
-
-</div>
+To further enhance the SuppliMed system for real-world production environments, the following developments are recommended:
 <br/>
+<ul>
+  <li>
+  <strong>🛡️ Enhanced Security:</strong> Currently, the system uses cookie-based sessions for local development. Shifting to <em>JSON Web Tokens (JWT)</em> and implement <em>HTTPS</em> would allow for more secure communication between the frontend and the C# API, especially if deployed to a cloud server.
+  </li>
+
+  <li>
+  <strong>📈 Advanced Analytics & Forecasting:</strong> Implementing a predictive algorithm to suggest reorder quantities based on historical <em>dispense</em> actions would help centers manage their budgets more effectively.
+  </li>
+
+  <li>
+  <strong>📱 Mobile Integration & Barcode Scanning:</strong> Developing a mobile companion app or adding QR/Barcode scanning functionality via the camera. This would allow staff to instantly <em>Dispense</em> or <em>Restock</em> supplies by scanning the physical packaging rather than manually typing IDs.
+  </li>
+
+  <li>
+  <strong>🚨 Automated Notifications System:</strong> Implementing an email or SMS alert service that automatically notifies the administrators when a life-saving medicine hits a critical low stock threshold or is within 30 days of expiry.
+  </li>
+
+  <li>
+  <strong>☁️ Cloud Migration & Multi-Tenant Support:</strong> Advancing the SQL database to Azure or Amazon Web Services (AWS) to allow multiple health centers to use the same system while keeping their data isolated. This would transform SuppliMed from a local tool into a <em><strong>Software as a Service</strong></em> platform
+  </li>
+</ul>
+
+## 💻 The Developers
+
+<table width="100%">
+  <tr>
+    <th align="left" width="33%">Role</th>
+    <th align="left" width="33%">Member</th>
+    <th align="left" width="33%">GitHub</th>
+  </tr>
+
+  <tr>
+    <td>Project Manager/Lead Developer</td>
+    <td>Nikki C. Limboc</td>
+    <td><a href="https://github.com/nikkibuttowsk"><img src="https://img.shields.io/badge/nikkibuttowsk-181717?style=for-the-badge&logo=github&logoColor=white"/></a></td>
+  </tr>
+  <tr>
+    <td>GUI Developer </td>
+    <td>Rex Anthony C. Castillano </td>
+    <td><a href="https://github.com/rexanthonyyy"><img src="https://img.shields.io/badge/rexanthonyyy-181717?style=for-the-badge&logo=github&logoColor=white"/></a></td>
+  </tr>
+
+  
