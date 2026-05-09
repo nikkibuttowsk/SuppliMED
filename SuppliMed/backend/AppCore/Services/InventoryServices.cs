@@ -71,6 +71,9 @@ namespace AppCore.Services
                 RecordAuditLog(supply, 0, "DELETE", user);
                 _context.Supplies.Remove(supply);
                 _context.SaveChanges();
+            } else
+            {
+                throw new Exception("No existing ID found. Refer to the inventory list for valid IDs.");
             }
         }
 
