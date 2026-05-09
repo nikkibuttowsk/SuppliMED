@@ -25,11 +25,13 @@ The primary purpose of the system is to assist small pharmacies, non-government 
 <br/>
 
 ## ✨ Key Features
+<div align="justify">
+
+Designed to streamline the workflow of health clinics, SuppliMed offers several key functionalities to ensure accurate stock tracking and organizational accountability.
 
 <details>
   <summary> Role-Based Access Control (RBAC) </summary>
 
-### `Role-Based Access Control (RBAC)`
 The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the `AuthService.cs` service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an administrator or staff member, enabling role-based access and permissions within the inventory system.
 
 * **`Admin`** – Has elevated privileges for managing inventory and system operations.
@@ -40,7 +42,6 @@ The system implements a role-based authentication mechanism that differentiates 
 <details>
   <summary> Inventory Tracking </summary>
 
-### `Inventory Tracking`
 The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
 
 * **`Stock Monitoring`** – Tracks available quantities of medicines and supplies in real time.
@@ -52,7 +53,6 @@ The system implements a structured inventory tracking mechanism that allows real
 <details>
   <summary> Real-time Search & Filtering </summary>
 
-### `Real-time Search & Filtering`
 The system implements a real-time search and filtering mechanism that allows users to instantly locate specific inventory records as they type in the search bar. This functionality is handled through the frontend script, which continuously queries and filters displayed data without requiring page reloads. It improves usability by making large datasets easier to navigate and manage efficiently.
 
 * **`Live Search`** – Dynamically filters results as the user types input.
@@ -64,7 +64,6 @@ The system implements a real-time search and filtering mechanism that allows use
 <details>
   <summary>Database Integration</summary>
 
-### `Database Integration`
 The system integrates a SQL-based database to ensure reliable storage and retrieval of all inventory data. It supports secure processing of transactions such as adding, updating, and deleting records while maintaining data consistency across the system. This implementation improves data management efficiency and ensures that all information is properly stored and easily accessible when needed.
 
 * **`SQL Database`** – Provides structured and secure storage of system data.
@@ -76,7 +75,6 @@ The system integrates a SQL-based database to ensure reliable storage and retrie
 <details>
   <summary> Audit Log </summary>
 
-### `Audit Log`
 The system implements an automated audit logging mechanism that continuously records user activities and system transactions. It tracks detailed information regarding who performed an action, what specific changes were made, and the exact time the event occurred. This implementation ensures accountability among staff and administrators, aids in troubleshooting, and enhances overall system security by maintaining a transparent history of all data modifications.
 
 * **`Activity Tracking`** – Monitors and records all critical system operations, including stock additions, updates, and deletions.
@@ -89,7 +87,8 @@ The system implements an automated audit logging mechanism that continuously rec
 <br/>
 
 ## ⚙️ How It Works
-
+<div align="justify">
+<p>
 The **SuppliMed** ecosystem functions through a seamless communication loop between the client interface and the server logic:
 
 1. **User Interaction:** The user performs an action (e.g., adding a medicine) through the dashboard and inventory tab.
@@ -97,19 +96,19 @@ The **SuppliMed** ecosystem functions through a seamless communication loop betw
 3. **Logic Processing:** The `InventoryServices.cs` validates the data, checks for existing stock, and generates a unique ID using **Encapsulation** and **Abstraction**.
 4. **Data Persistence:** The `AppDbContext.cs` saves the changes to the SQL database via Entity Framework Core.
 5. **Activity Logging:** The system automatically triggers an **Audit Log** entry, recording the user identity and the specific modification made for accountability.
+</p>
 
 ## 📂 Project Structure 
 
 <div align="justify">
 
-
+<p>
 The **SuppliMed Medicine Inventory System** is organized into two separate environments to maintain a clear distinction between the client-side and server-side components of the application. The project includes a dedicated frontend folder that stores all user interface resources such as HTML, CSS, JavaScript, and media assets, while the backend folder contains the main ASP.NET (C#) system architecture and application logic. To better understand the structure of the system, the discussion is divided into four major sections: the overall system architecture, the complete project structure diagram, the frontend directory, and the backend directory.
 </p>
 
 <details>
   <summary>System Architecture</summary>
 
-### `Application Flow & Data Logic`
 The architecture follows a Client-Server model. The Frontend communicates with the ASP.NET Core Web API via asynchronous HTTP requests, while the Backend manages data persistence through Entity Framework Core and MySQL.
 
 #### 🔄 System Flowchart
@@ -117,8 +116,6 @@ The architecture follows a Client-Server model. The Frontend communicates with t
 <p align="center">
   <img src="SuppliMed/frontend/icons/READMEimages/flowchart.png" width="800" alt="Flowchart">
 </p>
-
-
 
 ##### 📊 UML Class Diagram
 
@@ -226,7 +223,6 @@ SuppliMed/
 <details>
   <summary> Frontend </summary>
         
-### `Frontend`
 The frontend contains all client-side resources—including styles, scripts, media assets, and HTML pages—that power the visual presentation and interactive user experience of SuppliMed.
 
 #### CSS Stylesheets
@@ -271,8 +267,7 @@ This directory contains all the graphical assets and standard imagery used to bu
 
 <details>
   <summary> Backend </summary>
-        
-### `Backend`
+
 The backend follows a clean architecture pattern, separating the core business domain (`AppCore`) from the implementation of the web interface (`SuppliMed.Api`).
 
 #### AppCore (Domain & Data Layer)
@@ -387,7 +382,6 @@ The SuppliMed project demonstrates the implementation of Object-Oriented Program
 <details>
   <summary> Encapsulation </summary>
 
-### `Encapsulation`
 Encapsulation is implemented by protecting core data and business logic from direct, unsafe modifications. Instead of allowing API controllers to directly modify database values, sensitive operations are handled inside the `InventoryServices` class. This ensures that stock updates are always validated, logged, and processed safely.
 
 Example:
@@ -623,7 +617,7 @@ To further enhance the SuppliMed system for real-world production environments, 
   </tr>
 
   <tr>
-    <td>Project Manager/Lead Developer</td>
+    <td>Project Manager / Lead Developer</td>
     <td>Nikki C. Limboc</td>
     <td><a href="https://github.com/nikkibuttowsk"><img src="https://img.shields.io/badge/nikkibuttowsk-181717?style=for-the-badge&logo=github&logoColor=white"/></a></td>
   </tr>
