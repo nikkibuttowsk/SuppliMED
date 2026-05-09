@@ -103,7 +103,7 @@ The <strong>SuppliMed</strong> ecosystem functions through a seamless communicat
 <div align="justify">
 
 <p>
-The **SuppliMed Medicine Inventory System** is organized into two separate environments to maintain a clear distinction between the client-side and server-side components of the application. The project includes a dedicated frontend folder that stores all user interface resources such as HTML, CSS, JavaScript, and media assets, while the backend folder contains the main ASP.NET (C#) system architecture and application logic. To better understand the structure of the system, the discussion is divided into four major sections: the overall system architecture, the complete project structure diagram, the frontend directory, and the backend directory.
+The <strong>SuppliMed Medicine Inventory System</strong> is organized into two separate environments to maintain a clear distinction between the client-side and server-side components of the application. The project includes a dedicated frontend folder that stores all user interface resources such as HTML, CSS, JavaScript, and media assets, while the backend folder contains the main ASP.NET (C#) system architecture and application logic. To better understand the structure of the system, the discussion is divided into four major sections: the overall system architecture, the complete project structure diagram, the frontend directory, and the backend directory.
 </p>
 
 <details>
