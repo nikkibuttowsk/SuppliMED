@@ -51,7 +51,7 @@ body {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: 2px solid var(--accent-green);
+    border: 2px solid var(--accent-gray);
     margin-bottom: 40px;
 }
 
