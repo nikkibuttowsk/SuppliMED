@@ -89,7 +89,7 @@ The system implements an automated audit logging mechanism that continuously rec
 ## ⚙️ How It Works
 <div align="justify">
 <p>
-The **SuppliMed** ecosystem functions through a seamless communication loop between the client interface and the server logic:
+The <strong>SuppliMed</strong> ecosystem functions through a seamless communication loop between the client interface and the server logic:
 
 1. **User Interaction:** The user performs an action (e.g., adding a medicine) through the dashboard and inventory tab.
 2. **API Call:** The `inventory.js` module captures the input and sends a JSON-formatted request to the `InventoryController.cs` in the backend.
