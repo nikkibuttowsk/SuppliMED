@@ -2,10 +2,6 @@
         <img width="1100" height="250" alt="supplimedlogo" src="https://github.com/user-attachments/assets/bfd5a536-7a62-4d36-abf1-67d9304b9e49" /
 </h1>
 
-<!-- <h2 align="center">
-  A Medical Supplies Inventory System powered by C# and SQL, with a modern HTML and CSS interface.
-</h2> -->
-
 <div align="center">
 
 <img src="https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
@@ -25,18 +21,19 @@ The primary purpose of the system is to assist small pharmacies, non-government 
 <br/>
 
 ## ✨ Key Features
+
 <div align="justify">
 
 Designed to streamline the workflow of health clinics, SuppliMed offers several key functionalities to ensure accurate stock tracking and organizational accountability.
 
 <details>
   <summary> 🧑‍💻 Role-Based Access Control (RBAC) </summary>
-<br/>
+<p>
 The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the `AuthService.cs` service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an administrator or staff member, enabling role-based access and permissions within the inventory system.
 
 * **`Admin`** – Has elevated privileges for managing inventory and system operations.
 * **`Staff`** – Has standard access for inventory-related tasks and monitoring.
-
+</p>
 </details>
 
 <details>
@@ -52,24 +49,24 @@ The system implements a structured inventory tracking mechanism that allows real
 
 <details>
   <summary> 🔎 Real-time Search & Filtering </summary>
-<br/>
+<p>
 The system implements a real-time search and filtering mechanism that allows users to instantly locate specific inventory records as they type in the search bar. This functionality is handled through the frontend script, which continuously queries and filters displayed data without requiring page reloads. It improves usability by making large datasets easier to navigate and manage efficiently.
 
 * **`Live Search`** – Dynamically filters results as the user types input.
 * **`Instant Filtering`** – Narrows down inventory records based on keywords.
 * **`Improved Navigation`** – Enhances speed and accuracy in finding specific data.
-
+</p>
 </details>
 
 <details>
   <summary> 💾 Database Integration</summary>
-<br/>
+<p>
 The system integrates a SQL-based database to ensure reliable storage and retrieval of all inventory data. It supports secure processing of transactions such as adding, updating, and deleting records while maintaining data consistency across the system. This implementation improves data management efficiency and ensures that all information is properly stored and easily accessible when needed.
 
 * **`SQL Database`** – Provides structured and secure storage of system data.
 * **`Data Consistency`** – Maintains accurate and synchronized records across all operations.
 * **`Reliable Retrieval`** – Enables fast and efficient access to stored inventory information.
-
+</p>
 </details>
 
 <details>
@@ -84,7 +81,8 @@ The system implements an automated audit logging mechanism that continuously rec
 </details>
 
 </div>
-<br/>
+
+---
 
 ## 🛠️ How It Works
 <p>
@@ -250,7 +248,7 @@ SuppliMed/
 
 <details>
   <summary> Frontend </summary>
-<br/>        
+<p>     
 The frontend contains all client-side resources—including styles, scripts, media assets, and HTML pages—that power the visual presentation and interactive user experience of SuppliMed.
 
 #### 🎨 CSS Stylesheets
@@ -291,6 +289,7 @@ This directory contains all the graphical assets and standard imagery used to bu
 * **`lowStock.png`** – Status icon used to flag items that have dropped below their minimum stock threshold.
 * **`totalSupplies.png`** – Dashboard icon representing the aggregate count of all supplies in the system.
 * **`updateSupply.png`** – Icon representing the action to adjust or restock an existing supply.
+</p>
 </details>
 
 <details>
@@ -331,18 +330,47 @@ The bridge between our database logic and the HTML/JS frontend.
 <br/>
 </details>
 
+---
+
 ## 🖥️ System Requirements
 
 To ensure **SuppliMed** runs smoothly, please refer to the following hardware and software specifications.
 
 ### 🔩 Hardware Requirements
+<table width="100%">
+  <tr>
+    <th align="left" width="33%">Requirement</th>
+    <th align="left" width="33%">Minimum</th>
+    <th align="left" width="33%">Recommended</th>
+  </tr>
 
-| Requirement | Minimum | Recommended |
+  <tr>
+    <td> <strong>Processor</strong> </td>
+    <td>Dual-core 2.0 Ghz</td>
+    <td>Quad-core 2.5 Ghz+</td>
+  </tr>
+  <tr>
+    <td> <strong>RAM</strong> </td>
+    <td>4GB</td>
+    <td>8GBz+</td>
+  </tr>
+  <tr>
+    <td> <strong>Storage</strong> </td>
+    <td>500 MB (App + MariaDB overhead)</td>
+    <td>2GB (For database growth)</td>
+  </tr>
+  <tr>
+    <td> <strong>Display</strong> </td>
+    <td>1024 x 768</td>
+    <td>1920 x 1080</td>
+  </tr>
+
+<!-- | Requirement | Minimum | Recommended |
 | :--- | :--- | :--- |
 | ⚙️ **Processor** | Dual-core 2.0 GHz | Quad-core 2.5 GHz+ |
 | 🐏 **RAM** | 4 GB | 8 GB+ |
 | 💿 **Storage** | 500 MB (App + MariaDB overhead) | [2 GB] (For database growth) |
-| ⭐ **Display** | 1024 x 768 | 1920 x 1080 |
+| ⭐ **Display** | 1024 x 768 | 1920 x 1080 | -->
 
 ---
 
@@ -350,22 +378,51 @@ To ensure **SuppliMed** runs smoothly, please refer to the following hardware an
 
 Before running SuppliMed in **VS Code**, ensure you have the following installed:
 
-| Requirement | Specification |
+<table width="100%">
+  <tr>
+    <th align="left" width="50%">Requirement</th>
+    <th align="left" width="50%">Specification</th>
+  </tr>
+
+  <tr>
+    <td> <strong> Runtime </strong> </td>
+    <td> .NET 10.0 SDK or Runtime </td>
+  </tr>
+  <tr>
+    <td> <strong> ORM </strong> </td>
+    <td> Entity Framework Core 9.0.0 </td>
+  </tr>
+  <tr>
+    <td> <strong> Database </strong> </td>
+    <td> MariaDB(v10.5 to v11.6+ recommended) </td>
+  </tr>
+  <tr>
+    <td> <strong> Database Provider </strong> </td>
+    <td> Pomelo.EntityFrameworkCore.MySql 9.0.0 </td>
+  </tr>
+  <tr>
+    <td> <strong> Tools </strong> </td>
+    <td> dotnet-ef global tool (for migrations) </td>
+  </tr>  
+
+
+<!-- | Requirement | Specification |
 | :--- | :--- |
 | 🏃 **Runtime** | .NET 10.0 SDK or Runtime |
 | 🗺️ **ORM** | Entity Framework Core 9.0.0 |
 | 🗄️ **Database** | MariaDB(v10.5 to v11.6+ recommended) |
 | 🌐 **Database Provider** | Pomelo.EntityFrameworkCore.MySql 9.0.0 |
-| 🔧 **Tools** | dotnet-ef global tool (for migrations) |
+| 🔧 **Tools** | dotnet-ef global tool (for migrations) | -->
 
+---
 
 ## 🚀 Getting Started
 
 <div align="justify">
 Quick setup guide for running SuppliMed locally.
-<p> </p>
-<details>
-  <summary> How to install and setup the program </summary>
+<!-- <details> -->
+
+<!-- ### How to install and setup the program -->
 
 ### 🛠️ Installation & Setup
 
@@ -374,8 +431,6 @@ Quick setup guide for running SuppliMed locally.
 git clone https://github.com/your-username/SuppliMed.git](https://github.com/nikkibuttowsk/SuppliMED.git
 cd SuppliMED/SuppliMed/backend
 ```
-
-
 
 #### 2. Setup the Database
 Run the correct Entity Framework command:
@@ -386,8 +441,6 @@ dotnet ef database update --project AppCore --startup-project SuppliMed.Api
 
 > This will create and update the database using your backend configuration.
 
-
-
 #### 3. Start Required Services
 Make sure your local server is running:
 
@@ -396,16 +449,12 @@ Make sure your local server is running:
   - Apache
   - MySQL
 
-
-
 #### 4. Run the Backend (API)
 Inside the backend folder, run:
 
 ```bash
 dotnet run --project SuppliMed.Api
 ```
-
-
 
 #### 5. Run the Frontend (UI)
 
@@ -428,7 +477,8 @@ dotnet run --project SuppliMed.Api
 </div>
 <br/>
 
-</details>
+<!-- </details> -->
+---
 
 ## 🍵 Implementation of Object-Oriented Programming (OOP) Principles
 <div align="justify">
@@ -553,8 +603,8 @@ public class InventoryController : ControllerBase
 </details>
 
 </div>
-<br/>
 
+---
 
 ## 🖥️ Program Snapshots
 <div align="justify">
@@ -628,8 +678,9 @@ This section provides a visual overview of the SuppliMed user interface.
 
 </details>
 
-<br/>
 </div>
+
+---
 
 ## 🌱 Future Enhancements
 <div align="justify">
