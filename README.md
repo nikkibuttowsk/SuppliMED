@@ -19,7 +19,7 @@
 
 <div align="justify">
 
-The project entitled “SuppliMed: Medical Supplies Inventory System” was developed to help organize and manage medical supplies more efficiently. The system uses C# for the backend functionality and SQL as the database to ensure secure and well-structured data management. It also includes a simple and user-friendly interface created with HTML and CSS to make the system accessible and easy to navigate.
+The <strong>SuppliMed: Medical Supplies Inventory System</strong> was developed to help organize and manage medical supplies more efficiently. The system uses C# for the backend functionality and SQL as the database to ensure secure and well-structured data management. It also includes a simple and user-friendly interface created with HTML and CSS to make the system accessible and easy to navigate.
 
 The primary purpose of the system is to assist small pharmacies, non-government organizations (NGOs), barangay health centers, and volunteer groups in monitoring and managing medicines more effectively. Through a more organized inventory process, the system helps minimize errors, avoid medicine shortages, and support better decisions when distributing medical supplies to communities that need them most.
 <br/>
@@ -30,7 +30,7 @@ The primary purpose of the system is to assist small pharmacies, non-government 
 Designed to streamline the workflow of health clinics, SuppliMed offers several key functionalities to ensure accurate stock tracking and organizational accountability.
 
 <details>
-  <summary> Role-Based Access Control (RBAC) </summary>
+  <summary> 🧑‍💻 Role-Based Access Control (RBAC) </summary>
 
 The system implements a role-based authentication mechanism that differentiates administrative users from regular staff accounts. Authentication is handled through the `AuthService.cs` service located in the backend architecture. This implementation allows the system to identify whether the authenticated account belongs to an administrator or staff member, enabling role-based access and permissions within the inventory system.
 
@@ -40,7 +40,7 @@ The system implements a role-based authentication mechanism that differentiates 
 </details>
 
 <details>
-  <summary> Inventory Tracking </summary>
+  <summary> 🗃️ Inventory Tracking </summary>
 
 The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
 
@@ -51,7 +51,7 @@ The system implements a structured inventory tracking mechanism that allows real
 </details>
 
 <details>
-  <summary> Real-time Search & Filtering </summary>
+  <summary> 🔎 Real-time Search & Filtering </summary>
 
 The system implements a real-time search and filtering mechanism that allows users to instantly locate specific inventory records as they type in the search bar. This functionality is handled through the frontend script, which continuously queries and filters displayed data without requiring page reloads. It improves usability by making large datasets easier to navigate and manage efficiently.
 
@@ -62,7 +62,7 @@ The system implements a real-time search and filtering mechanism that allows use
 </details>
 
 <details>
-  <summary>Database Integration</summary>
+  <summary> 💾 Database Integration</summary>
 
 The system integrates a SQL-based database to ensure reliable storage and retrieval of all inventory data. It supports secure processing of transactions such as adding, updating, and deleting records while maintaining data consistency across the system. This implementation improves data management efficiency and ensures that all information is properly stored and easily accessible when needed.
 
@@ -73,7 +73,7 @@ The system integrates a SQL-based database to ensure reliable storage and retrie
 </details>
 
 <details>
-  <summary> Audit Log </summary>
+  <summary> 📜 Audit Log </summary>
 
 The system implements an automated audit logging mechanism that continuously records user activities and system transactions. It tracks detailed information regarding who performed an action, what specific changes were made, and the exact time the event occurred. This implementation ensures accountability among staff and administrators, aids in troubleshooting, and enhances overall system security by maintaining a transparent history of all data modifications.
 
@@ -86,17 +86,45 @@ The system implements an automated audit logging mechanism that continuously rec
 </div>
 <br/>
 
-## ⚙️ How It Works
-<div align="justify">
+## 🛠️ How It Works
 <p>
-The <strong>SuppliMed</strong> ecosystem functions through a seamless communication loop between the client interface and the server logic:
 
-1. **User Interaction:** The user performs an action (e.g., adding a medicine) through the dashboard and inventory tab.
-2. **API Call:** The `inventory.js` module captures the input and sends a JSON-formatted request to the `InventoryController.cs` in the backend.
-3. **Logic Processing:** The `InventoryServices.cs` validates the data, checks for existing stock, and generates a unique ID using **Encapsulation** and **Abstraction**.
-4. **Data Persistence:** The `AppDbContext.cs` saves the changes to the SQL database via Entity Framework Core.
-5. **Activity Logging:** The system automatically triggers an **Audit Log** entry, recording the user identity and the specific modification made for accountability.
+### 1. 🕵️ Secure Authentication
+The system begins at the <strong> Login Portal </strong> To maintain data integrity, access is restricted to authorized personnel.
+
+* **Pre-defined Roles:** The system utilizes default accounts for **Staff** and **Admin** roles set during development.
+* **Access Requests:** New users are recommended to contact the System Administrator to obtain their credentials.
+* **Security Lockout:** To prevent unauthorized access, the login interface will **freeze after three failed attempts**.
+
+### 2. 👀 Dashboard
+Upon a successful login, users are directed to the **Dashboard**, which serves as the command center for the system.
+
+* **Summary Cards:** Instant visibility into key metrics:
+    * **Total Stocks:** Current count of all items in the database.
+    * **Low Stock Supplies:** Real-time alerts for items requiring a restock.
+    * **Expired Supplies:** Critical view of items that have passed their shelf life.
+* **Quick Lists:** Dedicated views for items that are currently low on stock or expiring soon.
+* **Quick Action Buttons:** Rapid shortcuts to manage inventory:
+    * `Add Supply` | `Update Supply` | `Delete Supply`
+
+### 3. 📦 Inventory Management
+The **Inventory Tab** provides a comprehensive environment for granular data control.
+
+* **Full List View:** A complete, sortable table of all existing supplies.
+* **Advanced Search:** Filter through the inventory using specific keywords to find items quickly.
+* **Management Tools:** Direct access to action buttons for editing or removing specific stock entries.
+
+### 4. 🧐 Accountability & Tracking
+The **Audit Log Tab** ensures transparency by maintaining a chronological "Audit Trail" of system activity.
+
+* **Detailed Records:** View the specific details of every transaction or modification made.
+* **Audit Search:** Filter logs to track specific activities or investigate historical changes.
+
+### 5. 💀 Session Termination
+Clicking the **Logout** button securely ends the user session and returns the interface to the **Login Form**, ensuring the system remains protected from unauthorized use.
 </p>
+
+---
 
 ## 📂 Project Structure 
 
@@ -303,6 +331,34 @@ The bridge between our database logic and the HTML/JS frontend.
 <br/>
 </details>
 
+## 🖥️ System Requirements
+
+To ensure **SuppliMed** runs smoothly, please refer to the following hardware and software specifications.
+
+### 🔩 Hardware Requirements
+
+| Requirement | Minimum | Recommended |
+| :--- | :--- | :--- |
+| ⚙️ **Processor** | Dual-core 2.0 GHz | Quad-core 2.5 GHz+ |
+| 🐏 **RAM** | 4 GB | 8 GB+ |
+| 💿 **Storage** | 500 MB (App + MariaDB overhead) | [2 GB] (For database growth) |
+| ⭐ **Display** | 1024 x 768 | 1920 x 1080 |
+
+---
+
+### 📺 Software Prerequisites
+
+Before running SuppliMed in **VS Code**, ensure you have the following installed:
+
+| Requirement | Specification |
+| :--- | :--- |
+| 🏃 **Runtime** | .NET 10.0 SDK or Runtime |
+| 🗺️ **ORM** | Entity Framework Core 9.0.0 |
+| 🗄️ **Database** | MariaDB(v10.5 to v11.6+ recommended) |
+| 🌐 **Database Provider** | Pomelo.EntityFrameworkCore.MySql 9.0.0 |
+| 🔧 **Tools** | dotnet-ef global tool (for migrations) |
+
+
 ## 🚀 Getting Started
 
 <div align="justify">
@@ -379,12 +435,13 @@ dotnet run --project SuppliMed.Api
 
 The SuppliMed project demonstrates the implementation of Object-Oriented Programming (OOP) principles in C# to ensure a structured, maintainable, and scalable system design.
 
-<details>
-  <summary> Encapsulation </summary>
+### 🔒 Encapsulation
 
 Encapsulation is implemented by protecting core data and business logic from direct, unsafe modifications. Instead of allowing API controllers to directly modify database values, sensitive operations are handled inside the `InventoryServices` class. This ensures that stock updates are always validated, logged, and processed safely.
 
-Example:
+<details>
+  <summary> Code Example </summary>
+
 ```csharp
 
 public class InventoryServices
@@ -410,13 +467,11 @@ public class InventoryServices
 
 </details>
 
-<details>
-  <summary> Inheritance </summary>
-
-### `Inheritance`
+### 🧬 Inheritance
 Inheritance is implemented through a class hierarchy that eliminates redundancy. Shared properties such as `Id`, `Name`, `Brand`, and `Quantity` are stored in a base class, while specific entities extend this base structure.
 
-Example:
+<details> 
+  <summary> Code Example </summary>
 
 ```csharp
 public abstract class MedicalSupply
@@ -442,13 +497,11 @@ public class Medicine : MedicalSupply
 ```
 </details>
 
-<details>
-  <summary> Polymorphism </summary>
-
-### `Polymorphism`
+### 🎭 Polymorphism
 Polymorphism is implemented using method overriding, allowing different inventory types to behave differently while sharing a common structure. This is used when displaying expiry dates depending on the type of supply.
 
-Example:
+<details>
+  <summary> Code Example </summary>
 
 ```csharp
 public abstract class MedicalSupply
@@ -476,13 +529,11 @@ public class Medicine : MedicalSupply
 ```
 </details>
 
-<details>
-  <summary> Abstraction </summary>
-
-### `Abstraction`
+### 🧩 Abstraction
 Abstraction is implemented by hiding complex logic inside the service layer. The controller only interacts with simple methods, while internal processes such as ID generation and validation are handled behind the scenes.
 
-Example:
+<details>
+  <summary> Code Example </summary>
 
 ```csharp
 public class InventoryController : ControllerBase
