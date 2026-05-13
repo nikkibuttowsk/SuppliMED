@@ -327,7 +327,6 @@ The bridge between our database logic and the HTML/JS frontend.
 * **`.gitignore`** – Keeps sensitive files and local builds out of the repository.
 
 </div>
-<br/>
 </details>
 
 ---
@@ -337,6 +336,7 @@ The bridge between our database logic and the HTML/JS frontend.
 To ensure **SuppliMed** runs smoothly, please refer to the following hardware and software specifications.
 
 ### 🔩 Hardware Requirements
+
 <table width="100%">
   <tr>
     <th align="left" width="33%">Requirement</th>
