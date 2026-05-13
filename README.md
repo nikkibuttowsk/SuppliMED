@@ -83,8 +83,8 @@ The system implements an automated audit logging mechanism that continuously rec
 </p>
 
 </details>
-
 </div>
+<br/>
 
 ## 🛠️ How It Works
 <p>
@@ -123,6 +123,7 @@ The **Audit Log Tab** ensures transparency by maintaining a chronological "Audit
 ### 5. 💀 Session Termination
 Clicking the **Logout** button securely ends the user session and returns the interface to the **Login Form**, ensuring the system remains protected from unauthorized use.
 </p>
+<br/>
 
 ## 📂 Project Structure 
 
@@ -328,6 +329,7 @@ The bridge between our database logic and the HTML/JS frontend.
 
 </div>
 </details>
+<br/>
 
 ## 🖥️ System Requirements
 
@@ -364,6 +366,7 @@ A device should possesses the following specifications:
     <td>1024 x 768</td>
     <td>1920 x 1080</td>
   </tr>
+  </table>
 
 ### 📺 Software Prerequisites
 
@@ -394,7 +397,9 @@ Before running SuppliMed in **VS Code**, ensure you have the following installed
   <tr>
     <td> <strong>🔧 Tools </strong> </td>
     <td> dotnet-ef global tool (for migrations) </td>
-  </tr>  
+  </tr> 
+  </table>
+<br/> 
 
 ## 🚀 Getting Started
 
@@ -452,6 +457,7 @@ dotnet run --project SuppliMed.Api
 - XAMPP must be running for database connection  
 
 </div>
+<br/>
 
 ## 🍵 Implementation of Object-Oriented Programming (OOP) Principles
 <div align="justify">
@@ -574,7 +580,6 @@ public class InventoryController : ControllerBase
 }
 ```
 </details>
-
 </div>
 
 ---
@@ -701,5 +706,5 @@ To further enhance the SuppliMed system for real-world production environments, 
     <td>Rex Anthony C. Castillano </td>
     <td><a href="https://github.com/rexanthonyyy"><img src="https://img.shields.io/badge/rexanthonyyy-181717?style=for-the-badge&logo=github&logoColor=white"/></a></td>
   </tr>
-
+</table>
   
