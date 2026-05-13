@@ -38,12 +38,14 @@ The system implements a role-based authentication mechanism that differentiates 
 
 <details>
   <summary> 🗃️ Inventory Tracking </summary>
-<br/>
+
+<p>
 The system implements a structured inventory tracking mechanism that allows real-time monitoring of medical supplies and equipment within the database. It ensures that all stock movements such as additions, updates, and deductions are properly recorded through the system’s backend services. This implementation helps maintain accurate inventory records, reduces the risk of shortages, and improves overall supply management efficiency.
 
 * **`Stock Monitoring`** – Tracks available quantities of medicines and supplies in real time.
 * **`Expiration Tracking`** – Identifies items nearing expiration to prevent unsafe usage.
 * **`Low Stock Alerts`** – Notifies users when inventory falls below safe thresholds.
+</p>
 
 </details>
 
@@ -71,18 +73,18 @@ The system integrates a SQL-based database to ensure reliable storage and retrie
 
 <details>
   <summary> 📜 Audit Log </summary>
-<br/>
+
+<p>
 The system implements an automated audit logging mechanism that continuously records user activities and system transactions. It tracks detailed information regarding who performed an action, what specific changes were made, and the exact time the event occurred. This implementation ensures accountability among staff and administrators, aids in troubleshooting, and enhances overall system security by maintaining a transparent history of all data modifications.
 
 * **`Activity Tracking`** – Monitors and records all critical system operations, including stock additions, updates, and deletions.
 * **`Timestamped Records`** – Accurately logs the exact date and time of every recorded transaction for precise tracking.
 * **`User Accountability`** – Links specific actions directly to individual administrator or staff accounts to ensure system security.
+</p>
 
 </details>
 
 </div>
-
----
 
 ## 🛠️ How It Works
 <p>
@@ -122,8 +124,6 @@ The **Audit Log Tab** ensures transparency by maintaining a chronological "Audit
 Clicking the **Logout** button securely ends the user session and returns the interface to the **Login Form**, ensuring the system remains protected from unauthorized use.
 </p>
 
----
-
 ## 📂 Project Structure 
 
 <div align="justify">
@@ -134,7 +134,7 @@ The <strong>SuppliMed Medicine Inventory System</strong> is organized into two s
 
 <details>
   <summary>System Architecture</summary>
-<br/>
+
 The architecture follows a Client-Server model. The Frontend communicates with the ASP.NET Core Web API via asynchronous HTTP requests, while the Backend manages data persistence through Entity Framework Core and MySQL.
 
 #### 🔄 System Flowchart
@@ -154,7 +154,7 @@ The architecture follows a Client-Server model. The Frontend communicates with t
 </p>
 <details>
   <summary>Project Diagram</summary>
-<p> </p>
+
 <pre>
 SuppliMed/
 │
@@ -329,13 +329,13 @@ The bridge between our database logic and the HTML/JS frontend.
 </div>
 </details>
 
----
-
 ## 🖥️ System Requirements
 
 To ensure **SuppliMed** runs smoothly, please refer to the following hardware and software specifications.
 
 ### 🔩 Hardware Requirements
+
+A device should possesses the following specifications:
 
 <table width="100%">
   <tr>
@@ -345,34 +345,25 @@ To ensure **SuppliMed** runs smoothly, please refer to the following hardware an
   </tr>
 
   <tr>
-    <td> <strong>Processor</strong> </td>
+    <td> <strong>⚙️ Processor</strong> </td>
     <td>Dual-core 2.0 Ghz</td>
     <td>Quad-core 2.5 Ghz+</td>
   </tr>
   <tr>
-    <td> <strong>RAM</strong> </td>
+    <td> <strong>🐏 RAM</strong> </td>
     <td>4GB</td>
     <td>8GBz+</td>
   </tr>
   <tr>
-    <td> <strong>Storage</strong> </td>
+    <td> <strong>💿 Storage</strong> </td>
     <td>500 MB (App + MariaDB overhead)</td>
     <td>2GB (For database growth)</td>
   </tr>
   <tr>
-    <td> <strong>Display</strong> </td>
+    <td> <strong>⭐ Display</strong> </td>
     <td>1024 x 768</td>
     <td>1920 x 1080</td>
   </tr>
-
-<!-- | Requirement | Minimum | Recommended |
-| :--- | :--- | :--- |
-| ⚙️ **Processor** | Dual-core 2.0 GHz | Quad-core 2.5 GHz+ |
-| 🐏 **RAM** | 4 GB | 8 GB+ |
-| 💿 **Storage** | 500 MB (App + MariaDB overhead) | [2 GB] (For database growth) |
-| ⭐ **Display** | 1024 x 768 | 1920 x 1080 | -->
-
----
 
 ### 📺 Software Prerequisites
 
@@ -385,50 +376,36 @@ Before running SuppliMed in **VS Code**, ensure you have the following installed
   </tr>
 
   <tr>
-    <td> <strong> Runtime </strong> </td>
+    <td> <strong>🏃 Runtime </strong> </td>
     <td> .NET 10.0 SDK or Runtime </td>
   </tr>
   <tr>
-    <td> <strong> ORM </strong> </td>
+    <td> <strong>🗺️ ORM </strong> </td>
     <td> Entity Framework Core 9.0.0 </td>
   </tr>
   <tr>
-    <td> <strong> Database </strong> </td>
+    <td> <strong>🗄️ Database </strong> </td>
     <td> MariaDB(v10.5 to v11.6+ recommended) </td>
   </tr>
   <tr>
-    <td> <strong> Database Provider </strong> </td>
+    <td> <strong>🌐 Database Provider </strong> </td>
     <td> Pomelo.EntityFrameworkCore.MySql 9.0.0 </td>
   </tr>
   <tr>
-    <td> <strong> Tools </strong> </td>
+    <td> <strong>🔧 Tools </strong> </td>
     <td> dotnet-ef global tool (for migrations) </td>
   </tr>  
-
-
-<!-- | Requirement | Specification |
-| :--- | :--- |
-| 🏃 **Runtime** | .NET 10.0 SDK or Runtime |
-| 🗺️ **ORM** | Entity Framework Core 9.0.0 |
-| 🗄️ **Database** | MariaDB(v10.5 to v11.6+ recommended) |
-| 🌐 **Database Provider** | Pomelo.EntityFrameworkCore.MySql 9.0.0 |
-| 🔧 **Tools** | dotnet-ef global tool (for migrations) | -->
-
----
 
 ## 🚀 Getting Started
 
 <div align="justify">
 Quick setup guide for running SuppliMed locally.
-<!-- <details> -->
-
-<!-- ### How to install and setup the program -->
 
 ### 🛠️ Installation & Setup
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/SuppliMed.git](https://github.com/nikkibuttowsk/SuppliMED.git
+git clone https://github.com/your-username/SuppliMed.git](https://github.com/nikkibuttowsk/SuppliMED.git)
 cd SuppliMED/SuppliMed/backend
 ```
 
@@ -475,10 +452,6 @@ dotnet run --project SuppliMed.Api
 - XAMPP must be running for database connection  
 
 </div>
-<br/>
-
-<!-- </details> -->
----
 
 ## 🍵 Implementation of Object-Oriented Programming (OOP) Principles
 <div align="justify">
