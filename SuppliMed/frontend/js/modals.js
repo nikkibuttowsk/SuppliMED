@@ -89,7 +89,7 @@ const ModalController = {
         if (val === 'Medicine') {
             extra.innerHTML = `
                 <div class="form-group"><label>Initial Qty (Total)</label><input type="number" id="field-qty" value="100"></div>
-                <div class="form-group"><label>Batch Number</label><input id="field-batch" value="B-001"></div>
+                
                 <div class="form-group"><label>Expiry Date</label><input type="date" id="field-expiry" required></div>
             `;
         } else {
